@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  role      String   @default("XML_OPERATOR") // ADMIN, EDITORIAL_MANAGER, XML_OPERATOR, REVIEWER
+  status    String   @default("ACTIVE")
+  lastLogin DateTime?
+  articles  Article[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Article {
+  id               String   @id @default(cuid())
+  title            String?
+  originalFileName String
+  fileUrl          String?
+  status           String   @default("UPLOADED") // UPLOADED, METADATA_EXTRACTED, UNDER_REVIEW, XML_GENERATED, VALIDATION_PASSED, READY_FOR_EXPORT
+  uploaderId       String
+  uploader         User     @relation(fields: [uploaderId], references: [id])
+  metadata         Metadata?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Metadata {
+  id               String   @id @default(cuid())
+  articleId        String   @unique
+  article          Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  title            String?
+  runningTitle     String?
+  subtitle         String?
+  abstract         String?
+  keywords         String?
+  journalName      String?
+  volume           String?
+  issue            String?
+  pages            String?
+  doi              String?
+  publicationDate  DateTime?
+  fundingInfo      String?
+  conflictOfInterest String?
+  ethicalApproval  String?
+  acknowledgements String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

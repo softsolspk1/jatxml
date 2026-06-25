@@ -1,0 +1,78 @@
+:root {
+  --brand-blue: #0A2540;      /* Deep professional blue */
+  --brand-blue-light: #1A3E6D;
+  --brand-green: #2ECC71;     /* Vibrant action green */
+  --brand-green-hover: #27AE60;
+  --brand-white: #FFFFFF;
+  --bg-color: #F8FAFC;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --border-color: #E2E8F0;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.button {
+  background-color: var(--brand-green);
+  color: var(--brand-white);
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.button:hover {
+  background-color: var(--brand-green-hover);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button-outline {
+  background-color: transparent;
+  color: var(--brand-blue);
+  border: 2px solid var(--brand-blue);
+}
+
+.button-outline:hover {
+  background-color: var(--brand-blue);
+  color: var(--brand-white);
+}
+
+.header {
+  background-color: var(--brand-blue);
+  color: var(--brand-white);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background-color: var(--brand-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+}

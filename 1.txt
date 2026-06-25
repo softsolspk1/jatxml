@@ -1,0 +1,36 @@
+Develop the Automated Research Article to JATS XML Conversion Platform for Scholarly Database Indexing
+
+Web Based.
+Complete requirements is available in /1.docx document file
+Logo is available at /logo.png file
+The Portal colors should be similar to Logo Colors and UI should be professional.
+
+Database: 
+postgresql://neondb_owner:npg_l1WNTF4KqyCc@ep-flat-cloud-at00pmd7-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+GIT:
+…or create a new repository on the command line
+echo "# jatxml" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/softsolspk1/jatxml.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/softsolspk1/jatxml.git
+git branch -M main
+git push -u origin main
+
+
+1. Brand Colors: Use Blue and Green with White
+
+2. Cloud Dtorage: Cloudflare R2 
+S3 API: https://5a34edfcf71a3c6ebfc157615e961391.r2.cloudflarestorage.com/softsols1
+
+3. Use NextAuth.js
+
+
+Cloudfare 
+Email: kashiffareed2023@gmail.com
+Password: ???SoftS@lS1
