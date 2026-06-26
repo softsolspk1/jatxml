@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Extract Metadata (mock if buffer is empty due to lack of R2 keys)
-    let extractedData = { title: "Draft Title", abstract: "", keywords: "" };
+    let extractedData: any = { title: "Draft Title", abstract: "", keywords: "", references: [], figures: [], tables: [] };
     if (buffer.length > 0) {
       extractedData = await extractMetadataFromDocx(buffer);
     }
