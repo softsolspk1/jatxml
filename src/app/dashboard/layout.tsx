@@ -21,7 +21,7 @@ export default async function DashboardLayout({
           <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>Editorial Manager</p>
         </div>
         <nav style={{ display: 'flex', flexDirection: 'column' }}>
-          <Link href="/dashboard" style={{ padding: '15px 20px', borderLeft: '4px solid transparent', hover: { backgroundColor: 'var(--brand-blue-light)' } }}>Overview</Link>
+          <Link href="/dashboard" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>Overview</Link>
           <Link href="/dashboard/upload" style={{ padding: '15px 20px', borderLeft: '4px solid var(--brand-green)', backgroundColor: 'var(--brand-blue-light)' }}>Upload Article</Link>
           <Link href="/dashboard/articles" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>All Articles</Link>
           <Link href="/dashboard/settings" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>Settings</Link>
