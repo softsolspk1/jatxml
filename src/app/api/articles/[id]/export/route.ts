@@ -41,7 +41,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const report = `JATS XML Platform - Validation Report\n=====================================\n\nStatus: ${validation.isValid ? 'PASSED' : 'FAILED'}\n\nErrors/Warnings:\n${validation.errors.length > 0 ? validation.errors.join('\n') : 'None. Structurally perfect.'}`;
     zip.file("validation_report.txt", report);
 
-    const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
+    const zipBuffer = await zip.generateAsync({ type: "uint8array" });
 
     return new NextResponse(zipBuffer, {
       status: 200,
