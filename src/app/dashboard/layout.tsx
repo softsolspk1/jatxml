@@ -8,9 +8,8 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Commenting out real auth check for local UI testing, but you can enable it later.
-  // const session = await getServerSession(authOptions);
-  // if (!session) redirect('/login');
+  const session = await getServerSession(authOptions);
+  if (!session) redirect('/login');
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>

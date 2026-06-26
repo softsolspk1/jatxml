@@ -34,3 +34,5 @@ S3 API: https://5a34edfcf71a3c6ebfc157615e961391.r2.cloudflarestorage.com/softso
 Cloudfare 
 Email: kashiffareed2023@gmail.com
 Password: ???SoftS@lS1
+
+

@@ -20,10 +20,14 @@ export default function Home() {
           <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '30px', maxWidth: '800px', margin: '0 auto 30px' }}>
             Automatically convert scholarly research articles (DOCX) into industry-standard JATS XML formats for PMC, SciELO, and Crossref.
           </p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-            <Link href="/dashboard/upload" className="button" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>Start Converting</Link>
-            <Link href="/about" className="button button-outline" style={{ fontSize: '1.1rem', padding: '15px 30px' }}>Learn More</Link>
-          </div>
+          <div style={{ marginTop: '40px', display: 'flex', gap: '20px', justifyContent: 'center' }}>
+          <Link href="/login" className="button" style={{ padding: '15px 30px', fontSize: '1.1rem' }}>
+            Login to Portal
+          </Link>
+          <Link href="#features" className="button button-outline" style={{ padding: '15px 30px', fontSize: '1.1rem' }}>
+            Learn More
+          </Link>
+        </div>
         </section>
         
         <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
@@ -41,6 +45,10 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      <footer style={{ marginTop: 'auto', padding: '20px', textAlign: 'center', backgroundColor: 'var(--brand-blue)', color: 'white', fontSize: '0.9rem' }}>
+        <p>&copy; 2026. All Rights Reserved. Developed by Softsols Pakistan</p>
+      </footer>
     </div>
   );
 }
