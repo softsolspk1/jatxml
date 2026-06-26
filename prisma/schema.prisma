@@ -29,6 +29,10 @@ model Article {
   uploaderId       String
   uploader         User     @relation(fields: [uploaderId], references: [id])
   metadata         Metadata?
+  references       Reference[]
+  figures          Figure[]
+  tables           ArticleTable[]
+  authors          Author[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
@@ -54,4 +58,47 @@ model Metadata {
   acknowledgements String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Reference {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  rawText     String
+  authors     String?
+  title       String?
+  journal     String?
+  year        String?
+  doi         String?
+  volume      String?
+  issue       String?
+  pages       String?
+}
+
+model Figure {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  label       String?
+  caption     String?
+  base64Data  String?
+}
+
+model ArticleTable {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  label       String?
+  caption     String?
+  htmlContent String?
+}
+
+model Author {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  name        String
+  affiliation String?
+  email       String?
+  orcid       String?
 }

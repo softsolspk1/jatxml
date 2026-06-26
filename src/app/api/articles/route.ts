@@ -63,6 +63,15 @@ export async function POST(req: NextRequest) {
             abstract: extractedData.abstract,
             keywords: extractedData.keywords,
           }
+        },
+        references: {
+          create: extractedData.references || []
+        },
+        figures: {
+          create: extractedData.figures || []
+        },
+        tables: {
+          create: extractedData.tables || []
         }
       },
     });

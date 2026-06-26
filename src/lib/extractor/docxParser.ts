@@ -47,10 +47,55 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     }
   });
 
+  // 4. Try to find References
+  let rawReferences = '';
+  $('h1, h2, h3, p, strong, b').each((i, el) => {
+    const text = $(el).text().trim().toLowerCase();
+    if (text === 'references' || text === 'bibliography') {
+      let current = $(el).parent().is('p') ? $(el).parent().next() : $(el).next();
+      while (current.length > 0) {
+        if (current.is('p')) {
+          rawReferences += current.text().trim() + '\n';
+        }
+        current = current.next();
+      }
+      return false; // Break
+    }
+  });
+
+  const { parseReferences } = require('./referenceParser');
+  const parsedReferences = parseReferences(rawReferences);
+
+  // 5. Try to find Figures (Images embedded in docx)
+  const figures: any[] = [];
+  $('img').each((i, el) => {
+    const src = $(el).attr('src');
+    if (src && src.startsWith('data:image')) {
+      figures.push({
+        label: `Figure ${i + 1}`,
+        base64Data: src,
+        caption: $(el).next('p').text() || `Extracted Image ${i + 1}`
+      });
+    }
+  });
+
+  // 6. Try to find Tables
+  const tables: any[] = [];
+  $('table').each((i, el) => {
+    tables.push({
+      label: `Table ${i + 1}`,
+      htmlContent: $.html(el),
+      caption: $(el).prev('p').text() || `Extracted Table ${i + 1}`
+    });
+  });
+
   return {
     title,
     abstract: abstract.trim(),
     keywords,
-    rawHtml: html
+    rawHtml: html,
+    references: parsedReferences,
+    figures,
+    tables
   };
 }
