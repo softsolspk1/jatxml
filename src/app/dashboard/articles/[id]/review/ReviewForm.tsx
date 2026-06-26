@@ -17,14 +17,16 @@ export default function ReviewForm({ articleId, initialData }: { articleId: stri
       });
       if (res.ok) {
         setStatus('success');
-        alert("XML Successfully Generated!");
-        window.location.href = '/dashboard';
       } else {
         setStatus('error');
       }
     } catch (e) {
       setStatus('error');
     }
+  };
+
+  const handleDownload = () => {
+    window.location.href = `/api/articles/${articleId}/export`;
   };
 
   return (
@@ -54,15 +56,28 @@ export default function ReviewForm({ articleId, initialData }: { articleId: stri
       
       {status === 'error' && <p style={{ color: '#EF4444' }}>Error generating XML. Please try again.</p>}
       
-      <button 
-        type="button" 
-        className="button" 
-        style={{ marginTop: '20px', opacity: status === 'generating' ? 0.7 : 1 }}
-        onClick={handleGenerate}
-        disabled={status === 'generating'}
-      >
-        {status === 'generating' ? 'Generating XML...' : 'Save & Generate XML'}
-      </button>
+      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+        <button 
+          type="button" 
+          className="button" 
+          style={{ opacity: status === 'generating' ? 0.7 : 1, flex: 1 }}
+          onClick={handleGenerate}
+          disabled={status === 'generating'}
+        >
+          {status === 'generating' ? 'Generating XML...' : 'Save & Generate XML'}
+        </button>
+
+        {status === 'success' && (
+          <button 
+            type="button" 
+            className="button button-outline" 
+            style={{ flex: 1, backgroundColor: 'white' }}
+            onClick={handleDownload}
+          >
+            Download ZIP Package
+          </button>
+        )}
+      </div>
     </form>
   );
 }
