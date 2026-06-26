@@ -61,7 +61,19 @@ export default function UploadPage() {
       });
 
       if (uploadRes.ok) {
-        setStatus('success');
+        // 3. Trigger Extraction API
+        const extractRes = await fetch('/api/articles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: data.key, originalFileName: file.name })
+        });
+        
+        if (extractRes.ok) {
+           const { articleId } = await extractRes.json();
+           window.location.href = `/dashboard/articles/${articleId}/review`;
+        } else {
+           setStatus('error');
+        }
       } else {
         setStatus('error');
       }
