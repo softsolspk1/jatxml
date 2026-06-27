@@ -28,7 +28,7 @@ export default function LoginPage() {
     <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-color)' }}>
       <div className="card" style={{ maxWidth: '400px', width: '100%', padding: '40px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-          <Image src="/logo.png" alt="JATS XML Converter Logo" width={80} height={80} style={{ objectFit: 'contain' }} />
+          <Image src="/logo.png" alt="JATS XML Converter Logo" width={150} height={150} style={{ objectFit: 'contain' }} />
         </div>
         <h2 style={{ fontSize: '1.8rem', color: 'var(--brand-blue)', marginBottom: '10px', textAlign: 'center' }}>Portal Login</h2>
         <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '30px' }}>Sign in to manage JATS XML conversions.</p>
