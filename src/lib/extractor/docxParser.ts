@@ -29,17 +29,23 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     const t = earlyElements[i].toLowerCase();
     
     // Check if this line looks like a journal name at the very top
-    if (i < 3 && (t.includes('journal') || t.includes('bmc') || t.includes('springer') || t.includes('review'))) {
+    if (i < 5 && (t.includes('journal') || t.includes('bmc') || t.includes('springer') || t.includes('review') || t.includes('pjps') || t.includes('science'))) {
        if (!journalName) journalName = earlyElements[i];
        continue;
     }
 
-    // Skip common publisher headers, DOI strings, etc
+    // Skip common publisher headers, DOI strings, Volume info, etc
     if (
       t.includes('open access') || 
-      t.includes('research') || 
+      t.includes('research article') || 
+      t.includes('original article') || 
       t.includes('doi:') || 
       t.includes('10.') || 
+      t.includes('vol.') ||
+      t.includes('volume') ||
+      t.includes('issue') ||
+      t.includes('pp.') ||
+      t.includes('pages') ||
       t.length < 10
     ) {
        continue;
@@ -214,7 +220,7 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   let rawReferences = '';
   $('h1, h2, h3, p, strong, b').each((i, el) => {
     const text = $(el).text().trim().toLowerCase();
-    if (text === 'references' || text === 'bibliography') {
+    if (text === 'references' || text === 'reference' || text === 'bibliography' || text === 'literature cited') {
       let current = $(el).parent().is('p') ? $(el).parent().next() : $(el).next();
       while (current.length > 0) {
         const curText = current.text().toLowerCase();
@@ -259,6 +265,9 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
 
     const pagesMatch = text.match(/(?:pp\.|pages?)\s*(\d+\s*[-–]\s*\d+|\d+)/i);
     if (pagesMatch && !pages) pages = pagesMatch[1];
+
+    const dateMatch = text.match(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December)?\s*(?:20\d{2}|19\d{2})\b/i);
+    if (dateMatch && !publicationDate) publicationDate = dateMatch[0];
   }
 
   return {
