@@ -50,6 +50,36 @@ Username: softsols
 Password: ???S@fTs@Ls123
 Email: kashiffareed01@gmail.com
 
+=========================================
+
+1) Remove Login to Portal and Learn More Buttons as shown in 1st attachment.
+2) Remove dashboard button from Header in home page. Dashboard will show after succesful login
+3) Add Logo on Login Page 
+4) In Admin Panel, see 2nd attachment, i am not see any proper feature in it. So, develop features and make sure i need 100% workign features. No 404 Page on click
 
 
- 
+
+Create All User Types Accounts and share credentials for me
+
+
+Password: Welcome@123
+
+
+Administrator
+Email: admin@example.com
+Password: Welcome@123
+
+
+Editorial Manager
+Email: manager@example.com 
+Password: Welcome@123
+
+
+XML Operator
+Email: operator@example.com
+Password: Welcome@123
+
+Reviewer
+Email: reviewer@example.com
+Password: Welcome@123
+
