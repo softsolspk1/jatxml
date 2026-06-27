@@ -7,13 +7,14 @@ const BUCKET_NAME = process.env.R2_BUCKET_NAME || "softsols1";
 
 export async function POST(req: NextRequest) {
   try {
-    const { filename, contentType } = await req.json();
+    const { filename, contentType, isSupplementary } = await req.json();
 
     if (!filename || !contentType) {
       return NextResponse.json({ error: "Missing filename or contentType" }, { status: 400 });
     }
 
-    const key = `uploads/${Date.now()}-${filename}`;
+    const prefix = isSupplementary ? 'supplementary' : 'uploads';
+    const key = `${prefix}/${Date.now()}-${filename}`;
 
     const command = new PutObjectCommand({
       Bucket: BUCKET_NAME,

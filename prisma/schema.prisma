@@ -36,7 +36,7 @@ model Article {
   title            String?
   originalFileName String
   fileUrl          String?
-  status           String   @default("UPLOADED") // UPLOADED, METADATA_EXTRACTED, UNDER_REVIEW, XML_GENERATED, VALIDATION_PASSED, READY_FOR_EXPORT
+  status           String   @default("UPLOADED") // UPLOADED, METADATA_EXTRACTED, UNDER_REVIEW, XML_GENERATED, VALIDATION_FAILED, VALIDATION_PASSED, READY_FOR_EXPORT, SUBMITTED
   uploaderId       String
   uploader         User     @relation(fields: [uploaderId], references: [id])
   metadata         Metadata?

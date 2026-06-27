@@ -4,6 +4,7 @@ import ReviewForm from "./ReviewForm";
 import { convertToHTML } from "@/lib/xml/htmlConverter";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import PipelineVisualizer from "../PipelineVisualizer";
 
 export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -28,6 +29,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   return (
     <div>
       <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)', marginBottom: '20px' }}>Review Extracted Metadata</h1>
+      <PipelineVisualizer currentStatus={article.status} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
         
         {/* Left: Metadata Form */}

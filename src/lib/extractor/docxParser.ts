@@ -13,6 +13,16 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   let subtitle = '';
   let abstract = '';
   let keywords = '';
+
+  const headings: { level: number; text: string }[] = [];
+  $('h1, h2, h3, h4, h5, h6').each((_, el) => {
+    const text = $(el).text().trim();
+    const tagName = $(el).prop('tagName');
+    if (text && tagName) {
+      const level = parseInt(tagName.substring(1), 10);
+      headings.push({ level, text });
+    }
+  });
   
   // Collect early text elements for Title and Authors
   const earlyElements: string[] = [];
@@ -242,16 +252,70 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
 
   // 7. Figures & Tables
   const figures: any[] = [];
+  let figCounter = 1;
   $('img').each((i, el) => {
     const src = $(el).attr('src');
     if (src && src.startsWith('data:image')) {
-      figures.push({ label: `Figure ${i + 1}`, base64Data: src, caption: $(el).next('p').text() || `Image ${i + 1}` });
+      let caption = '';
+      let nextP = $(el).next('p');
+      if (!nextP.length) nextP = $(el).parent().next('p');
+      
+      const textNext = nextP.text().trim();
+      if (textNext.toLowerCase().startsWith('fig') || textNext.toLowerCase().startsWith('image')) {
+        caption = textNext;
+      } else {
+        caption = `Figure ${figCounter}`;
+      }
+      
+      // Attempt to extract explicit figure numbering
+      const labelMatch = caption.match(/^(?:Figure|Fig\.?)\s*(\d+[a-zA-Z]*)/i);
+      const label = labelMatch ? `Figure ${labelMatch[1]}` : `Figure ${figCounter}`;
+      
+      figures.push({ label, base64Data: src, caption });
+      figCounter++;
     }
   });
 
   const tables: any[] = [];
+  let tableCounter = 1;
   $('table').each((i, el) => {
-    tables.push({ label: `Table ${i + 1}`, htmlContent: $.html(el), caption: $(el).prev('p').text() || `Table ${i + 1}` });
+    let caption = '';
+    let prevP = $(el).prev('p');
+    if (!prevP.length) prevP = $(el).parent().prev('p');
+    
+    const textPrev = prevP.text().trim();
+    if (textPrev.toLowerCase().startsWith('table')) {
+      caption = textPrev;
+    } else {
+      caption = `Table ${tableCounter}`;
+    }
+
+    const labelMatch = caption.match(/^Table\s*([I\d]+)/i);
+    const label = labelMatch ? `Table ${labelMatch[1]}` : `Table ${tableCounter}`;
+
+    // Structure conversion: Ensure <thead> exists
+    const $table = $(el);
+    if ($table.find('thead').length === 0 && $table.find('tr').length > 1) {
+       const firstRow = $table.find('tr').first();
+       // wrap first row in thead
+       const thead = $('<thead></thead>');
+       firstRow.wrap(thead);
+       
+       // convert td to th in thead
+       firstRow.find('td').each((_, td) => {
+          const $td = $(td);
+          $td.replaceWith(`<th>${$td.html()}</th>`);
+       });
+       
+       // wrap rest in tbody if not already
+       if ($table.find('tbody').length === 0) {
+          const tbody = $('<tbody></tbody>');
+          $table.find('tr').not(firstRow).wrapAll(tbody);
+       }
+    }
+
+    tables.push({ label, htmlContent: $.html(el), caption });
+    tableCounter++;
   });
 
   // Scan for Volume, Issue, Pages in early elements
@@ -293,6 +357,7 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     volume,
     issue,
     pages,
-    publicationDate
+    publicationDate,
+    headings
   };
 }

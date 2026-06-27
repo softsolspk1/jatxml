@@ -1,9 +1,13 @@
 import { create } from 'xmlbuilder2';
+import * as cheerio from 'cheerio';
 
 export function generateJATSXML(article: any) {
   const metadata = article.metadata || {};
   const authors = article.authors || [];
   const references = article.references || [];
+  const figures = article.figures || [];
+  const tables = article.tables || [];
+  const supplementaryFiles = article.supplementaryFiles || [];
   
   const root = create({ version: '1.0', encoding: 'UTF-8' })
     .ele('article', {
@@ -40,7 +44,6 @@ export function generateJATSXML(article: any) {
       const contrib = contribGroup.ele('contrib', { 'contrib-type': 'author' });
       const nameNode = contrib.ele('name');
       
-      // Simple split for surname/given-names (heuristics)
       const parts = author.name.split(' ');
       const surname = parts.pop() || '';
       const givenNames = parts.join(' ') || author.name;
@@ -74,7 +77,53 @@ export function generateJATSXML(article: any) {
   const body = root.ele('body');
   const sec = body.ele('sec');
   sec.ele('title').txt('Introduction');
-  sec.ele('p').txt('Article body content parsing mapped from DOCX raw HTML.');
+  sec.ele('p').txt('Article body content parsing mapped from raw HTML.');
+
+  // Floats Group (Figures and Tables)
+  if (figures.length > 0 || tables.length > 0) {
+    const floatsGroup = body.ele('floats-group');
+    
+    figures.forEach((fig: any, index: number) => {
+      const figNode = floatsGroup.ele('fig', { id: `fig${index + 1}` });
+      figNode.ele('label').txt(fig.label || `Figure ${index + 1}`);
+      figNode.ele('caption').ele('p').txt(fig.caption);
+      
+      // We assume the base64Data is packaged, we use a placeholder reference here for JATS
+      figNode.ele('graphic', { 'xlink:href': `figure_${index + 1}.png` });
+    });
+
+    tables.forEach((table: any, index: number) => {
+      const tableWrapNode = floatsGroup.ele('table-wrap', { id: `tbl${index + 1}` });
+      tableWrapNode.ele('label').txt(table.label || `Table ${index + 1}`);
+      tableWrapNode.ele('caption').ele('p').txt(table.caption);
+      
+      // Convert HTML Table to JATS Table
+      if (table.htmlContent) {
+        const $ = cheerio.load(table.htmlContent);
+        const jatsTable = tableWrapNode.ele('table');
+        
+        $('thead').each((_, thead) => {
+          const tNode = jatsTable.ele('thead');
+          $(thead).find('tr').each((_, tr) => {
+            const trNode = tNode.ele('tr');
+            $(tr).find('th, td').each((_, cell) => {
+              trNode.ele('th').txt($(cell).text().trim());
+            });
+          });
+        });
+
+        $('tbody').each((_, tbody) => {
+          const tNode = jatsTable.ele('tbody');
+          $(tbody).find('tr').each((_, tr) => {
+            const trNode = tNode.ele('tr');
+            $(tr).find('th, td').each((_, cell) => {
+              trNode.ele('td').txt($(cell).text().trim());
+            });
+          });
+        });
+      }
+    });
+  }
 
   // Back Matter
   const back = root.ele('back');
@@ -88,6 +137,22 @@ export function generateJATSXML(article: any) {
     back.ele('fn-group').ele('fn', { 'fn-type': 'coi-statement' }).ele('p').txt(metadata.conflictOfInterest);
   }
 
+  // Supplementary Material
+  if (supplementaryFiles.length > 0) {
+    const secSupp = back.ele('sec', { 'sec-type': 'supplementary-material' });
+    secSupp.ele('title').txt('Supplementary Material');
+    supplementaryFiles.forEach((file: any, index: number) => {
+      const suppNode = secSupp.ele('supplementary-material', {
+        id: `supp${index + 1}`,
+        'mimetype': file.mimeType?.split('/')[0] || 'application',
+        'mime-subtype': file.mimeType?.split('/')[1] || 'octet-stream'
+      });
+      suppNode.ele('label').txt(`Supplementary File ${index + 1}`);
+      suppNode.ele('caption').ele('title').txt(file.filename);
+      suppNode.ele('media', { 'xlink:href': file.filename });
+    });
+  }
+
   // References
   if (references.length > 0) {
     const refList = back.ele('ref-list');
@@ -95,11 +160,44 @@ export function generateJATSXML(article: any) {
     references.forEach((ref: any, index: number) => {
       const refNode = refList.ele('ref', { id: `ref${index + 1}` });
       const citation = refNode.ele('element-citation', { 'publication-type': 'journal' });
-      // Basic text insertion for citation
-      citation.ele('comment').txt(ref.rawText);
+      
+      // Map Authors
+      if (ref.authors && ref.authors.length > 0) {
+        const personGroup = citation.ele('person-group', { 'person-group-type': 'author' });
+        ref.authors.forEach((authorName: string) => {
+          const nameNode = personGroup.ele('name');
+          const parts = authorName.split(' ');
+          const surname = parts.pop() || '';
+          const givenNames = parts.join(' ') || authorName;
+          if (surname) nameNode.ele('surname').txt(surname);
+          if (givenNames) nameNode.ele('given-names').txt(givenNames);
+        });
+      }
+
+      if (ref.year) citation.ele('year').txt(ref.year);
+      if (ref.title) citation.ele('article-title').txt(ref.title);
+      if (ref.journal) citation.ele('source').txt(ref.journal);
+      if (ref.volume) citation.ele('volume').txt(ref.volume);
+      if (ref.issue) citation.ele('issue').txt(ref.issue);
+      
+      if (ref.pages) {
+        const pageParts = ref.pages.split(/[-–]/);
+        if (pageParts[0]) citation.ele('fpage').txt(pageParts[0].trim());
+        if (pageParts[1]) citation.ele('lpage').txt(pageParts[1].trim());
+      }
+      
       if (ref.doi) {
         citation.ele('pub-id', { 'pub-id-type': 'doi' }).txt(ref.doi);
       }
+      if (ref.pmid) {
+        citation.ele('pub-id', { 'pub-id-type': 'pmid' }).txt(ref.pmid);
+      }
+      if (ref.isbn) {
+        citation.ele('pub-id', { 'pub-id-type': 'isbn' }).txt(ref.isbn);
+      }
+      
+      // Add raw text as comment fallback
+      citation.ele('comment').txt(ref.rawText);
     });
   }
   

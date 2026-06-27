@@ -1,0 +1,76 @@
+'use client';
+
+import { Search, Filter } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+export default function ArticleFilters() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [status, setStatus] = useState(searchParams.get('status') || '');
+  const [date, setDate] = useState(searchParams.get('date') || '');
+  // Using an input for Journal to simulate the filter for now.
+  const [journal, setJournal] = useState(searchParams.get('journal') || '');
+
+  const handleApply = () => {
+    const params = new URLSearchParams();
+    if (query) params.set('q', query);
+    if (status) params.set('status', status);
+    if (date) params.set('date', date);
+    if (journal) params.set('journal', journal);
+
+    router.push(`/dashboard/articles?${params.toString()}`);
+  };
+
+  return (
+    <div className="card" style={{ marginBottom: '30px', display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ flex: 1, position: 'relative', minWidth: '250px' }}>
+        <Search size={18} style={{ position: 'absolute', left: '15px', top: '12px', color: 'var(--text-secondary)' }} />
+        <input 
+          type="text" 
+          placeholder="Search by Title, Author, or DOI..." 
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleApply()}
+          style={{ width: '100%', padding: '10px 10px 10px 40px', borderRadius: '6px', border: '1px solid var(--border-color)' }}
+        />
+      </div>
+      
+      <select 
+        value={status} 
+        onChange={e => setStatus(e.target.value)}
+        style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }}
+      >
+        <option value="">Status: All</option>
+        <option value="UPLOADED">Uploaded</option>
+        <option value="METADATA_EXTRACTED">Metadata Extracted</option>
+        <option value="UNDER_REVIEW">Under Review</option>
+        <option value="XML_GENERATED">XML Generated</option>
+        <option value="VALIDATION_FAILED">Validation Failed</option>
+        <option value="VALIDATION_PASSED">Validation Passed</option>
+        <option value="READY_FOR_EXPORT">Ready for Export</option>
+      </select>
+
+      <input 
+        type="text" 
+        placeholder="Journal Filter" 
+        value={journal}
+        onChange={e => setJournal(e.target.value)}
+        style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
+      />
+
+      <input 
+        type="date" 
+        value={date}
+        onChange={e => setDate(e.target.value)}
+        style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
+      />
+      
+      <button onClick={handleApply} className="button button-outline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Filter size={18} /> Apply Filters
+      </button>
+    </div>
+  );
+}

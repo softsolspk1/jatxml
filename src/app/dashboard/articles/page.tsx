@@ -1,16 +1,55 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { Search, Filter } from "lucide-react";
 import DeleteArticleButton from "./DeleteArticleButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import ArticleFilters from "./ArticleFilters";
+import { Prisma } from "@prisma/client";
 
-export default async function ArticlesPage() {
+export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ q?: string, status?: string, date?: string, journal?: string }> }) {
   const session = await getServerSession(authOptions);
   const role = (session?.user as any)?.role;
   const canDelete = role === 'ADMIN' || role === 'EDITORIAL_MANAGER';
 
+  const params = await searchParams;
+  
+  // Build dynamic where clause based on filters
+  const whereClause: Prisma.ArticleWhereInput = {};
+  
+  if (params.q) {
+    whereClause.OR = [
+      { title: { contains: params.q, mode: 'insensitive' } },
+      { originalFileName: { contains: params.q, mode: 'insensitive' } },
+      { authors: { some: { name: { contains: params.q, mode: 'insensitive' } } } },
+      { metadata: { doi: { contains: params.q, mode: 'insensitive' } } }
+    ];
+  }
+
+  if (params.status) {
+    whereClause.status = params.status;
+  }
+
+  if (params.journal) {
+    whereClause.metadata = {
+      ...whereClause.metadata as Prisma.MetadataWhereInput,
+      journalName: { contains: params.journal, mode: 'insensitive' }
+    };
+  }
+
+  if (params.date) {
+    // Basic date filtering based on YYYY-MM-DD string
+    const startOfDay = new Date(params.date);
+    const endOfDay = new Date(params.date);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+    
+    whereClause.createdAt = {
+      gte: startOfDay,
+      lt: endOfDay
+    };
+  }
+
   const articles = await db.article.findMany({
+    where: whereClause,
     orderBy: { createdAt: 'desc' },
     include: { metadata: true, authors: true }
   });
@@ -18,42 +57,13 @@ export default async function ArticlesPage() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)' }}>All Articles</h1>
+        <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)' }}>Article Tracking</h1>
         {(role === 'ADMIN' || role === 'EDITORIAL_MANAGER') && (
            <Link href="/dashboard/upload" className="button">Upload New Article</Link>
         )}
       </div>
 
-      {/* Search & Filters */}
-      <div className="card" style={{ marginBottom: '30px', display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, position: 'relative', minWidth: '250px' }}>
-          <Search size={18} style={{ position: 'absolute', left: '15px', top: '12px', color: 'var(--text-secondary)' }} />
-          <input 
-            type="text" 
-            placeholder="Search by Title, Author, or DOI..." 
-            style={{ width: '100%', padding: '10px 10px 10px 40px', borderRadius: '6px', border: '1px solid var(--border-color)' }}
-          />
-        </div>
-        
-        <select style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }}>
-          <option value="">Status: All</option>
-          <option value="UPLOADED">Uploaded</option>
-          <option value="METADATA_EXTRACTED">Metadata Extracted</option>
-          <option value="XML_GENERATED">XML Generated</option>
-          <option value="READY_FOR_EXPORT">Ready for Export</option>
-        </select>
-
-        <select style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }}>
-          <option value="">Journal: All</option>
-          {/* This would be dynamic in a real app */}
-        </select>
-
-        <input type="date" style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} />
-        
-        <button className="button button-outline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Filter size={18} /> Apply Filters
-        </button>
-      </div>
+      <ArticleFilters />
 
       {/* Articles Table */}
       <div className="card" style={{ padding: '0', overflowX: 'auto' }}>
@@ -70,7 +80,7 @@ export default async function ArticlesPage() {
           <tbody>
             {articles.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{ padding: '30px', textAlign: 'center', color: 'var(--text-secondary)' }}>No articles found. Upload one to get started.</td>
+                <td colSpan={5} style={{ padding: '30px', textAlign: 'center', color: 'var(--text-secondary)' }}>No articles found matching filters.</td>
               </tr>
             ) : articles.map((article) => (
               <tr key={article.id}>
@@ -82,8 +92,8 @@ export default async function ArticlesPage() {
                 </td>
                 <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)' }}>
                   <span style={{ 
-                    backgroundColor: article.status === 'READY_FOR_EXPORT' ? '#D1FAE5' : '#FEF3C7', 
-                    color: article.status === 'READY_FOR_EXPORT' ? '#059669' : '#D97706', 
+                    backgroundColor: article.status === 'READY_FOR_EXPORT' ? '#D1FAE5' : (article.status.includes('FAILED') ? '#FEE2E2' : '#FEF3C7'), 
+                    color: article.status === 'READY_FOR_EXPORT' ? '#059669' : (article.status.includes('FAILED') ? '#DC2626' : '#D97706'), 
                     padding: '5px 10px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 600 
                   }}>
                     {article.status.replace(/_/g, ' ')}
@@ -94,7 +104,7 @@ export default async function ArticlesPage() {
                 </td>
                 <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '15px' }}>
                   {article.status === 'READY_FOR_EXPORT' ? (
-                    <Link href={`/api/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Download</Link>
+                    <Link href={`/dashboard/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Download Center</Link>
                   ) : null}
                   <Link href={`/dashboard/articles/${article.id}/review`} style={{ color: 'var(--brand-green)', fontWeight: 600 }}>Review</Link>
                   {canDelete && <DeleteArticleButton articleId={article.id} />}
