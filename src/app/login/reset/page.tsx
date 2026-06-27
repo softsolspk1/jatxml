@@ -5,7 +5,6 @@ import Link from 'next/link';
 export default function ResetRequestPage() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [mockLink, setMockLink] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,9 +18,6 @@ export default function ResetRequestPage() {
       });
       
       if (res.ok) {
-        const data = await res.json();
-        // Since we don't have an email provider configured, we'll display the link here for testing.
-        if (data.mockLink) setMockLink(data.mockLink);
         setStatus('success');
       } else {
         setStatus('error');
@@ -40,14 +36,8 @@ export default function ResetRequestPage() {
         {status === 'success' ? (
           <div>
             <div style={{ padding: '15px', backgroundColor: '#D1FAE5', color: '#059669', borderRadius: '4px', textAlign: 'center', marginBottom: '20px' }}>
-              Reset request received!
+              Reset request received! If your email exists in our system, you will receive a reset link shortly.
             </div>
-            {mockLink && (
-              <div style={{ padding: '15px', backgroundColor: '#FEF3C7', border: '1px solid #D97706', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
-                <strong>Test Link (Mock):</strong><br/>
-                <a href={mockLink} style={{ color: 'var(--brand-blue)', wordBreak: 'break-all' }}>{mockLink}</a>
-              </div>
-            )}
             <div style={{ textAlign: 'center' }}>
               <Link href="/login" style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Back to Login</Link>
             </div>

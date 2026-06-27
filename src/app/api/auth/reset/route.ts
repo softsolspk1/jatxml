@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,12 +39,38 @@ export async function POST(req: NextRequest) {
     });
 
     // In a real application, we would send an email here.
-    // For this demonstration without an email provider, we return the mock link to the client UI.
-    const mockLink = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/login/reset/${token}`;
+    const resetLink = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/login/reset/${token}`;
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'softsols.pk',
+      port: Number(process.env.SMTP_PORT) || 465,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER || 'jatxml@softsols.pk',
+        pass: process.env.SMTP_PASS || '??S@ftS@ls123',
+      },
+    });
+
+    const mailOptions = {
+      from: `"JATS XML Portal" <${process.env.SMTP_USER || 'jatxml@softsols.pk'}>`,
+      to: email,
+      subject: "Password Reset Request",
+      text: `You requested a password reset. Please click the following link to set a new password: ${resetLink}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #2563eb;">Password Reset Request</h2>
+          <p>You recently requested to reset your password for your JATS XML Portal account.</p>
+          <p>Click the button below to set a new password:</p>
+          <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; color: white; background-color: #2563eb; text-decoration: none; border-radius: 5px; margin-top: 10px;">Reset Password</a>
+          <p style="margin-top: 20px; font-size: 0.9rem; color: #6b7280;">If you did not request this, please ignore this email.</p>
+        </div>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ 
-      message: "If that email exists, a reset link has been sent.",
-      mockLink // ONLY FOR DEMO PURPOSES
+      message: "If that email exists, a reset link has been sent."
     }, { status: 200 });
 
   } catch (error) {
