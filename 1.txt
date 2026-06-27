@@ -36,3 +36,20 @@ Email: kashiffareed2023@gmail.com
 Password: ???SoftS@lS1
 
 
+---------------------------
+
+You have created only frontend. 
+
+The landing page is OK but the Dashboard will show after Login. Remove Start Converting can go to login page to login and then allow to upload document.
+Add Copyright line in Footer as @2026. All Rights Reserved. Developed by Softsols Pakistan
+
+I need 100% features and functionality mentioned in /1.docx document file.
+
+Also create Admin Credentials as:
+Username: softsols
+Password: ???S@fTs@Ls123
+Email: kashiffareed01@gmail.com
+
+
+
+ 
