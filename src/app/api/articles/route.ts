@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { r2Client } from "@/lib/r2";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { extractMetadataFromDocx } from "@/lib/extractor/docxParser";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,19 +38,30 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Save to Database
-    const uploaderId = "admin-dummy-id"; 
+    const session = await getServerSession(authOptions);
+    let uploaderId = "admin-dummy-id"; // Fallback
     
-    // Create dummy user if not exists for testing purposes
-    const user = await db.user.upsert({
-      where: { email: "admin@example.com" },
-      update: {},
-      create: {
-        id: uploaderId,
-        email: "admin@example.com",
-        password: "hashed",
-        name: "Admin User",
+    if (session && (session.user as any)?.email) {
+      const dbUser = await db.user.findUnique({
+        where: { email: (session.user as any).email }
+      });
+      if (dbUser) {
+        uploaderId = dbUser.id;
       }
-    });
+    } else {
+      // Create dummy user if not exists for testing purposes ONLY if no session
+      const user = await db.user.upsert({
+        where: { email: "admin@example.com" },
+        update: {},
+        create: {
+          id: uploaderId,
+          email: "admin@example.com",
+          password: "hashed",
+          name: "Admin User",
+        }
+      });
+      uploaderId = user.id;
+    }
 
     const article = await db.article.create({
       data: {
@@ -56,7 +69,7 @@ export async function POST(req: NextRequest) {
         originalFileName: originalFileName || key.split('-').pop() || "Document.docx",
         fileUrl: key,
         status: "METADATA_EXTRACTED",
-        uploaderId: user.id,
+        uploaderId: uploaderId,
         metadata: {
           create: {
             title: extractedData.title,

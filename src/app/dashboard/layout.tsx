@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
+import SidebarNav from '@/components/SidebarNav';
 
 export default async function DashboardLayout({
   children,
@@ -19,12 +20,7 @@ export default async function DashboardLayout({
           <h2 style={{ fontSize: '1.2rem', fontWeight: 600 }}>JATS XML Portal</h2>
           <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>Editorial Manager</p>
         </div>
-        <nav style={{ display: 'flex', flexDirection: 'column' }}>
-          <Link href="/dashboard" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>Overview</Link>
-          <Link href="/dashboard/upload" style={{ padding: '15px 20px', borderLeft: '4px solid var(--brand-green)', backgroundColor: 'var(--brand-blue-light)' }}>Upload Article</Link>
-          <Link href="/dashboard/articles" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>All Articles</Link>
-          <Link href="/dashboard/settings" style={{ padding: '15px 20px', borderLeft: '4px solid transparent' }}>Settings</Link>
-        </nav>
+          <SidebarNav />
       </aside>
 
       {/* Main Content */}
