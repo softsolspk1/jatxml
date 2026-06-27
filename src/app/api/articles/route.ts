@@ -90,15 +90,22 @@ export async function POST(req: NextRequest) {
               metadata: {
                 create: {
                   title: extractedData.title,
+                  runningTitle: extractedData.runningTitle,
+                  subtitle: extractedData.subtitle,
                   abstract: extractedData.abstract,
                   keywords: extractedData.keywords,
                   doi: extractedData.doi,
                   fundingInfo: extractedData.fundingInfo,
+                  grantNumbers: extractedData.grantNumbers,
                   conflictOfInterest: extractedData.conflictOfInterest,
+                  ethicalApproval: extractedData.ethicalApproval,
+                  acknowledgements: extractedData.acknowledgements
                 }
               },
               authors: {
-                create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
+                create: extractedData.structuredAuthors && extractedData.structuredAuthors.length > 0 
+                        ? extractedData.structuredAuthors 
+                        : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
               },
               references: { create: extractedData.references || [] },
               figures: { create: extractedData.figures || [] },
@@ -122,22 +129,29 @@ export async function POST(req: NextRequest) {
           fileUrl: key,
           status: "METADATA_EXTRACTED",
           uploaderId: uploaderId,
-          metadata: {
-            create: {
-              title: extractedData.title,
-              abstract: extractedData.abstract,
-              keywords: extractedData.keywords,
-              doi: extractedData.doi,
-              fundingInfo: extractedData.fundingInfo,
-              conflictOfInterest: extractedData.conflictOfInterest,
-            }
-          },
-          authors: {
-            create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
-          },
-          references: { create: extractedData.references || [] },
-          figures: { create: extractedData.figures || [] },
-          tables: { create: extractedData.tables || [] }
+              metadata: {
+                create: {
+                  title: extractedData.title,
+                  runningTitle: extractedData.runningTitle,
+                  subtitle: extractedData.subtitle,
+                  abstract: extractedData.abstract,
+                  keywords: extractedData.keywords,
+                  doi: extractedData.doi,
+                  fundingInfo: extractedData.fundingInfo,
+                  grantNumbers: extractedData.grantNumbers,
+                  conflictOfInterest: extractedData.conflictOfInterest,
+                  ethicalApproval: extractedData.ethicalApproval,
+                  acknowledgements: extractedData.acknowledgements
+                }
+              },
+              authors: {
+                create: extractedData.structuredAuthors && extractedData.structuredAuthors.length > 0 
+                        ? extractedData.structuredAuthors 
+                        : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
+              },
+              references: { create: extractedData.references || [] },
+              figures: { create: extractedData.figures || [] },
+              tables: { create: extractedData.tables || [] }
         },
       });
 

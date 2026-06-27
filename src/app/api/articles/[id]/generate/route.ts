@@ -14,29 +14,40 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     }
 
     const resolvedParams = await params;
-    const { title, abstract, keywords, doi, journalName, fundingInfo, conflictOfInterest, authorsText } = await req.json();
+    const { 
+      title, runningTitle, subtitle, abstract, keywords, 
+      doi, journalName, volume, issue, pages, publicationDate,
+      fundingInfo, grantNumbers, conflictOfInterest, ethicalApproval, acknowledgements, 
+      structuredAuthors 
+    } = await req.json();
 
     // 1. Update the Metadata based on the user's manual review edits
     await db.metadata.update({
       where: { articleId: resolvedParams.id },
-      data: { title, abstract, keywords, doi, journalName, fundingInfo, conflictOfInterest }
+      data: { 
+        title, runningTitle, subtitle, abstract, keywords, 
+        doi, journalName, volume, issue, pages, 
+        publicationDate: publicationDate ? new Date(publicationDate) : null,
+        fundingInfo, grantNumbers, conflictOfInterest, ethicalApproval, acknowledgements 
+      }
     });
 
-    // Handle Authors (simple overwrite for now based on text)
-    if (authorsText !== undefined) {
+    // Handle Structured Authors array
+    if (structuredAuthors && Array.isArray(structuredAuthors)) {
       // delete existing authors
       await db.author.deleteMany({ where: { articleId: resolvedParams.id } });
-      // split by comma and create
-      const authors = authorsText.split(',').map((a: string) => a.trim()).filter(Boolean);
-      for (const a of authors) {
-         let name = a;
-         let affiliation = '';
-         if (a.includes('(') && a.includes(')')) {
-            name = a.split('(')[0].trim();
-            affiliation = a.split('(')[1].replace(')', '').trim();
-         }
+      // recreate them based on the UI array
+      for (const a of structuredAuthors) {
          await db.author.create({
-           data: { articleId: resolvedParams.id, name, affiliation }
+           data: { 
+             articleId: resolvedParams.id, 
+             name: a.name || '', 
+             affiliation: a.affiliation || '',
+             email: a.email || '',
+             orcid: a.orcid || '',
+             isCorresponding: !!a.isCorresponding,
+             order: a.order ? parseInt(a.order) : 0
+           }
          });
       }
     }

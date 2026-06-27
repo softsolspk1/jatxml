@@ -63,6 +63,7 @@ model Metadata {
   doi              String?
   publicationDate  DateTime?
   fundingInfo      String?
+  grantNumbers     String?
   conflictOfInterest String?
   ethicalApproval  String?
   acknowledgements String?
@@ -111,4 +112,6 @@ model Author {
   affiliation String?
   email       String?
   orcid       String?
+  isCorresponding Boolean @default(false)
+  order       Int @default(0)
 }
