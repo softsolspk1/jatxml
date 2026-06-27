@@ -111,7 +111,15 @@ export async function POST(req: NextRequest) {
                         ? extractedData.structuredAuthors 
                         : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
               },
-              references: { create: extractedData.references || [] },
+              references: { 
+                create: (extractedData.references || []).map((r: any) => ({
+                  ...r,
+                  authors: Array.isArray(r.authors) ? r.authors.join(', ') : r.authors,
+                  formatDetected: undefined, // remove fields not in Prisma schema
+                  isbn: undefined,
+                  url: undefined
+                })) 
+              },
               figures: { create: extractedData.figures || [] },
               tables: { create: extractedData.tables || [] }
             },
@@ -157,7 +165,15 @@ export async function POST(req: NextRequest) {
                         ? extractedData.structuredAuthors 
                         : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
               },
-              references: { create: extractedData.references || [] },
+              references: { 
+                create: (extractedData.references || []).map((r: any) => ({
+                  ...r,
+                  authors: Array.isArray(r.authors) ? r.authors.join(', ') : r.authors,
+                  formatDetected: undefined, // remove fields not in Prisma schema
+                  isbn: undefined,
+                  url: undefined
+                })) 
+              },
               figures: { create: extractedData.figures || [] },
               tables: { create: extractedData.tables || [] }
         },
