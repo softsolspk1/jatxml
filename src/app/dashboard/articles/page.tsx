@@ -1,8 +1,15 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { Search, Filter } from "lucide-react";
+import DeleteArticleButton from "./DeleteArticleButton";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function ArticlesPage() {
+  const session = await getServerSession(authOptions);
+  const role = (session?.user as any)?.role;
+  const canDelete = role === 'ADMIN' || role === 'EDITORIAL_MANAGER';
+
   const articles = await db.article.findMany({
     orderBy: { createdAt: 'desc' },
     include: { metadata: true, authors: true }
@@ -12,7 +19,9 @@ export default async function ArticlesPage() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)' }}>All Articles</h1>
-        <Link href="/dashboard/upload" className="button">Upload New Article</Link>
+        {(role === 'ADMIN' || role === 'EDITORIAL_MANAGER') && (
+           <Link href="/dashboard/upload" className="button">Upload New Article</Link>
+        )}
       </div>
 
       {/* Search & Filters */}
@@ -83,11 +92,12 @@ export default async function ArticlesPage() {
                 <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
                   {new Date(article.createdAt).toLocaleDateString()}
                 </td>
-                <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)' }}>
+                <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '15px' }}>
                   {article.status === 'READY_FOR_EXPORT' ? (
-                    <Link href={`/api/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600, marginRight: '15px' }}>Download</Link>
+                    <Link href={`/api/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Download</Link>
                   ) : null}
                   <Link href={`/dashboard/articles/${article.id}/review`} style={{ color: 'var(--brand-green)', fontWeight: 600 }}>Review</Link>
+                  {canDelete && <DeleteArticleButton articleId={article.id} />}
                 </td>
               </tr>
             ))}
