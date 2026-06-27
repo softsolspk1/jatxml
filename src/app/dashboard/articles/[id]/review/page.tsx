@@ -24,7 +24,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
 
   if (!article || !article.metadata) return notFound();
 
-  const previewHtml = convertToHTML(article.metadata, article.references, article.figures);
+  const previewHtml = convertToHTML(article.metadata, article.authors, article.references, article.figures);
 
   return (
     <div>

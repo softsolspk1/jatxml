@@ -13,7 +13,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const resolvedParams = await params;
     const article = await db.article.findUnique({
       where: { id: resolvedParams.id },
-      include: { metadata: true, references: true, figures: true, tables: true }
+      include: { metadata: true, references: true, figures: true, tables: true, authors: { orderBy: { order: 'asc' } } }
     });
 
     if (!article || !article.metadata) {
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const pmcXml = generatePMCXML(article);
     const scieloXml = generateSciELOXML(article);
     const crossrefXml = generateCrossrefXML(article.metadata, article.references);
-    const htmlContent = convertToHTML(article.metadata, article.references, article.figures, article.tables, (article as any).supplementaryFiles || []);
+    const htmlContent = convertToHTML(article.metadata, article.authors, article.references, article.figures, article.tables, (article as any).supplementaryFiles || []);
 
     // 2. Validation Checks
     const validation = validateXMLStructure(pmcXml);

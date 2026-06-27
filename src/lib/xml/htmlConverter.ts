@@ -1,4 +1,4 @@
-export function convertToHTML(metadata: any, references: any[] = [], figures: any[] = [], tables: any[] = [], supplementaryFiles: any[] = []) {
+export function convertToHTML(metadata: any, authors: any[] = [], references: any[] = [], figures: any[] = [], tables: any[] = [], supplementaryFiles: any[] = []) {
   // A clean, stylized HTML representation of the extracted metadata and article contents.
   return `
 <!DOCTYPE html>
@@ -7,6 +7,19 @@ export function convertToHTML(metadata: any, references: any[] = [], figures: an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${metadata.title || 'Research Article'}</title>
+    
+    <!-- HighWire Press tags for Google Scholar Indexing -->
+    <meta name="citation_title" content="${metadata.title || 'Untitled Article'}">
+    ${metadata.journalName ? `<meta name="citation_journal_title" content="${metadata.journalName}">` : ''}
+    ${metadata.publicationDate ? `<meta name="citation_publication_date" content="${new Date(metadata.publicationDate).getFullYear()}">` : ''}
+    ${metadata.volume ? `<meta name="citation_volume" content="${metadata.volume}">` : ''}
+    ${metadata.issue ? `<meta name="citation_issue" content="${metadata.issue}">` : ''}
+    ${metadata.doi ? `<meta name="citation_doi" content="${metadata.doi}">` : ''}
+    ${metadata.pages ? `<meta name="citation_firstpage" content="${metadata.pages.split(/[-–]/)[0]?.trim() || ''}">` : ''}
+    ${metadata.abstract ? `<meta name="citation_abstract" content="${metadata.abstract.replace(/"/g, '&quot;')}">` : ''}
+    ${(authors || []).map((author: any) => `<meta name="citation_author" content="${author.name}">
+    ${author.affiliation ? `<meta name="citation_author_institution" content="${author.affiliation}">` : ''}`).join('\n    ')}
+    
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; color: #333; }
         h1 { color: #0A2540; font-size: 2.5em; border-bottom: 2px solid #2ECC71; padding-bottom: 10px; }
