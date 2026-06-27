@@ -1,10 +1,19 @@
 'use client';
 import { useState } from 'react';
 
-export default function ReviewForm({ articleId, initialData }: { articleId: string, initialData: any }) {
-  const [title, setTitle] = useState(initialData.title || '');
-  const [abstract, setAbstract] = useState(initialData.abstract || '');
-  const [keywords, setKeywords] = useState(initialData.keywords || '');
+export default function ReviewForm({ articleId, initialData, initialAuthors }: { articleId: string, initialData: any, initialAuthors?: any[] }) {
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [abstract, setAbstract] = useState(initialData?.abstract || '');
+  const [keywords, setKeywords] = useState(initialData?.keywords || '');
+  const [doi, setDoi] = useState(initialData?.doi || '');
+  const [journalName, setJournalName] = useState(initialData?.journalName || '');
+  const [fundingInfo, setFundingInfo] = useState(initialData?.fundingInfo || '');
+  const [conflictOfInterest, setConflictOfInterest] = useState(initialData?.conflictOfInterest || '');
+  
+  // Simple representation for authors for now
+  const defaultAuthors = initialAuthors && initialAuthors.length > 0 ? initialAuthors.map(a => `${a.name}${a.affiliation ? ` (${a.affiliation})` : ''}`).join(', ') : '';
+  const [authorsText, setAuthorsText] = useState(defaultAuthors);
+
   const [status, setStatus] = useState<'idle' | 'generating' | 'success' | 'error'>('idle');
 
   const handleGenerate = async () => {
@@ -13,7 +22,9 @@ export default function ReviewForm({ articleId, initialData }: { articleId: stri
       const res = await fetch(`/api/articles/${articleId}/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, abstract, keywords })
+        body: JSON.stringify({ 
+          title, abstract, keywords, doi, journalName, fundingInfo, conflictOfInterest, authorsText 
+        })
       });
       if (res.ok) {
         setStatus('success');
@@ -35,22 +46,61 @@ export default function ReviewForm({ articleId, initialData }: { articleId: stri
         <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Article Title</label>
         <textarea 
           value={title} onChange={e => setTitle(e.target.value)}
-          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '80px', fontFamily: 'inherit' }}
+          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '60px', fontFamily: 'inherit' }}
+        />
+      </div>
+      <div>
+        <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Authors & Affiliations</label>
+        <textarea 
+          value={authorsText} onChange={e => setAuthorsText(e.target.value)}
+          placeholder="John Doe (University of X), Jane Smith (University of Y)"
+          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '60px', fontFamily: 'inherit' }}
         />
       </div>
       <div>
         <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Abstract</label>
         <textarea 
           value={abstract} onChange={e => setAbstract(e.target.value)}
-          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '150px', fontFamily: 'inherit' }}
+          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '120px', fontFamily: 'inherit' }}
         />
       </div>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+        <div>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Keywords</label>
+          <input 
+            type="text" value={keywords} onChange={e => setKeywords(e.target.value)}
+            style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
+          />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>DOI</label>
+          <input 
+            type="text" value={doi} onChange={e => setDoi(e.target.value)}
+            style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
+          />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Journal Name</label>
+          <input 
+            type="text" value={journalName} onChange={e => setJournalName(e.target.value)}
+            style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
+          />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Conflict of Interest</label>
+          <input 
+            type="text" value={conflictOfInterest} onChange={e => setConflictOfInterest(e.target.value)}
+            style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
+          />
+        </div>
+      </div>
+      
       <div>
-        <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Keywords</label>
-        <input 
-          type="text"
-          value={keywords} onChange={e => setKeywords(e.target.value)}
-          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
+        <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Funding Information</label>
+        <textarea 
+          value={fundingInfo} onChange={e => setFundingInfo(e.target.value)}
+          style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', minHeight: '60px', fontFamily: 'inherit' }}
         />
       </div>
       

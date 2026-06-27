@@ -62,7 +62,13 @@ export async function POST(req: NextRequest) {
             title: extractedData.title,
             abstract: extractedData.abstract,
             keywords: extractedData.keywords,
+            doi: extractedData.doi,
+            fundingInfo: extractedData.fundingInfo,
+            conflictOfInterest: extractedData.conflictOfInterest,
           }
+        },
+        authors: {
+          create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
         },
         references: {
           create: extractedData.references || []

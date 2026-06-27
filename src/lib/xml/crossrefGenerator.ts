@@ -21,6 +21,20 @@ export function generateCrossrefXML(metadata: any, references: any[] = []) {
   const titles = journalArticle.ele('titles');
   titles.ele('title').txt(metadata.title || 'Untitled Article');
 
+  const authors = metadata.article?.authors || [];
+  if (authors.length > 0) {
+    const contributors = journalArticle.ele('contributors');
+    authors.forEach((author: any, index: number) => {
+      const person = contributors.ele('person_name', { sequence: index === 0 ? 'first' : 'additional', contributor_role: 'author' });
+      const parts = author.name.split(' ');
+      const surname = parts.pop() || '';
+      const givenName = parts.join(' ') || author.name;
+      if (givenName) person.ele('given_name').txt(givenName);
+      if (surname) person.ele('surname').txt(surname);
+      if (author.affiliation) person.ele('affiliation').txt(author.affiliation);
+    });
+  }
+
   if (metadata.doi) {
     const doiData = journalArticle.ele('doi_data');
     doiData.ele('doi').txt(metadata.doi);

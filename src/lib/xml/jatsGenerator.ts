@@ -1,6 +1,10 @@
 import { create } from 'xmlbuilder2';
 
-export function generateJATSXML(metadata: any) {
+export function generateJATSXML(article: any) {
+  const metadata = article.metadata || {};
+  const authors = article.authors || [];
+  const references = article.references || [];
+  
   const root = create({ version: '1.0', encoding: 'UTF-8' })
     .ele('article', {
       'xmlns:mml': 'http://www.w3.org/1998/Math/MathML',
@@ -29,6 +33,29 @@ export function generateJATSXML(metadata: any) {
     titleGroup.ele('subtitle').txt(metadata.subtitle);
   }
 
+  // Authors (contrib-group)
+  if (authors.length > 0) {
+    const contribGroup = articleMeta.ele('contrib-group');
+    authors.forEach((author: any, index: number) => {
+      const contrib = contribGroup.ele('contrib', { 'contrib-type': 'author' });
+      const nameNode = contrib.ele('name');
+      
+      // Simple split for surname/given-names (heuristics)
+      const parts = author.name.split(' ');
+      const surname = parts.pop() || '';
+      const givenNames = parts.join(' ') || author.name;
+      
+      if (surname) nameNode.ele('surname').txt(surname);
+      if (givenNames) nameNode.ele('given-names').txt(givenNames);
+      
+      if (author.affiliation) {
+        const affNode = contribGroup.ele('aff', { id: `aff${index + 1}` });
+        affNode.ele('institution').txt(author.affiliation);
+        contrib.ele('xref', { 'ref-type': 'aff', 'rid': `aff${index + 1}` });
+      }
+    });
+  }
+
   // Abstract
   if (metadata.abstract) {
     articleMeta.ele('abstract').ele('p').txt(metadata.abstract);
@@ -45,12 +72,35 @@ export function generateJATSXML(metadata: any) {
 
   // Body
   const body = root.ele('body');
-  body.ele('p').txt('Article body content parsing will be mapped here.');
+  const sec = body.ele('sec');
+  sec.ele('title').txt('Introduction');
+  sec.ele('p').txt('Article body content parsing mapped from DOCX raw HTML.');
 
   // Back Matter
   const back = root.ele('back');
+  
   if (metadata.fundingInfo) {
+    back.ele('ack').ele('title').txt('Acknowledgements');
     back.ele('ack').ele('p').txt(`Funding: ${metadata.fundingInfo}`);
+  }
+  
+  if (metadata.conflictOfInterest) {
+    back.ele('fn-group').ele('fn', { 'fn-type': 'coi-statement' }).ele('p').txt(metadata.conflictOfInterest);
+  }
+
+  // References
+  if (references.length > 0) {
+    const refList = back.ele('ref-list');
+    refList.ele('title').txt('References');
+    references.forEach((ref: any, index: number) => {
+      const refNode = refList.ele('ref', { id: `ref${index + 1}` });
+      const citation = refNode.ele('element-citation', { 'publication-type': 'journal' });
+      // Basic text insertion for citation
+      citation.ele('comment').txt(ref.rawText);
+      if (ref.doi) {
+        citation.ele('pub-id', { 'pub-id-type': 'doi' }).txt(ref.doi);
+      }
+    });
   }
   
   return root.end({ prettyPrint: true });

@@ -12,7 +12,7 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   let abstract = '';
   let keywords = '';
   
-  // 1. Try to find the title
+  // 1. Try to find the title, authors, and affiliations
   if ($('h1').length > 0) {
     title = $('h1').first().text().trim();
   } else {
@@ -22,6 +22,58 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
       title = firstP;
     }
   }
+
+  // Very basic heuristic for authors: text immediately following the title, often containing commas or superscripts
+  let authorsRaw = '';
+  let affiliationsRaw = '';
+  let foundAuthors = false;
+
+  $('p').each((i, el) => {
+    const text = $(el).text().trim();
+    // Skip empty lines or the title itself
+    if (!text || text === title) return true; 
+    
+    // If we haven't found authors yet, and it's short-ish and looks like names
+    if (!foundAuthors && text.length < 300 && !text.toLowerCase().startsWith('abstract')) {
+       authorsRaw = text;
+       foundAuthors = true;
+       // The next paragraph might be affiliations
+       const nextText = $(el).next('p').text().trim();
+       if (nextText && nextText.length < 400 && !nextText.toLowerCase().startsWith('abstract')) {
+         affiliationsRaw = nextText;
+       }
+       return false; // Break
+    }
+  });
+
+  // Extract DOI if present anywhere in the doc
+  let doi = '';
+  const doiMatch = html.match(/10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i);
+  if (doiMatch) {
+    doi = doiMatch[0];
+  }
+
+  // Find Funding / Conflict of Interest
+  let fundingInfo = '';
+  let conflictOfInterest = '';
+  
+  $('p, strong, b, h1, h2, h3').each((i, el) => {
+    const text = $(el).text().trim().toLowerCase();
+    
+    if (text.includes('funding') || text.includes('grant') || text.includes('financial support')) {
+       let current = $(el).is('p') ? $(el) : $(el).parent().is('p') ? $(el).parent() : $(el).next('p');
+       if (current.is('p')) {
+         fundingInfo = current.text().replace(/funding:?/i, '').trim();
+       }
+    }
+    
+    if (text.includes('conflict of interest') || text.includes('competing interest')) {
+       let current = $(el).is('p') ? $(el) : $(el).parent().is('p') ? $(el).parent() : $(el).next('p');
+       if (current.is('p')) {
+         conflictOfInterest = current.text().replace(/conflict of interest:?/i, '').replace(/competing interest(s)?:?/i, '').trim();
+       }
+    }
+  });
 
   // 2. Try to find the abstract
   $('h1, h2, h3, p, strong, b').each((i, el) => {
@@ -96,6 +148,11 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     rawHtml: html,
     references: parsedReferences,
     figures,
-    tables
+    tables,
+    authorsRaw,
+    affiliationsRaw,
+    doi,
+    fundingInfo,
+    conflictOfInterest
   };
 }

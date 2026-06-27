@@ -20,9 +20,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     // 1. Generate XMLs & HTML
-    const jatsXml = generateJATSXML(article.metadata);
-    const pmcXml = generatePMCXML(article.metadata);
-    const scieloXml = generateSciELOXML(article.metadata);
+    const jatsXml = generateJATSXML(article);
+    const pmcXml = generatePMCXML(article);
+    const scieloXml = generateSciELOXML(article);
     const crossrefXml = generateCrossrefXML(article.metadata, article.references);
     const htmlContent = convertToHTML(article.metadata, article.references, article.figures);
 

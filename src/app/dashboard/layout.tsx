@@ -33,6 +33,7 @@ export default async function DashboardLayout({
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <span style={{ color: 'var(--text-secondary)' }}>Welcome, Admin</span>
             <div style={{ width: '35px', height: '35px', borderRadius: '50%', backgroundColor: 'var(--brand-green)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>A</div>
+            <Link href="/api/auth/signout" style={{ marginLeft: '20px', fontSize: '0.9rem', color: '#EF4444', fontWeight: 600 }}>Logout</Link>
           </div>
         </header>
         <main style={{ padding: '40px', flex: 1 }}>

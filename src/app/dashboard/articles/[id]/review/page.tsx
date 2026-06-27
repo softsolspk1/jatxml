@@ -7,7 +7,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   const resolvedParams = await params;
   const article = await db.article.findUnique({
     where: { id: resolvedParams.id },
-    include: { metadata: true, references: true, figures: true, tables: true }
+    include: { metadata: true, references: true, figures: true, tables: true, authors: true }
   });
 
   if (!article || !article.metadata) return notFound();
@@ -22,7 +22,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
         {/* Left: Metadata Form */}
         <div className="card">
           <h2 style={{ fontSize: '1.2rem', color: 'var(--brand-green)', marginBottom: '20px' }}>Editable Metadata Form</h2>
-          <ReviewForm articleId={article.id} initialData={article.metadata} />
+          <ReviewForm articleId={article.id} initialData={article.metadata} initialAuthors={article.authors || []} />
         </div>
 
         {/* Right: Article Preview or Processing State */}
