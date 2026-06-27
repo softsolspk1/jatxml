@@ -2,9 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { generateJATSXML } from "@/lib/xml/jatsGenerator";
 import { generatePMCXML, generateSciELOXML } from "@/lib/xml/specializedGenerators";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session || (session.user as any).role === 'REVIEWER') {
+      return NextResponse.json({ error: "Unauthorized. You do not have permission to generate XML." }, { status: 403 });
+    }
+
     const resolvedParams = await params;
     const { title, abstract, keywords, doi, journalName, fundingInfo, conflictOfInterest, authorsText } = await req.json();
 

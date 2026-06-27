@@ -3,19 +3,21 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function SidebarNav() {
+export default function SidebarNav({ role }: { role: string }) {
   const pathname = usePathname();
 
-  const links = [
-    { href: '/dashboard', label: 'Overview' },
-    { href: '/dashboard/upload', label: 'Upload Article' },
-    { href: '/dashboard/articles', label: 'All Articles' },
-    { href: '/dashboard/settings', label: 'Settings' },
+  const allLinks = [
+    { href: '/dashboard', label: 'Overview', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
+    { href: '/dashboard/upload', label: 'Upload Article', roles: ['ADMIN', 'EDITORIAL_MANAGER'] },
+    { href: '/dashboard/articles', label: 'All Articles', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
+    { href: '/dashboard/settings', label: 'Settings', roles: ['ADMIN'] },
   ];
+
+  const visibleLinks = allLinks.filter(link => link.roles.includes(role));
 
   return (
     <nav style={{ display: 'flex', flexDirection: 'column' }}>
-      {links.map(link => {
+      {visibleLinks.map(link => {
         const isActive = pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
         return (
           <Link 

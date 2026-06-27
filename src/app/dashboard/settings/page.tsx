@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
+import AddUserForm from './AddUserForm';
+
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions);
   
@@ -26,29 +28,7 @@ export default async function SettingsPage() {
     <div>
       <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)', marginBottom: '30px' }}>Settings & User Management</h1>
       
-      <div className="card" style={{ marginBottom: '30px' }}>
-        <h2 style={{ fontSize: '1.2rem', color: 'var(--brand-blue)', marginBottom: '15px' }}>Add New User</h2>
-        <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '15px', alignItems: 'end' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', fontWeight: 600 }}>Name</label>
-            <input type="text" required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', fontWeight: 600 }}>Email</label>
-            <input type="email" required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
-          </div>
-          <div>
-            <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', fontWeight: 600 }}>Role</label>
-            <select required style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)', backgroundColor: 'white' }}>
-              <option value="XML_OPERATOR">XML Operator</option>
-              <option value="EDITORIAL_MANAGER">Editorial Manager</option>
-              <option value="REVIEWER">Reviewer</option>
-              <option value="ADMIN">Admin</option>
-            </select>
-          </div>
-          <button type="submit" className="button" style={{ padding: '10px 20px' }}>Create User</button>
-        </form>
-      </div>
+      <AddUserForm />
 
       <div className="card" style={{ padding: 0, overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>

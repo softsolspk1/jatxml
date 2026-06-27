@@ -16,8 +16,18 @@ model User {
   status    String   @default("ACTIVE")
   lastLogin DateTime?
   articles  Article[]
+  resetTokens ResetToken[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model Article {

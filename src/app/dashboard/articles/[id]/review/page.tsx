@@ -2,9 +2,13 @@ import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import ReviewForm from "./ReviewForm";
 import { convertToHTML } from "@/lib/xml/htmlConverter";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
+  const session = await getServerSession(authOptions);
+  
   const article = await db.article.findUnique({
     where: { id: resolvedParams.id },
     include: { metadata: true, references: true, figures: true, tables: true, authors: true }
@@ -22,7 +26,12 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
         {/* Left: Metadata Form */}
         <div className="card">
           <h2 style={{ fontSize: '1.2rem', color: 'var(--brand-green)', marginBottom: '20px' }}>Editable Metadata Form</h2>
-          <ReviewForm articleId={article.id} initialData={article.metadata} initialAuthors={article.authors || []} />
+          <ReviewForm 
+            articleId={article.id} 
+            initialData={article.metadata} 
+            initialAuthors={article.authors || []} 
+            role={(session?.user as any)?.role || 'REVIEWER'}
+          />
         </div>
 
         {/* Right: Article Preview or Processing State */}

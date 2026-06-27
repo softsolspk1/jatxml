@@ -8,6 +8,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    const role = (session?.user as any)?.role;
+    
+    if (!session || (role !== 'ADMIN' && role !== 'EDITORIAL_MANAGER')) {
+      return NextResponse.json({ error: "Unauthorized. Only Admins and Editorial Managers can upload articles." }, { status: 403 });
+    }
+
     const { key, originalFileName } = await req.json();
     if (!key) return NextResponse.json({ error: "Missing key" }, { status: 400 });
 
@@ -38,7 +45,6 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Save to Database
-    const session = await getServerSession(authOptions);
     let uploaderId = "admin-dummy-id"; // Fallback
     
     if (session && (session.user as any)?.email) {

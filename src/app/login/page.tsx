@@ -2,6 +2,7 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -56,6 +57,9 @@ export default function LoginPage() {
             />
           </div>
           <button type="submit" className="button" style={{ marginTop: '10px', padding: '12px' }}>Sign In</button>
+          <div style={{ textAlign: 'center', marginTop: '5px' }}>
+            <Link href="/login/reset" style={{ color: 'var(--brand-blue)', fontSize: '0.9rem', fontWeight: 600 }}>Forgot Password?</Link>
+          </div>
         </form>
         
         <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
