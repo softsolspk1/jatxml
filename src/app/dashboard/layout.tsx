@@ -18,7 +18,7 @@ export default async function DashboardLayout({
       <aside style={{ width: '250px', backgroundColor: 'var(--brand-blue)', color: 'var(--brand-white)', padding: '20px 0' }}>
         <div style={{ padding: '0 20px', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '1.2rem', fontWeight: 600 }}>JATS XML Portal</h2>
-          <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>Editorial Manager</p>
+          <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>{((session?.user as any)?.role || 'REVIEWER').replace('_', ' ')}</p>
         </div>
           <SidebarNav role={(session?.user as any)?.role || 'REVIEWER'} />
       </aside>

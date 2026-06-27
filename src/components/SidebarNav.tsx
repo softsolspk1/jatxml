@@ -10,7 +10,10 @@ export default function SidebarNav({ role }: { role: string }) {
     { href: '/dashboard', label: 'Overview', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
     { href: '/dashboard/upload', label: 'Upload Article', roles: ['ADMIN', 'EDITORIAL_MANAGER'] },
     { href: '/dashboard/articles', label: 'All Articles', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
-    { href: '/dashboard/settings', label: 'Users', roles: ['ADMIN'] },
+    { href: '/dashboard/users', label: 'Manage Users', roles: ['ADMIN'] },
+    { href: '/dashboard/settings', label: 'System Settings', roles: ['ADMIN'] },
+    { href: '/dashboard/templates', label: 'XML Templates', roles: ['ADMIN'] },
+    { href: '/dashboard/reports', label: 'Reports & Logs', roles: ['ADMIN'] },
   ];
 
   const visibleLinks = allLinks.filter(link => link.roles.includes(role));

@@ -103,7 +103,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
                   {new Date(article.createdAt).toLocaleDateString()}
                 </td>
                 <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  {article.status === 'READY_FOR_EXPORT' ? (
+                  {(article.status === 'READY_FOR_EXPORT' || article.status === 'SUBMITTED') && role !== 'XML_OPERATOR' ? (
                     <Link href={`/dashboard/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Download Center</Link>
                   ) : null}
                   <Link href={`/dashboard/articles/${article.id}/review`} style={{ color: 'var(--brand-green)', fontWeight: 600 }}>Review</Link>

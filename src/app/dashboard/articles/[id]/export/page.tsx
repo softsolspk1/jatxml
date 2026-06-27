@@ -2,11 +2,27 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 import { Download, FileText, Archive, BookOpen, Globe, Send } from "lucide-react";
 import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import PipelineVisualizer from "../PipelineVisualizer";
 import SubmitButton from "./SubmitButton";
 
 export default async function ExportCenterPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
+  const session = await getServerSession(authOptions);
+  const role = (session?.user as any)?.role || 'REVIEWER';
+  
+  // XML Operator should not see the final packages per requirements
+  if (role === 'XML_OPERATOR') {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <h2>Unauthorized</h2>
+        <p>XML Operators cannot download finalized export packages.</p>
+        <Link href="/dashboard/articles" className="button" style={{ marginTop: '20px', display: 'inline-block' }}>Back to Articles</Link>
+      </div>
+    );
+  }
+
   const article = await db.article.findUnique({
     where: { id: resolvedParams.id },
     include: { metadata: true }

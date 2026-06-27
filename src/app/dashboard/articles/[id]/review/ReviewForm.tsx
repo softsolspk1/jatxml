@@ -3,7 +3,14 @@ import { useState } from 'react';
 import { Trash2, Plus, CheckCircle, Save, AlertCircle, Clock } from 'lucide-react';
 
 export default function ReviewForm({ articleId, initialData, initialAuthors, initialReferences, history, role }: { articleId: string, initialData: any, initialAuthors?: any[], initialReferences?: any[], history?: any[], role: string }) {
-  const isReadOnly = role === 'REVIEWER';
+  const isReviewer = role === 'REVIEWER';
+  const isEditorialManager = role === 'EDITORIAL_MANAGER';
+  const isXmlOperator = role === 'XML_OPERATOR';
+  const isAdmin = role === 'ADMIN';
+
+  const canEditMetadata = isAdmin || isXmlOperator;
+  const canGenerateXml = isAdmin || isXmlOperator || isEditorialManager;
+  const isReadOnly = !canEditMetadata;
 
   // State: Article Details
   const [title, setTitle] = useState(initialData?.title || '');
@@ -318,15 +325,16 @@ export default function ReviewForm({ articleId, initialData, initialAuthors, ini
       {status === 'error' && !validationError && <p style={{ color: '#EF4444', fontWeight: 600 }}>An error occurred. Please try again.</p>}
       
       <div style={{ display: 'flex', gap: '10px', marginTop: '10px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
-        {!isReadOnly && (
-          <>
-            <button type="button" className="button button-outline" style={{ opacity: status === 'saving' ? 0.7 : 1, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={handleSaveDraft} disabled={status === 'saving' || status === 'generating'}>
-              <Save size={18} /> {status === 'saving' ? 'Saving...' : 'Save Draft'}
-            </button>
-            <button type="button" className="button" style={{ opacity: status === 'generating' ? 0.7 : 1, flex: 1 }} onClick={handleGenerate} disabled={status === 'saving' || status === 'generating'}>
-              {status === 'generating' ? 'Saving & Generating XML...' : 'Validate & Generate XML'}
-            </button>
-          </>
+        {canEditMetadata && (
+          <button type="button" className="button button-outline" style={{ opacity: status === 'saving' ? 0.7 : 1, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={handleSaveDraft} disabled={status === 'saving' || status === 'generating'}>
+            <Save size={18} /> {status === 'saving' ? 'Saving...' : 'Save Draft'}
+          </button>
+        )}
+        
+        {canGenerateXml && (
+          <button type="button" className="button" style={{ opacity: status === 'generating' ? 0.7 : 1, flex: 1 }} onClick={handleGenerate} disabled={status === 'saving' || status === 'generating'}>
+            {status === 'generating' ? 'Processing...' : isEditorialManager ? 'Approve & Generate XML' : 'Validate & Generate XML'}
+          </button>
         )}
 
         {(status === 'success' || isReadOnly) && (
