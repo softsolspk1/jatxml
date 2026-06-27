@@ -15,56 +15,129 @@
     <article-meta>
       <article-id pub-id-type="doi">10.1186/s13643-023-02359-2</article-id>
       <title-group>
-        <article-title>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1,</article-title>
+        <article-title>Graduate and postgraduate educational challenges during the COVID-19 pandemic period: its impact and innovations—a scoping review</article-title>
       </title-group>
       <contrib-group>
+        <contrib contrib-type="author" corresp="yes">
+          <name>
+            <surname>Shoaib</surname>
+            <given-names>Muhammad Harris</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Sikandar</surname>
+            <given-names>Muhammad</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Yousuf</surname>
+            <given-names>Rabia Ismail</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Parkash</surname>
+            <given-names>Monica</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">4</xref>
+        </contrib>
         <contrib contrib-type="author">
           <name>
             <surname>Kazmi</surname>
             <given-names>Syed Jamil Hassan</given-names>
           </name>
-          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="aff" rid="aff5">5</xref>
         </contrib>
         <contrib contrib-type="author">
           <name>
             <surname>Ahmed</surname>
             <given-names>Farrukh Rafiq</given-names>
           </name>
-          <xref ref-type="aff" rid="aff2">2</xref>
+          <xref ref-type="aff" rid="aff6">6</xref>
         </contrib>
         <contrib contrib-type="author">
           <name>
             <surname>Ahmed</surname>
             <given-names>Kamran</given-names>
           </name>
-          <xref ref-type="aff" rid="aff3">3</xref>
+          <xref ref-type="aff" rid="aff7">7</xref>
         </contrib>
         <contrib contrib-type="author">
           <name>
-            <surname>and</surname>
-            <given-names>Muhammad Talha Saleem</given-names>
+            <surname>Saleem</surname>
+            <given-names>Muhammad Talha</given-names>
           </name>
-          <xref ref-type="aff" rid="aff4">4</xref>
+          <xref ref-type="aff" rid="aff8">8</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Zaidi</surname>
+            <given-names>Syeda Hina</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff9">9</xref>
         </contrib>
       </contrib-group>
       <aff id="aff1">
         <label>1</label>
-        <institution>Syeda Hina Zaidi1</institution>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
       </aff>
       <aff id="aff2">
         <label>2</label>
-        <institution>Syeda Hina Zaidi1</institution>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
       </aff>
       <aff id="aff3">
         <label>3</label>
-        <institution>Syeda Hina Zaidi1</institution>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
       </aff>
       <aff id="aff4">
         <label>4</label>
-        <institution>Syeda Hina Zaidi1</institution>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff5">
+        <label>5</label>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff6">
+        <label>6</label>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff7">
+        <label>7</label>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff8">
+        <label>8</label>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff9">
+        <label>9</label>
+        <institution>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1, 
+Syed Jamil Hassan Kazmi2, Farrukh Rafiq Ahmed1, Kamran Ahmed1, Muhammad Talha Saleem1 and 
+Syeda Hina Zaidi1</institution>
       </aff>
       <pub-date pub-type="epub">
-        <day>27</day>
+        <day>28</day>
         <month>06</month>
         <year>2026</year>
       </pub-date>
@@ -352,6 +425,906 @@ Keywords COVID-19, Online education, PRISMA statement, Pandemic</p>
         <mixed-citation publication-type="journal">
           <person-group person-group-type="author">
             <name>
+              <surname>MH</surname>
+              <given-names>Shoaib</given-names>
+            </name>
+            <name>
+              <surname>FR</surname>
+              <given-names>Ahmed</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Sikandar</given-names>
+            </name>
+            <name>
+              <surname>RI</surname>
+              <given-names>Yousuf</given-names>
+            </name>
+            <name>
+              <surname>MT</surname>
+              <given-names>Saleem</given-names>
+            </name>
+          </person-group>
+          <article-title>A journey from SARS-CoV-2 to COVID-19 and beyond: a comprehensive insight of epidemiology, diagnosis, pathogenesis, and overview of the progress into its therapeutic management</article-title>
+          <source>Front Pharmacol</source>
+          <year>2021</year>
+          <volume>12</volume>
+          <issue>72</issue>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>M</surname>
+              <given-names>Chinazzi</given-names>
+            </name>
+            <name>
+              <surname>JT</surname>
+              <given-names>Davis</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Ajelli</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Gioannini</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Litvinova</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Merler</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>The effect of travel restrictions on the spread of the 2019 novel coronavirus (COVID-19) outbreak</article-title>
+          <source>Science</source>
+          <year>2020</year>
+          <volume>368</volume>
+          <issue>6489</issue>
+          <fpage>395</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>SH</surname>
+              <given-names>Ebrahim</given-names>
+            </name>
+            <name>
+              <surname>QA</surname>
+              <given-names>Ahmed</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Gozzer</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Schlagenhauf</given-names>
+            </name>
+            <name>
+              <surname>ZA</surname>
+              <given-names>Memish</given-names>
+            </name>
+          </person-group>
+          <article-title>Covid-19 and community mitigation strategies in a pandemic</article-title>
+          <source>Br Med J Publishing Group</source>
+          <year>2020</year>
+          <volume>368</volume>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>AO</surname>
+              <given-names>Docea</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Tsatsakis</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Albulescu</given-names>
+            </name>
+            <name>
+              <surname>O</surname>
+              <given-names>Cristea</given-names>
+            </name>
+            <name>
+              <surname>O</surname>
+              <given-names>Zlatian</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Vinceti</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>A new threat from an old enemy: re-emergence of coronavirus</article-title>
+          <source>Int J Mol Med</source>
+          <year>2020</year>
+          <volume>45</volume>
+          <issue>6</issue>
+          <fpage>1631</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Colleges</surname>
+              <given-names>Colleges</given-names>
+            </name>
+            <name>
+              <surname>universities</surname>
+              <given-names>universities</given-names>
+            </name>
+            <name>
+              <surname>plan</surname>
+              <given-names>and higher learning -</given-names>
+            </name>
+            <name>
+              <surname>prepare</surname>
+              <given-names>prepare</given-names>
+            </name>
+            <name>
+              <surname>respond</surname>
+              <given-names>and</given-names>
+            </name>
+          </person-group>
+          <article-title>2020 [cited March 3, 2021]</article-title>
+          <year>2019</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>C</surname>
+              <given-names>Foronda</given-names>
+            </name>
+            <name>
+              <surname>B</surname>
+              <given-names>Armstrong</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19: SSH/INACSL position statement on use of virtual simulation during the pandemic</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>classes</surname>
+              <given-names>Thomason A. U. of Washington cancels in-person</given-names>
+            </name>
+            <name>
+              <surname>Education</surname>
+              <given-names>becoming First Major US institution to do so amid coronavirus fears. Chronicle of Higher</given-names>
+            </name>
+          </person-group>
+          <article-title>Available from: https:// www</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>S</surname>
+              <given-names>Pokhrel</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Chhetri</given-names>
+            </name>
+          </person-group>
+          <article-title>A literature review on impact of COVID-19 pandemic on teaching and learning</article-title>
+          <source>Higher Educ Future</source>
+          <year>2021</year>
+          <volume>8</volume>
+          <issue>1</issue>
+          <fpage>133</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>UNICEF</surname>
+              <given-names>UNICEF</given-names>
+            </name>
+          </person-group>
+          <article-title>Discussion papers: Children’s Rights and Business in a Digital World Berlin, Germany2017 [Available from: https:// child rens- rights</article-title>
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>DataReportal</surname>
+              <given-names>DataReportal</given-names>
+            </name>
+          </person-group>
+          <article-title>DIGITAL AROUND THE WORLD 2021 [Available from: https:// datar eport al</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Stats</surname>
+              <given-names>Internet World</given-names>
+            </name>
+          </person-group>
+          <article-title>World Internet Usage and Population Statistics 2021 Year-Q1 Estimates Colombia2021 [Available from: https:// www</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MJ</surname>
+              <given-names>Page</given-names>
+            </name>
+            <name>
+              <surname>JE</surname>
+              <given-names>McKenzie</given-names>
+            </name>
+            <name>
+              <surname>PM</surname>
+              <given-names>Bossuyt</given-names>
+            </name>
+            <name>
+              <surname>I</surname>
+              <given-names>Boutron</given-names>
+            </name>
+            <name>
+              <surname>TC</surname>
+              <given-names>Hoffmann</given-names>
+            </name>
+            <name>
+              <surname>CD</surname>
+              <given-names>Mulrow</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>The PRISMA 2020 statement: an updated guideline for reporting systematic reviews</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>T</surname>
+              <given-names>Shopova</given-names>
+            </name>
+          </person-group>
+          <article-title>Digital literacy of students and its improvement at the university</article-title>
+          <source>J Effici Responsib Educ Sci</source>
+          <year>2014</year>
+          <volume>7</volume>
+          <issue>2</issue>
+          <fpage>26</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>M</surname>
+              <given-names>Antoninis</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Montoya</given-names>
+            </name>
+          </person-group>
+          <article-title>A global framework to measure digital literacy</article-title>
+          <year>2018</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>UIf</surname>
+              <given-names>Statistics</given-names>
+            </name>
+          </person-group>
+          <article-title>Literacy rates continue to rise from one generation to the next</article-title>
+          <year>2017</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>WorldAtlas</surname>
+              <given-names>WorldAtlas</given-names>
+            </name>
+          </person-group>
+          <article-title>List of countries by literacy rate Canada: Reunion Technology Inc</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>RJ</surname>
+              <given-names>Barro</given-names>
+            </name>
+          </person-group>
+          <article-title>Economic growth in a cross section of countries</article-title>
+          <source>Q J Econ</source>
+          <year>1991</year>
+          <volume>106</volume>
+          <issue>2</issue>
+          <fpage>407</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bank</surname>
+              <given-names>The World</given-names>
+            </name>
+          </person-group>
+          <article-title>GDP (current US$) Washington, DC , USA 2019 [Available from: https:// data</article-title>
+          <year>2019</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>EA</surname>
+              <given-names>Hanushek</given-names>
+            </name>
+            <name>
+              <surname>DD</surname>
+              <given-names>Kimko</given-names>
+            </name>
+          </person-group>
+          <article-title>Schooling, labor-force quality, and the growth of nations</article-title>
+          <source>Am Econ Rev</source>
+          <year>2000</year>
+          <volume>90</volume>
+          <issue>5</issue>
+          <fpage>1184</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bank</surname>
+              <given-names>The World</given-names>
+            </name>
+          </person-group>
+          <article-title>GDP per capita (current US$): Washington DC, US; 2019 [Available from: https:// data</article-title>
+          <year>2019</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>F</surname>
+              <given-names>Reinhold</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Hoch</given-names>
+            </name>
+            <name>
+              <surname>B</surname>
+              <given-names>Werner</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Richter-Gebert</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Reiss</given-names>
+            </name>
+          </person-group>
+          <article-title>Learning fractions with and without educational technology: what matters for high-achieving and low-achieving students? Learn Instr</article-title>
+          <year>2020</year>
+          <volume>65</volume>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Zheng</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Hundeyin</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>He</given-names>
+            </name>
+            <name>
+              <surname>T</surname>
+              <given-names>Sachs</given-names>
+            </name>
+            <name>
+              <surname>DT</surname>
+              <given-names>Hess</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Whang</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>General surgery chief residents’ perspective on surgical education during the coronavirus disease 2019 (COVID-19) pandemic</article-title>
+          <source>Surgery</source>
+          <year>2020</year>
+          <volume>168</volume>
+          <issue>2</issue>
+          <fpage>222</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>UNESCO</surname>
+              <given-names>UNESCO</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19 impact on education 2021 [updated March 7, 2121</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>AC</surname>
+              <given-names>Tricco</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Lillie</given-names>
+            </name>
+            <name>
+              <surname>W</surname>
+              <given-names>Zarin</given-names>
+            </name>
+            <name>
+              <surname>KK</surname>
+              <given-names>O’Brien</given-names>
+            </name>
+            <name>
+              <surname>H</surname>
+              <given-names>Colquhoun</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Levac</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>PRISMA Extension for Scoping Reviews (PRISMA-ScR): checklist and explanation</article-title>
+          <source>Ann Intern Med</source>
+          <year>2018</year>
+          <volume>169</volume>
+          <issue>7</issue>
+          <fpage>467</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MD</surname>
+              <given-names>Peters</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Godfrey</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>McInerney</given-names>
+            </name>
+            <name>
+              <surname>Z</surname>
+              <given-names>Munn</given-names>
+            </name>
+            <name>
+              <surname>AC</surname>
+              <given-names>Tricco</given-names>
+            </name>
+            <name>
+              <surname>H</surname>
+              <given-names>Khalil</given-names>
+            </name>
+          </person-group>
+          <article-title>Scoping reviews</article-title>
+          <source>Joanna Briggs Institute Reviewer’s Manual</source>
+          <year>2017</year>
+          <volume>2015</volume>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>BE</surname>
+              <given-names>Laurence</given-names>
+            </name>
+            <name>
+              <surname>CE</surname>
+              <given-names>Fryer</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Sonnier</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Taylor‐Bishop</given-names>
+            </name>
+          </person-group>
+          <article-title>Visualizing the dynamics of COVID‐19 modeling with dental students</article-title>
+          <source>J Den Educ</source>
+          <year>2020</year>
+          <volume>85</volume>
+          <issue>Suppl 1</issue>
+          <fpage>925</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>E</surname>
+              <given-names>Chen</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Kaczmarek</given-names>
+            </name>
+            <name>
+              <surname>H</surname>
+              <given-names>Ohyama</given-names>
+            </name>
+          </person-group>
+          <article-title>Student perceptions of distance learning strategies during COVID‐19</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>NM</surname>
+              <given-names>Damien</given-names>
+            </name>
+            <name>
+              <surname>DJ</surname>
+              <given-names>Chappell</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>van der Hoeven</given-names>
+            </name>
+          </person-group>
+          <article-title>Teaching emergency medicine in a dental school during the time of COVID‐19</article-title>
+          <source>J Den Educ</source>
+          <year>2021</year>
+          <volume>85</volume>
+          <issue>Suppl 1</issue>
+          <fpage>899</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref29">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Z</surname>
+              <given-names>Moore</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Stallard</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Tittemore</given-names>
+            </name>
+            <name>
+              <surname>JY</surname>
+              <given-names>Lee</given-names>
+            </name>
+          </person-group>
+          <article-title>The COVID-19 pandemic: opportunity for integration of educational technology</article-title>
+          <source>J Den Educ</source>
+          <year>2021</year>
+          <volume>85</volume>
+          <fpage>1160</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref30">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Lee</given-names>
+            </name>
+            <name>
+              <surname>RJ</surname>
+              <given-names>Kim</given-names>
+            </name>
+            <name>
+              <surname>SY</surname>
+              <given-names>Park</given-names>
+            </name>
+            <name>
+              <surname>MA</surname>
+              <given-names>Henning</given-names>
+            </name>
+          </person-group>
+          <article-title>Using technologies to prevent cheating in remote assessments during the COVID‐19 pandemic</article-title>
+          <source>J Den Educ</source>
+          <year>2021</year>
+          <volume>85</volume>
+          <issue>Suppl. 1</issue>
+          <fpage>1015</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref31">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>S</surname>
+              <given-names>Singh</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Arya</given-names>
+            </name>
+          </person-group>
+          <article-title>A hybrid flipped-classroom approach for online teaching of biochemistry in developing countries during COVID-19 crisis</article-title>
+          <source>Biochemistry and Molecular Biology Education: a Bimonthly Publication of the International Union of Biochemistry and Molecular Biology</source>
+          <year>2020</year>
+          <volume>48</volume>
+          <issue>5</issue>
+          <fpage>502</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref32">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MA</surname>
+              <given-names>Cheong</given-names>
+            </name>
+            <name>
+              <surname>Y-L</surname>
+              <given-names>Chee</given-names>
+            </name>
+            <name>
+              <surname>HJ</surname>
+              <given-names>Ng</given-names>
+            </name>
+            <name>
+              <surname>W-Y</surname>
+              <given-names>Jen</given-names>
+            </name>
+          </person-group>
+          <article-title>Keeping the bloodline of haematology medical education flowing during a pandemic</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref33">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>A</surname>
+              <given-names>Ul Bari</given-names>
+            </name>
+          </person-group>
+          <article-title>Dermatology residency training in COVID-19 pandemic: transition from traditional to online teaching</article-title>
+          <source>J Coll Physicians Surg Pak</source>
+          <year>2020</year>
+          <volume>30</volume>
+          <issue>6</issue>
+          <fpage>63</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref34">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Y</surname>
+              <given-names>Maeda</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Takeda</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Hayama</given-names>
+            </name>
+            <name>
+              <surname>T</surname>
+              <given-names>Tsuda</given-names>
+            </name>
+            <name>
+              <surname>T</surname>
+              <given-names>Shikina</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Nishiike</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Experience with online lectures about endoscopic sinus surgery using an online conferencing app</article-title>
+          <source>Auris, Nasus, Larynx</source>
+          <year>2020</year>
+          <volume>47</volume>
+          <issue>6</issue>
+          <fpage>1083</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref35">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>WJ</surname>
+              <given-names>Chang</given-names>
+            </name>
+            <name>
+              <surname>YD</surname>
+              <given-names>Jiang</given-names>
+            </name>
+            <name>
+              <surname>JM</surname>
+              <given-names>Xu</given-names>
+            </name>
+          </person-group>
+          <article-title>Experience of teaching and training for medical students at gastrointestinal surgery department under COVID-19 epidemic situation</article-title>
+          <source>Zhonghua wei chang wai ke za zhi = Chin J Gastrointest Surg</source>
+          <year>2020</year>
+          <volume>23</volume>
+          <issue>6</issue>
+          <fpage>616</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref36">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MTH</surname>
+              <given-names>Chowdhury</given-names>
+            </name>
+            <name>
+              <surname>EH</surname>
+              <given-names>Apu</given-names>
+            </name>
+            <name>
+              <surname>SK</surname>
+              <given-names>Nath</given-names>
+            </name>
+            <name>
+              <surname>AE</surname>
+              <given-names>Noor</given-names>
+            </name>
+            <name>
+              <surname>CP</surname>
+              <given-names>Podder</given-names>
+            </name>
+            <name>
+              <surname>I</surname>
+              <given-names>Mahmud</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Exploring the knowledge, awareness and practices of COVID-19 among dentists in Bangladesh: a cross-sectional investigation</article-title>
+          <year>2021</year>
+          <volume>10</volume>
+          <issue>3</issue>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref37">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>C</surname>
+              <given-names>McRoy</given-names>
+            </name>
+            <name>
+              <surname>L</surname>
+              <given-names>Patel</given-names>
+            </name>
+            <name>
+              <surname>DS</surname>
+              <given-names>Gaddam</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Rothenberg</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Herring</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Hamm</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Radiology education in the time of COVID-19: a novel distance learning workstation experience for residents</article-title>
+          <source>Acad Radiol</source>
+          <year>2020</year>
+          <volume>27</volume>
+          <issue>10</issue>
+          <fpage>1467</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref38">
+        <mixed-citation publication-type="journal">Pollom EL, Sandhu N, Frank J, Miller JA, Obeid J-P, Kastelowitz N, et al.</mixed-citation>
+      </ref>
+      <ref id="ref39">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
               <surname>clerkship</surname>
               <given-names>Continuing medical student education during the coronavirus disease 2019 (COVID-19) pandemic: development of a virtual radiation oncology</given-names>
             </name>
@@ -361,6 +1334,1371 @@ Keywords COVID-19, Online education, PRISMA statement, Pandemic</p>
           <volume>5</volume>
           <issue>4</issue>
           <fpage>732</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref40">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>KK</surname>
+              <given-names>Patterson</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Ritwik</given-names>
+            </name>
+            <name>
+              <surname>CA</surname>
+              <given-names>Kerins</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Adewumi</given-names>
+            </name>
+          </person-group>
+          <article-title>Real‐time measurement for effectiveness of novel educational endeavors during the COVID‐19 pandemic</article-title>
+          <source>J Dent Educ</source>
+          <year>2021</year>
+          <volume>85</volume>
+          <issue>Suppl 1</issue>
+          <fpage>1020</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref41">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>SM</surname>
+              <given-names>Durfee</given-names>
+            </name>
+            <name>
+              <surname>RP</surname>
+              <given-names>Goldenson</given-names>
+            </name>
+            <name>
+              <surname>RR</surname>
+              <given-names>Gill</given-names>
+            </name>
+            <name>
+              <surname>SP</surname>
+              <given-names>Rincon</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Flower</given-names>
+            </name>
+            <name>
+              <surname>LL</surname>
+              <given-names>Avery</given-names>
+            </name>
+          </person-group>
+          <article-title>Medical student education roadblock due to COVID-19: virtual radiology core clerkship to the rescue</article-title>
+          <source>Acad Radiol</source>
+          <year>2020</year>
+          <volume>27</volume>
+          <issue>10</issue>
+          <fpage>1461</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref42">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>HN</surname>
+              <given-names>Abraham</given-names>
+            </name>
+            <name>
+              <surname>IN</surname>
+              <given-names>Opara</given-names>
+            </name>
+            <name>
+              <surname>RL</surname>
+              <given-names>Dwaihy</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Acuff</given-names>
+            </name>
+            <name>
+              <surname>B</surname>
+              <given-names>Brauer</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Nabaty</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Engaging third-year medical students on their internal medicine clerkship in telehealth during COVID-19</article-title>
+          <source>Cureus</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <issue>6</issue>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref43">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>R</surname>
+              <given-names>North</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Vitto</given-names>
+            </name>
+            <name>
+              <surname>G</surname>
+              <given-names>Hickam</given-names>
+            </name>
+            <name>
+              <surname>SA</surname>
+              <given-names>Santen</given-names>
+            </name>
+          </person-group>
+          <article-title>Remote learning in the time of COVID-19</article-title>
+          <source>AEM Educ Train</source>
+          <year>2020</year>
+          <volume>4</volume>
+          <issue>3</issue>
+          <fpage>280</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref44">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>PZ</surname>
+              <given-names>Chiou</given-names>
+            </name>
+          </person-group>
+          <article-title>Learning cytology in times of pandemic: an educational institutional experience with remote teaching</article-title>
+          <source>J Am Soc Cytopathol</source>
+          <year>2020</year>
+          <volume>9</volume>
+          <issue>6</issue>
+          <fpage>579</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref45">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>DC</surname>
+              <given-names>Wang</given-names>
+            </name>
+            <name>
+              <surname>Q</surname>
+              <given-names>Emmad</given-names>
+            </name>
+            <name>
+              <surname>TM</surname>
+              <given-names>Jiayi</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Bartlett</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19 pandemic on Canadian radiology residency education—impact and solutions: University of Toronto perspective</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref46">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>H</surname>
+              <given-names>Hofmann</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Harding</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Youm</given-names>
+            </name>
+            <name>
+              <surname>W</surname>
+              <given-names>Wiechmann</given-names>
+            </name>
+          </person-group>
+          <article-title>Virtual bedside teaching rounds with patients with COVID-19</article-title>
+          <source>Medical education</source>
+          <year>2020</year>
+          <volume>54</volume>
+          <issue>10</issue>
+          <fpage>959</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref47">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>JD</surname>
+              <given-names>Nelson</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Marshall</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Kelly</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Vuthiganon</given-names>
+            </name>
+          </person-group>
+          <article-title>Dental student research mentorship in the era of COVID‐19</article-title>
+          <source>J Den Educ</source>
+          <year>2021</year>
+          <volume>85</volume>
+          <issue>Suppl 1</issue>
+          <fpage>923</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref48">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>TM</surname>
+              <given-names>Khan</given-names>
+            </name>
+          </person-group>
+          <article-title>Use of social media and WhatsApp to conduct teaching activities during the COVID-19 lockdown in Pakistan</article-title>
+          <source>Int J Pharm Pract</source>
+          <year>2021</year>
+          <volume>29</volume>
+          <issue>1</issue>
+          <fpage>90</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref49">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>A</surname>
+              <given-names>Guerandel</given-names>
+            </name>
+            <name>
+              <surname>N</surname>
+              <given-names>McCarthy</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>McCarthy</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Mulligan</given-names>
+            </name>
+          </person-group>
+          <article-title>An approach to teaching psychiatry to medical students in the time of COVID-19</article-title>
+          <source>Ir J Psychol Med</source>
+          <year>2021</year>
+          <volume>38</volume>
+          <issue>4</issue>
+          <fpage>293</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref50">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>EU</surname>
+              <given-names>Parker</given-names>
+            </name>
+            <name>
+              <surname>O</surname>
+              <given-names>Chang</given-names>
+            </name>
+            <name>
+              <surname>L</surname>
+              <given-names>Koch</given-names>
+            </name>
+          </person-group>
+          <article-title>Remote anatomic pathology medical student education in Washington State: an early COVID-19 experience</article-title>
+          <source>Am J Clin Pathol</source>
+          <year>2020</year>
+          <volume>154</volume>
+          <issue>5</issue>
+          <fpage>585</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref51">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Naidoo</given-names>
+            </name>
+          </person-group>
+          <article-title>Postgraduate mathematics education students’ experiences of using digital platforms for learning within the COVID-19 pandemic era</article-title>
+          <source>Pythagoras</source>
+          <year>2020</year>
+          <volume>41</volume>
+          <issue>1</issue>
+          <fpage>568</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref52">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>LF</surname>
+              <given-names>Pacheco</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Noll</given-names>
+            </name>
+            <name>
+              <surname>CR</surname>
+              <given-names>Mendonça</given-names>
+            </name>
+          </person-group>
+          <article-title>Challenges in teaching human anatomy to students with intellectual disabilities during the COVID-19 pandemic</article-title>
+          <source>Anat Sci Educ</source>
+          <year>2020</year>
+          <volume>13</volume>
+          <issue>5</issue>
+          <fpage>556</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref53">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>C</surname>
+              <given-names>Jarry Trujillo</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Achurra Tirado</given-names>
+            </name>
+            <name>
+              <surname>G</surname>
+              <given-names>Escalona Vivas</given-names>
+            </name>
+            <name>
+              <surname>F</surname>
+              <given-names>Crovari Eulufi</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Varas Cohen</given-names>
+            </name>
+          </person-group>
+          <article-title>Surgical training during COVID-19: a validated solution to keep on practicing</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref54">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>R</surname>
+              <given-names>Sud</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Sharma</given-names>
+            </name>
+            <name>
+              <surname>V</surname>
+              <given-names>Budhwar</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Khanduja</given-names>
+            </name>
+          </person-group>
+          <article-title>Undergraduate ophthalmology teaching in COVID-19 times: students’ perspective and feedback</article-title>
+          <source>Indian J Ophthalmol</source>
+          <year>2020</year>
+          <volume>68</volume>
+          <issue>7</issue>
+          <fpage>1490</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref55">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>ÁT</surname>
+              <given-names>Schlégl</given-names>
+            </name>
+            <name>
+              <surname>Z</surname>
+              <given-names>Pintér</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Kovács</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Kopjár</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Varga</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Kardos</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Teaching basic surgical skills using homemade tools in response to COVID-19</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref56">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>RH</surname>
+              <given-names>Kim</given-names>
+            </name>
+            <name>
+              <surname>NK</surname>
+              <given-names>Brinster</given-names>
+            </name>
+            <name>
+              <surname>SA</surname>
+              <given-names>Meehan</given-names>
+            </name>
+          </person-group>
+          <article-title>Dermatopathology education during the COVID-19 pandemic: virtual simulation of the multiheaded microscope</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref57">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>TS</surname>
+              <given-names>Gupta</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Chalmers</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>McGonigal</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19: General practice education in the ‘new normal</article-title>
+          <source>’ Aust J Gen Pract</source>
+          <year>2020</year>
+          <volume>49</volume>
+          <fpage>30</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref58">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>PM</surname>
+              <given-names>Patel</given-names>
+            </name>
+            <name>
+              <surname>CL</surname>
+              <given-names>Tsui</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Varma</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Levitt</given-names>
+            </name>
+          </person-group>
+          <article-title>Remote learning for medical studentlevel dermatology during the COVID-19 pandemic</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref59">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>O</surname>
+              <given-names>Oki</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Shah</given-names>
+            </name>
+            <name>
+              <surname>L</surname>
+              <given-names>Scrivens</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Guckian</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19: challenges and solutions for the future of UK dermatology undergraduate curriculum delivery</article-title>
+          <source>Clin Exp Dermatol</source>
+          <year>2021</year>
+          <volume>46</volume>
+          <issue>1</issue>
+          <fpage>171</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref60">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Iwanaga</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Loukas</given-names>
+            </name>
+            <name>
+              <surname>AS</surname>
+              <given-names>Dumont</given-names>
+            </name>
+            <name>
+              <surname>RS</surname>
+              <given-names>Tubbs</given-names>
+            </name>
+          </person-group>
+          <article-title>A review of anatomy education during and after the COVID-19 pandemic: revisiting traditional and modern methods to achieve future innovation</article-title>
+          <source>Clin Anat</source>
+          <year>2021</year>
+          <volume>34</volume>
+          <issue>1</issue>
+          <fpage>108</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref61">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>A</surname>
+              <given-names>Torda</given-names>
+            </name>
+          </person-group>
+          <article-title>How COVID-19 has pushed us into a medical education revolution</article-title>
+          <source>Int Med J</source>
+          <year>2020</year>
+          <volume>50</volume>
+          <issue>9</issue>
+          <fpage>1150</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref62">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Bassuner</given-names>
+            </name>
+            <name>
+              <surname>L</surname>
+              <given-names>Rindy</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Tew</given-names>
+            </name>
+            <name>
+              <surname>G</surname>
+              <given-names>Vatakencherry</given-names>
+            </name>
+          </person-group>
+          <article-title>Opening up resident education during the coronavirus disease (COVID-19) pandemic and beyond</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref63">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>TN</surname>
+              <given-names>Chao</given-names>
+            </name>
+            <name>
+              <surname>AS</surname>
+              <given-names>Frost</given-names>
+            </name>
+            <name>
+              <surname>JG</surname>
+              <given-names>Newman</given-names>
+            </name>
+          </person-group>
+          <article-title>Interactive virtual surgical education during COVID-19 and beyond</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref64">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>J</surname>
+              <given-names>Sidpra</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Gaier</given-names>
+            </name>
+            <name>
+              <surname>N</surname>
+              <given-names>Reddy</given-names>
+            </name>
+            <name>
+              <surname>N</surname>
+              <given-names>Kumar</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Mirsky</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Mankad</given-names>
+            </name>
+          </person-group>
+          <article-title>Sustaining education in the age of COVID-19: a survey of synchronous web-based platforms</article-title>
+          <source>Quant Imaging Med Surg</source>
+          <year>2020</year>
+          <volume>10</volume>
+          <issue>7</issue>
+          <fpage>1422</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref65">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>S</surname>
+              <given-names>Tabatabai</given-names>
+            </name>
+          </person-group>
+          <article-title>Simulations and virtual learning supporting clinical education during the COVID 19 pandemic</article-title>
+          <source>Adv Med Educ Pract</source>
+          <year>2020</year>
+          <volume>11</volume>
+          <fpage>513</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref66">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>ON</surname>
+              <given-names>Akande</given-names>
+            </name>
+            <name>
+              <surname>TA</surname>
+              <given-names>Badmus</given-names>
+            </name>
+            <name>
+              <surname>AT</surname>
+              <given-names>Akindele</given-names>
+            </name>
+            <name>
+              <surname>OT</surname>
+              <given-names>Arulogun</given-names>
+            </name>
+          </person-group>
+          <article-title>Dataset to support the adoption of social media and emerging technologies for students’ continuous engagement</article-title>
+          <source>Data Brief</source>
+          <year>2020</year>
+          <volume>31</volume>
+          <fpage>2352</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref67">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>L</surname>
+              <given-names>Watts</given-names>
+            </name>
+          </person-group>
+          <article-title>Synchronous and asynchronous communication in distance learning: a review of the literature</article-title>
+          <source>Q Rev Distance Educ</source>
+          <year>2016</year>
+          <volume>17</volume>
+          <issue>1</issue>
+          <fpage>23</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref68">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>B</surname>
+              <given-names>Offir</given-names>
+            </name>
+            <name>
+              <surname>Y</surname>
+              <given-names>Lev</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Bezalel</given-names>
+            </name>
+          </person-group>
+          <article-title>Surface and deep learning processes in distance education: synchronous versus asynchronous systems</article-title>
+          <source>Comp Educ</source>
+          <year>2008</year>
+          <volume>51</volume>
+          <issue>3</issue>
+          <fpage>1172</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref69">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>KM</surname>
+              <given-names>Augestad</given-names>
+            </name>
+            <name>
+              <surname>RO</surname>
+              <given-names>Lindsetmo</given-names>
+            </name>
+          </person-group>
+          <article-title>Overcoming distance: video-conferencing as a clinical and educational tool among surgeons</article-title>
+          <source>World J Surg</source>
+          <year>2009</year>
+          <volume>33</volume>
+          <issue>7</issue>
+          <fpage>1356</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref70">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>A</surname>
+              <given-names>Bonney</given-names>
+            </name>
+            <name>
+              <surname>P</surname>
+              <given-names>Knight-Billington</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Mullan</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Moscova</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Barnett</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Iverson</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>The telehealth skills, training, and implementation project: an evaluation protocol</article-title>
+          <year>2015</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref71">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>A</surname>
+              <given-names>Wernhart</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Gahbauer</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Haluza</given-names>
+            </name>
+          </person-group>
+          <article-title>eHealth and telemedicine: practices and beliefs among healthcare professionals and medical students at a medical university</article-title>
+          <year>2019</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref72">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>TY</surname>
+              <given-names>Wong</given-names>
+            </name>
+            <name>
+              <surname>F</surname>
+              <given-names>Bandello</given-names>
+            </name>
+          </person-group>
+          <article-title>Academic ophthalmology during and after the COVID-19 pandemic</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref73">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>DSW</surname>
+              <given-names>Ting</given-names>
+            </name>
+            <name>
+              <surname>L</surname>
+              <given-names>Carin</given-names>
+            </name>
+            <name>
+              <surname>V</surname>
+              <given-names>Dzau</given-names>
+            </name>
+            <name>
+              <surname>TY</surname>
+              <given-names>Wong</given-names>
+            </name>
+          </person-group>
+          <article-title>Digital technology and COVID-19</article-title>
+          <source>Nat Med</source>
+          <year>2020</year>
+          <volume>26</volume>
+          <issue>4</issue>
+          <fpage>459</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref74">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>RH</surname>
+              <given-names>Kay</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>LeSage</given-names>
+            </name>
+          </person-group>
+          <article-title>Examining the benefits and challenges of using audience response systems: a review of the literature</article-title>
+          <source>Comp Educ</source>
+          <year>2009</year>
+          <volume>53</volume>
+          <issue>3</issue>
+          <fpage>819</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref75">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MH</surname>
+              <given-names>Rajab</given-names>
+            </name>
+            <name>
+              <surname>AM</surname>
+              <given-names>Gazal</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Alkattan</given-names>
+            </name>
+          </person-group>
+          <article-title>Challenges to online medical education during the COVID-19 pandemic</article-title>
+          <source>Cureus</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <issue>7</issue>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref76">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>KE</surname>
+              <given-names>Darras</given-names>
+            </name>
+            <name>
+              <surname>RJ</surname>
+              <given-names>Spouge</given-names>
+            </name>
+            <name>
+              <surname>AB</surname>
+              <given-names>de Bruin</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Sedlic</given-names>
+            </name>
+            <name>
+              <surname>C</surname>
+              <given-names>Hague</given-names>
+            </name>
+            <name>
+              <surname>BB</surname>
+              <given-names>Forster</given-names>
+            </name>
+          </person-group>
+          <article-title>Undergraduate radiology education during the COVID-19 pandemic: a review of teaching and learning strategies</article-title>
+          <source>Can Assoc Radiol J</source>
+          <year>2021</year>
+          <volume>72</volume>
+          <issue>2</issue>
+          <fpage>194</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref77">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>I</surname>
+              <given-names>Chatziralli</given-names>
+            </name>
+            <name>
+              <surname>CV</surname>
+              <given-names>Ventura</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Touhami</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Reynolds</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Nassisi</given-names>
+            </name>
+            <name>
+              <surname>T</surname>
+              <given-names>Weinberg</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Transforming ophthalmic education into virtual learning during COVID-19 pandemic: a global perspective</article-title>
+          <source>Eye</source>
+          <year>2021</year>
+          <volume>35</volume>
+          <issue>5</issue>
+          <fpage>1459</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref78">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>AUTN</surname>
+              <given-names>Ovest</given-names>
+            </name>
+          </person-group>
+          <article-title>Breast surgeons updating on the thresholds of COVID-19 era: results of a multicenter collaborative study evaluating the role of online videos and multimedia sources on breast surgeons education and training</article-title>
+          <source>Eur Rev Med Pharmacol Sci</source>
+          <year>2020</year>
+          <volume>24</volume>
+          <fpage>7845</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref79">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MÖ</surname>
+              <given-names>Yüce</given-names>
+            </name>
+            <name>
+              <surname>E</surname>
+              <given-names>Adalı</given-names>
+            </name>
+            <name>
+              <surname>B</surname>
+              <given-names>Kanmaz</given-names>
+            </name>
+          </person-group>
+          <article-title>An analysis of YouTube videos as educational resources for dental practitioners to prevent the spread of COVID-19</article-title>
+          <source>Ir J Med Sci (1971 -)</source>
+          <year>2021</year>
+          <volume>190</volume>
+          <issue>1</issue>
+          <fpage>19</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref80">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MZ</surname>
+              <given-names>Iqbal</given-names>
+            </name>
+            <name>
+              <surname>HI</surname>
+              <given-names>Alradhi</given-names>
+            </name>
+            <name>
+              <surname>AA</surname>
+              <given-names>Alhumaidi</given-names>
+            </name>
+            <name>
+              <surname>KH</surname>
+              <given-names>Alshaikh</given-names>
+            </name>
+            <name>
+              <surname>AM</surname>
+              <given-names>AlObaid</given-names>
+            </name>
+            <name>
+              <surname>MT</surname>
+              <given-names>Alhashim</given-names>
+            </name>
+            <name>
+              <surname>al</surname>
+              <given-names>et</given-names>
+            </name>
+          </person-group>
+          <article-title>Telegram as a tool to supplement online medical education during COVID-19 crisis</article-title>
+          <source>Acta Informatica Medica</source>
+          <year>2020</year>
+          <volume>28</volume>
+          <issue>2</issue>
+          <fpage>94</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref81">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>F</surname>
+              <given-names>Pérez-Escamirosa</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Medina-Alvarez</given-names>
+            </name>
+            <name>
+              <surname>EA</surname>
+              <given-names>Ruíz-Vereo</given-names>
+            </name>
+            <name>
+              <surname>RM</surname>
+              <given-names>Ordorica-Flores</given-names>
+            </name>
+            <name>
+              <surname>A</surname>
+              <given-names>Minor-Martínez</given-names>
+            </name>
+            <name>
+              <surname>J</surname>
+              <given-names>Tapia-Jurado</given-names>
+            </name>
+          </person-group>
+          <article-title>Immersive virtual operating room simulation for surgical resident education during COVID-19</article-title>
+          <source>Surg Innov</source>
+          <year>2020</year>
+          <volume>27</volume>
+          <issue>5</issue>
+          <fpage>549</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref82">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>TS</surname>
+              <given-names>Okland</given-names>
+            </name>
+            <name>
+              <surname>J-P</surname>
+              <given-names>Pepper</given-names>
+            </name>
+            <name>
+              <surname>TA</surname>
+              <given-names>Valdez</given-names>
+            </name>
+          </person-group>
+          <article-title>How do we teach surgical residents in the COVID-19 era? J Surg Edu</article-title>
+          <year>2020</year>
+          <volume>77</volume>
+          <issue>5</issue>
+          <fpage>1005</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref83">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>AJ</surname>
+              <given-names>Evans</given-names>
+            </name>
+            <name>
+              <surname>N</surname>
+              <given-names>Depeiza</given-names>
+            </name>
+            <name>
+              <surname>S-G</surname>
+              <given-names>Allen</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Fraser</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Shirley</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Chetty</given-names>
+            </name>
+          </person-group>
+          <article-title>Use of whole slide imaging (WSI) for distance teaching</article-title>
+          <source>J Clin Pathol</source>
+          <year>2021</year>
+          <volume>74</volume>
+          <issue>7</issue>
+          <fpage>425</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref84">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>MM</surname>
+              <given-names>Jack</given-names>
+            </name>
+            <name>
+              <surname>DA</surname>
+              <given-names>Gattozzi</given-names>
+            </name>
+            <name>
+              <surname>PJ</surname>
+              <given-names>Camarata</given-names>
+            </name>
+            <name>
+              <surname>KJ</surname>
+              <given-names>Shah</given-names>
+            </name>
+          </person-group>
+          <article-title>Live-streaming surgery for medical student education-educational solutions in neurosurgery during the COVID-19 pandemic</article-title>
+          <source>J Surg Educ</source>
+          <year>2021</year>
+          <volume>78</volume>
+          <issue>1</issue>
+          <fpage>99</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref85">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>G</surname>
+              <given-names>Brumini</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Špalj</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Mavrinac</given-names>
+            </name>
+            <name>
+              <surname>D</surname>
+              <given-names>Biočina-Lukenda</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Strujić</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Brumini</given-names>
+            </name>
+          </person-group>
+          <article-title>Attitudes towards e-learning amongst dental students at the universities in Croatia</article-title>
+          <source>Eur J Den Educ</source>
+          <year>2014</year>
+          <volume>18</volume>
+          <issue>1</issue>
+          <fpage>15</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref86">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>ZW</surname>
+              <given-names>Lee</given-names>
+            </name>
+            <name>
+              <surname>FM</surname>
+              <given-names>Yeong</given-names>
+            </name>
+          </person-group>
+          <article-title>Online conferencing platform provides opportunity for reciprocal teaching</article-title>
+          <source>Biochem Mol Biol Educ</source>
+          <year>2020</year>
+          <volume>48</volume>
+          <issue>5</issue>
+          <fpage>471</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref87">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>BK</surname>
+              <given-names>Oyewole</given-names>
+            </name>
+            <name>
+              <surname>VJ</surname>
+              <given-names>Animasahun</given-names>
+            </name>
+            <name>
+              <surname>HJ</surname>
+              <given-names>Chapman</given-names>
+            </name>
+          </person-group>
+          <article-title>A survey on the effectiveness of WhatsApp for teaching doctors preparing for a licensing exam</article-title>
+          <source>PloS One</source>
+          <year>2020</year>
+          <volume>15</volume>
+          <issue>4</issue>
+          <fpage>1</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref88">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>F</surname>
+              <given-names>Tuma</given-names>
+            </name>
+            <name>
+              <surname>AK</surname>
+              <given-names>Nassar</given-names>
+            </name>
+            <name>
+              <surname>MK</surname>
+              <given-names>Kamel</given-names>
+            </name>
+            <name>
+              <surname>LM</surname>
+              <given-names>Knowlton</given-names>
+            </name>
+            <name>
+              <surname>NK</surname>
+              <given-names>Jawad</given-names>
+            </name>
+          </person-group>
+          <article-title>Students and faculty perception of distance medical education outcomes in resourceconstrained system during COVID-19 pandemic</article-title>
+          <source>A cross-sectional study. Ann Med Surg</source>
+          <year>2021</year>
+          <volume>62</volume>
+          <fpage>377</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref89">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>S</surname>
+              <given-names>Carvalho</given-names>
+            </name>
+            <name>
+              <surname>S</surname>
+              <given-names>Hares</given-names>
+            </name>
+          </person-group>
+          <article-title>Six ways COVID-19 will shape the future of education</article-title>
+          <year>2020</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref90">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>P</surname>
+              <given-names>Egielewa</given-names>
+            </name>
+            <name>
+              <surname>PO</surname>
+              <given-names>Idogho</given-names>
+            </name>
+            <name>
+              <surname>FO</surname>
+              <given-names>Iyalomhe</given-names>
+            </name>
+            <name>
+              <surname>GT</surname>
+              <given-names>Cirella</given-names>
+            </name>
+          </person-group>
+          <article-title>COVID-19 and digitized education: analysis of online learning in Nigerian higher education</article-title>
+          <year>2021</year>
+        </mixed-citation>
+      </ref>
+      <ref id="ref91">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>B</surname>
+              <given-names>Means</given-names>
+            </name>
+            <name>
+              <surname>Y</surname>
+              <given-names>Toyama</given-names>
+            </name>
+            <name>
+              <surname>R</surname>
+              <given-names>Murphy</given-names>
+            </name>
+            <name>
+              <surname>M</surname>
+              <given-names>Bakia</given-names>
+            </name>
+            <name>
+              <surname>K</surname>
+              <given-names>Jones</given-names>
+            </name>
+          </person-group>
+          <article-title>Evaluation of evidencebased practices in online learning: a meta-analysis and review of online learning studies</article-title>
+          <source>Assoc Learn Technol</source>
+          <year>2009</year>
+          <volume>41</volume>
+          <issue>13</issue>
+          <fpage>260</fpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref92">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>UNICEF</surname>
+              <given-names>UNICEF</given-names>
+            </name>
+          </person-group>
+          <article-title>Education and COVID-19 New York, US2020 [Available from: https:// data</article-title>
         </mixed-citation>
       </ref>
     </ref-list>

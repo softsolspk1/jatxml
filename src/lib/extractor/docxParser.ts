@@ -26,25 +26,40 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   
   // Collect early text elements for Title and Authors
   const earlyElements: string[] = [];
-  $('p, h1, h2, h3').slice(0, 20).each((i, el) => {
+  $('p, h1, h2, h3').slice(0, 40).each((i, el) => {
     const text = $(el).text().trim();
     if (text.length > 3) earlyElements.push(text);
   });
 
-  // 1. Title and Journal Extraction
-  let titleIndex = -1;
+  // 1. Journal Extraction (Scan all early elements)
   let journalName = '';
-  
   for (let i = 0; i < earlyElements.length; i++) {
     const t = earlyElements[i].toLowerCase();
     
-    // Check if this line looks like a journal name at the very top
-    if (i < 5 && (t.includes('journal') || t.includes('bmc') || t.includes('springer') || t.includes('review') || t.includes('pjps') || t.includes('science'))) {
-       if (!journalName) journalName = earlyElements[i];
-       continue;
+    // Journal name heuristic
+    if (i < 15 && (t.includes('journal') || t.includes('bmc') || t.includes('springer') || t.includes('review') || t.includes('pjps') || t.includes('science'))) {
+       if (!journalName && !t.includes('open access') && t.length < 50) {
+         journalName = earlyElements[i];
+       }
     }
+    
+    // Check for DOI line to extract journal name if missed
+    if (t.includes('doi.org/') || t.includes('doi:')) {
+       const clean = earlyElements[i].replace(/https?:\/\/doi\.org\/[^\s]+/i, '').replace(/doi:?\s*10\.[^\s]+/i, '').trim();
+       if (clean.length > 5 && clean.length < 80) {
+          const possibleJournal = clean.replace(/et al\.?/i, '').replace(/\([0-9]{4}\)/, '').replace(/[0-9]+:[0-9]+/, '').trim();
+          if (possibleJournal.length > 5 && !journalName) journalName = possibleJournal;
+       }
+    }
+  }
 
-    // Skip common publisher headers, DOI strings, Volume info, etc
+  // 1.5. Title Extraction
+  let titleIndex = -1;
+  
+  for (let i = 0; i < earlyElements.length; i++) {
+    const t = earlyElements[i].toLowerCase();
+
+    // Skip common publisher headers, DOI strings, Volume info, etc for Title search
     if (
       t.includes('open access') || 
       t.includes('research article') || 
@@ -56,12 +71,15 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
       t.includes('issue') ||
       t.includes('pp.') ||
       t.includes('pages') ||
-      t.length < 10
+      t.includes('creative commons') ||
+      t.includes('license') ||
+      t.length < 15
     ) {
        continue;
     }
+    
     // First substantial line is likely the Title
-    if (earlyElements[i].length > 15 && earlyElements[i].length < 400 && !t.startsWith('abstract')) {
+    if (earlyElements[i].length > 20 && earlyElements[i].length < 500 && !t.startsWith('abstract') && !t.startsWith('background')) {
        title = earlyElements[i];
        titleIndex = i;
        break;
@@ -77,18 +95,34 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   let authorsRaw = '';
   let affiliationsRaw = '';
   
-  if (titleIndex !== -1 && titleIndex + 1 < earlyElements.length) {
-    authorsRaw = earlyElements[titleIndex + 1];
-    // Next line might be affiliations if it doesn't say abstract
-    if (titleIndex + 2 < earlyElements.length && !earlyElements[titleIndex + 2].toLowerCase().startsWith('abstract')) {
-       affiliationsRaw = earlyElements[titleIndex + 2];
+  if (titleIndex !== -1) {
+    // Collect everything between Title and Abstract
+    let collectedBlocks = [];
+    for (let i = titleIndex + 1; i < earlyElements.length; i++) {
+       const t = earlyElements[i].toLowerCase();
+       if (t.startsWith('abstract') || t.startsWith('background') || t.startsWith('introduction')) {
+          break; // Stop at abstract
+       }
+       // Skip standard journal guff that might appear here
+       if (t.includes('doi.org/') || t.includes('et al.') || t.includes('open access')) continue;
+       
+       collectedBlocks.push(earlyElements[i]);
+    }
+    
+    if (collectedBlocks.length > 0) {
+       // Heuristic: usually first 1-3 blocks are authors, rest are affiliations/correspondence
+       authorsRaw = collectedBlocks.join(' ');
+       affiliationsRaw = collectedBlocks.join(' \n');
     }
   }
 
   // Structure Authors
   let structuredAuthors: any[] = [];
   if (authorsRaw) {
+     // Regex to split names securely
      const names = authorsRaw.split(/,\s*|\s+and\s+/i).map(n => n.trim()).filter(n => n.length > 2);
+     let orderCounter = 1;
+     
      names.forEach((n, idx) => {
         const isCorresponding = n.includes('*') || n.toLowerCase().includes('corresponding');
         
@@ -108,22 +142,27 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
 
         let cleanName = n.replace(/[^a-zA-Z\s.-]/g, '').trim(); 
         if (cleanName.length < 2) cleanName = n; // fallback
+        
+        // Exclude massive blocks that are clearly affiliations or addresses, not names
+        if (cleanName.length > 50 || cleanName.toLowerCase().includes('department') || cleanName.toLowerCase().includes('university')) {
+           return;
+        }
 
         structuredAuthors.push({
            name: cleanName,
-           affiliation: affiliationsRaw, // shared heuristic
+           affiliation: affiliationsRaw, // Pass entire block to be safe, PMC requires explicit linking which we will fake for now
            email,
            orcid,
            isCorresponding,
-           order: idx + 1
+           order: orderCounter++
         });
      });
   }
 
   // 3. Document Scanning (DOI, Funding, Ethics, Grants, Volume)
   let doi = '';
-  const doiMatch = html.match(/10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i);
-  if (doiMatch) doi = doiMatch[0];
+  const doiMatch = html.match(/(?:doi\.org\/|doi:?\s*)(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i);
+  if (doiMatch) doi = doiMatch[1];
 
   let volume = '';
   let issue = '';
@@ -232,15 +271,30 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     const text = $(el).text().trim().toLowerCase();
     if (text === 'references' || text === 'reference' || text === 'bibliography' || text === 'literature cited') {
       let current = $(el).parent().is('p') ? $(el).parent().next() : $(el).next();
+      
       while (current.length > 0) {
         const curText = current.text().toLowerCase();
+        
         // Break out of references if we hit publisher notes, declarations, or a new major section
         if (current.is('h1, h2') || curText.includes("publisher's note") || curText.includes("springer nature") || curText.includes("declarations")) {
            break;
         }
+        
+        // If References are mapped as Paragraphs
         if (current.is('p') && current.text().trim().length > 10) {
           rawReferences += current.text().trim() + '\n';
         }
+        
+        // If References are mapped as Lists (Ordered or Unordered)
+        if (current.is('ol, ul')) {
+           current.find('li').each((_, li) => {
+              const liText = $(li).text().trim();
+              if (liText.length > 10) {
+                 rawReferences += liText + '\n';
+              }
+           });
+        }
+
         current = current.next();
       }
       return false; 
