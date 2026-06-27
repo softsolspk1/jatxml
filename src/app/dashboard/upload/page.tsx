@@ -87,29 +87,13 @@ export default function UploadPage() {
     setFiles(prev => prev.map(f => f.id === uploadFile.id ? { ...f, status: 'uploading' } : f));
     
     try {
-      // 1. Get Presigned URL
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: uploadFile.file.name, contentType: uploadFile.file.type || 'application/octet-stream' })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      const formData = new FormData();
+      formData.append('file', uploadFile.file);
 
-      // 2. Upload to Cloudflare R2
-      const uploadRes = await fetch(data.url, {
-        method: 'PUT',
-        body: uploadFile.file,
-        headers: { 'Content-Type': uploadFile.file.type || 'application/octet-stream' }
-      });
-
-      if (!uploadRes.ok) throw new Error("Storage upload failed");
-
-      // 3. Trigger Extraction API
+      // Trigger Extraction API (Backend handles R2 upload directly)
       const extractRes = await fetch('/api/articles', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: data.key, originalFileName: uploadFile.file.name })
+        body: formData
       });
       
       const extractData = await extractRes.json();

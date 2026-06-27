@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { r2Client } from "@/lib/r2";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { extractMetadataFromDocx } from "@/lib/extractor/docxParser";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -15,27 +15,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized. Only Admins and Editorial Managers can upload articles." }, { status: 403 });
     }
 
-    const { key, originalFileName } = await req.json();
-    if (!key) return NextResponse.json({ error: "Missing key" }, { status: 400 });
+    const formData = await req.formData();
+    const file = formData.get('file') as File;
+    
+    if (!file) return NextResponse.json({ error: "Missing file" }, { status: 400 });
 
     const bucketName = process.env.R2_BUCKET_NAME || "softsols1";
+    const originalFileName = file.name;
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const key = `uploads/${Date.now()}-${originalFileName}`;
 
-    // 1. Download file from R2
-    const getCommand = new GetObjectCommand({
-      Bucket: bucketName,
-      Key: key,
-    });
-    
-    let buffer: Buffer;
+    // 1. Upload to R2 directly from backend (Bypasses CORS issues)
     try {
-      const r2Response = await r2Client.send(getCommand);
-      const byteArray = await r2Response.Body?.transformToByteArray();
-      if (!byteArray) throw new Error("Empty body");
-      buffer = Buffer.from(byteArray);
+      await r2Client.send(new PutObjectCommand({
+        Bucket: bucketName,
+        Key: key,
+        Body: buffer,
+        ContentType: file.type || 'application/octet-stream',
+      }));
     } catch (e) {
-      console.warn("Could not fetch from R2 (check credentials). Running dummy extraction.", e);
-      // Fallback for demonstration without real R2 keys
-      buffer = Buffer.from("");
+      console.warn("Could not upload to R2 (check credentials). Continuing with local extraction.", e);
     }
     // Determine Uploader ID
     let uploaderId = "admin-dummy-id"; // Fallback
