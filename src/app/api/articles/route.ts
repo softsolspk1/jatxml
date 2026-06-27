@@ -37,16 +37,8 @@ export async function POST(req: NextRequest) {
       // Fallback for demonstration without real R2 keys
       buffer = Buffer.from("");
     }
-
-    // 2. Extract Metadata (mock if buffer is empty due to lack of R2 keys)
-    let extractedData: any = { title: "Draft Title", abstract: "", keywords: "", references: [], figures: [], tables: [] };
-    if (buffer.length > 0) {
-      extractedData = await extractMetadataFromDocx(buffer);
-    }
-
-    // 3. Save to Database
+    // Determine Uploader ID
     let uploaderId = "admin-dummy-id"; // Fallback
-    
     if (session && (session.user as any)?.email) {
       const dbUser = await db.user.findUnique({
         where: { email: (session.user as any).email }
@@ -55,7 +47,6 @@ export async function POST(req: NextRequest) {
         uploaderId = dbUser.id;
       }
     } else {
-      // Create dummy user if not exists for testing purposes ONLY if no session
       const user = await db.user.upsert({
         where: { email: "admin@example.com" },
         update: {},
@@ -69,39 +60,89 @@ export async function POST(req: NextRequest) {
       uploaderId = user.id;
     }
 
-    const article = await db.article.create({
-      data: {
-        title: extractedData.title,
-        originalFileName: originalFileName || key.split('-').pop() || "Document.docx",
-        fileUrl: key,
-        status: "METADATA_EXTRACTED",
-        uploaderId: uploaderId,
-        metadata: {
-          create: {
-            title: extractedData.title,
-            abstract: extractedData.abstract,
-            keywords: extractedData.keywords,
-            doi: extractedData.doi,
-            fundingInfo: extractedData.fundingInfo,
-            conflictOfInterest: extractedData.conflictOfInterest,
-          }
-        },
-        authors: {
-          create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
-        },
-        references: {
-          create: extractedData.references || []
-        },
-        figures: {
-          create: extractedData.figures || []
-        },
-        tables: {
-          create: extractedData.tables || []
-        }
-      },
-    });
+    // 2. Extract Metadata & Save
+    if (originalFileName.toLowerCase().endsWith('.zip')) {
+      const AdmZip = (await import('adm-zip')).default;
+      const zip = new AdmZip(buffer);
+      const zipEntries = zip.getEntries();
+      const articleIds = [];
 
-    return NextResponse.json({ articleId: article.id });
+      for (const entry of zipEntries) {
+        if (!entry.isDirectory && entry.entryName.toLowerCase().endsWith('.docx')) {
+          const docxBuffer = entry.getData();
+          
+          let extractedData: any = { title: entry.name, abstract: "", keywords: "", references: [], figures: [], tables: [] };
+          try {
+            if (docxBuffer.length > 0) {
+              extractedData = await extractMetadataFromDocx(docxBuffer);
+            }
+          } catch (e) {
+            console.warn(`Could not extract metadata from ${entry.name}`, e);
+          }
+
+          const article = await db.article.create({
+            data: {
+              title: extractedData.title || entry.name,
+              originalFileName: entry.name,
+              fileUrl: key,
+              status: "METADATA_EXTRACTED",
+              uploaderId: uploaderId,
+              metadata: {
+                create: {
+                  title: extractedData.title,
+                  abstract: extractedData.abstract,
+                  keywords: extractedData.keywords,
+                  doi: extractedData.doi,
+                  fundingInfo: extractedData.fundingInfo,
+                  conflictOfInterest: extractedData.conflictOfInterest,
+                }
+              },
+              authors: {
+                create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
+              },
+              references: { create: extractedData.references || [] },
+              figures: { create: extractedData.figures || [] },
+              tables: { create: extractedData.tables || [] }
+            },
+          });
+          articleIds.push(article.id);
+        }
+      }
+      return NextResponse.json({ isZip: true, articleIds, count: articleIds.length });
+    } else {
+      let extractedData: any = { title: "Draft Title", abstract: "", keywords: "", references: [], figures: [], tables: [] };
+      if (buffer.length > 0) {
+        extractedData = await extractMetadataFromDocx(buffer);
+      }
+
+      const article = await db.article.create({
+        data: {
+          title: extractedData.title,
+          originalFileName: originalFileName || key.split('-').pop() || "Document.docx",
+          fileUrl: key,
+          status: "METADATA_EXTRACTED",
+          uploaderId: uploaderId,
+          metadata: {
+            create: {
+              title: extractedData.title,
+              abstract: extractedData.abstract,
+              keywords: extractedData.keywords,
+              doi: extractedData.doi,
+              fundingInfo: extractedData.fundingInfo,
+              conflictOfInterest: extractedData.conflictOfInterest,
+            }
+          },
+          authors: {
+            create: extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : []
+          },
+          references: { create: extractedData.references || [] },
+          figures: { create: extractedData.figures || [] },
+          tables: { create: extractedData.tables || [] }
+        },
+      });
+
+      return NextResponse.json({ isZip: false, articleId: article.id });
+    }
   } catch (error) {
     console.error("API error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
