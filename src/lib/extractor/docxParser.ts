@@ -21,19 +21,25 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     if (text.length > 3) earlyElements.push(text);
   });
 
-  // 1. Title Extraction
+  // 1. Title and Journal Extraction
   let titleIndex = -1;
+  let journalName = '';
+  
   for (let i = 0; i < earlyElements.length; i++) {
     const t = earlyElements[i].toLowerCase();
-    // Skip common publisher headers, DOI strings, or journal names
+    
+    // Check if this line looks like a journal name at the very top
+    if (i < 3 && (t.includes('journal') || t.includes('bmc') || t.includes('springer') || t.includes('review'))) {
+       if (!journalName) journalName = earlyElements[i];
+       continue;
+    }
+
+    // Skip common publisher headers, DOI strings, etc
     if (
       t.includes('open access') || 
       t.includes('research') || 
       t.includes('doi:') || 
       t.includes('10.') || 
-      t.includes('systematic review') || 
-      t.includes('bmc') ||
-      t.includes('springer') ||
       t.length < 10
     ) {
        continue;
@@ -66,7 +72,7 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   // Structure Authors
   let structuredAuthors: any[] = [];
   if (authorsRaw) {
-     const names = authorsRaw.split(/,|and/).map(n => n.trim()).filter(n => n.length > 2);
+     const names = authorsRaw.split(/,\s*|\s+and\s+/i).map(n => n.trim()).filter(n => n.length > 2);
      names.forEach((n, idx) => {
         const isCorresponding = n.includes('*') || n.toLowerCase().includes('corresponding');
         
@@ -98,10 +104,16 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
      });
   }
 
-  // 3. Document Scanning (DOI, Funding, Ethics, Grants)
+  // 3. Document Scanning (DOI, Funding, Ethics, Grants, Volume)
   let doi = '';
   const doiMatch = html.match(/10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i);
   if (doiMatch) doi = doiMatch[0];
+
+  let volume = '';
+  let issue = '';
+  let pages = '';
+  let publicationDate = '';
+
 
   let fundingInfo = '';
   let grantNumbers = '';
@@ -236,6 +248,19 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     tables.push({ label: `Table ${i + 1}`, htmlContent: $.html(el), caption: $(el).prev('p').text() || `Table ${i + 1}` });
   });
 
+  // Scan for Volume, Issue, Pages in early elements
+  for (let i = 0; i < earlyElements.length; i++) {
+    const text = earlyElements[i];
+    const volMatch = text.match(/Vol(?:ume|\.)?\s*(\d+)/i);
+    if (volMatch && !volume) volume = volMatch[1];
+    
+    const issueMatch = text.match(/Issue\s*(\d+)/i) || text.match(/No\.\s*(\d+)/i);
+    if (issueMatch && !issue) issue = issueMatch[1];
+
+    const pagesMatch = text.match(/(?:pp\.|pages?)\s*(\d+\s*[-–]\s*\d+|\d+)/i);
+    if (pagesMatch && !pages) pages = pagesMatch[1];
+  }
+
   return {
     title,
     runningTitle,
@@ -254,6 +279,11 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     grantNumbers,
     conflictOfInterest,
     ethicalApproval,
-    acknowledgements
+    acknowledgements,
+    journalName,
+    volume,
+    issue,
+    pages,
+    publicationDate
   };
 }
