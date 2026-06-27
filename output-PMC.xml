@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.3 20210610//EN" "JATS-journalpublishing1-3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.3" specific-use="pmc" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">Live Test Journal</journal-id>
+      <journal-title-group>
+        <journal-title>Live Test Journal</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">0000-0000</issn>
+      <publisher>
+        <publisher-name>Standard Publisher</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.1186/s13643-023-02359-2</article-id>
+      <title-group>
+        <article-title>Muhammad Harris Shoaib1*  , Muhammad Sikandar1, Rabia Ismail Yousuf1, Monica Parkash1,</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Kazmi</surname>
+            <given-names>Syed Jamil Hassan</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Ahmed</surname>
+            <given-names>Farrukh Rafiq</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Ahmed</surname>
+            <given-names>Kamran</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>and</surname>
+            <given-names>Muhammad Talha Saleem</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">4</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <institution>Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <institution>Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <institution>Syeda Hina Zaidi1</institution>
+      </aff>
+      <aff id="aff4">
+        <label>4</label>
+        <institution>Syeda Hina Zaidi1</institution>
+      </aff>
+      <pub-date pub-type="epub">
+        <day>27</day>
+        <month>06</month>
+        <year>2026</year>
+      </pub-date>
+      <abstract>
+        <p>Background The coronavirus disease 2019 (COVID-19) pandemic has transformed the global view of education, including graduate and postgraduate education making the development of an alternative approach in times of social isolation an academic imperative. The present review aims to investigate the challenges experienced among undergraduate and postgraduate education and the strategies adopted to address these challenges during the pandemic.
+Method The preferred reporting items for the systematic review and meta-analyses extension for Scoping Reviews (PRISMA-ScR) were followed. The aim was to include journal articles published in the English language that discussed the influence of the pandemic on educational processes and applied innovative approaches as a solution to educational challenges. From January to August 2020, PubMed, EMBASE, and Google Scholar were searched for articles, yielding 10,019 articles. Two groups of authors examined the retrieved articles separately to avoid any risk of bias. The title and abstract of the articles were used for scrutiny, followed by full-text screening based on the established inclusion and exclusion criteria. The facts and findings of the studies were also discussed based on per capita income, literacy rate, and Internet accessibility.
+Results Thirty of the obtained articles were included in the study. The selected articles were from North and South/ Latin America, Asia &amp; Pacific, South Africa, and Europe regions. Nineteen of the selected articles dealt with undergraduate education, ten with postgraduate, and one with both groups. The affordability of digital devices and the availability of Internet services were the major challenges for low- and middle-income economies. The ZOOM platform has been adopted by more than 90% of the education systems.
+Conclusion Means of communication, including visual media, digitized content, and other web-based platforms, have been recognized as efficient learning and training tools, but have not been fully accessible for mass application and use due to the lack of availability of resources, their cost, and insufficient training among the users. In light of this
+*Correspondence: Muhammad Harris Shoaib
+mhshoaib@uok.edu.pk; harrisshoaib2000@yahoo.com
+Full list of author information is available at the end of the article
+© The Author(s) 2023. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/. The Creative Commons Public Domain Dedication waiver (http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated in a credit line to the data.
+review, it is suggested that harmonized and collaborative efforts should be made to develop cost-effective and userfriendly tools to overcome the current challenges and prevent future educational crises.
+Systemic review registration The review was not registered.
+Keywords COVID-19, Online education, PRISMA statement, Pandemic</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec1">
+      <title>Introduction</title>
+      <p>Article body content parsing mapped from raw HTML.</p>
+    </sec>
+    <floats-group>
+      <fig id="fig1">
+        <label>Figure 1</label>
+        <caption>
+          <p>Figure 1</p>
+        </caption>
+        <graphic xlink:href="figure_1.png"/>
+      </fig>
+      <fig id="fig2">
+        <label>Figure 2</label>
+        <caption>
+          <p>Figure 2</p>
+        </caption>
+        <graphic xlink:href="figure_2.png"/>
+      </fig>
+      <fig id="fig3">
+        <label>Figure 3</label>
+        <caption>
+          <p>Figure 3</p>
+        </caption>
+        <graphic xlink:href="figure_3.png"/>
+      </fig>
+      <fig id="fig4">
+        <label>Figure 4</label>
+        <caption>
+          <p>Figure 4</p>
+        </caption>
+        <graphic xlink:href="figure_4.png"/>
+      </fig>
+      <fig id="fig5">
+        <label>Figure 5</label>
+        <caption>
+          <p>Figure 5</p>
+        </caption>
+        <graphic xlink:href="figure_5.png"/>
+      </fig>
+      <fig id="fig6">
+        <label>Figure 6</label>
+        <caption>
+          <p>Figure 6</p>
+        </caption>
+        <graphic xlink:href="figure_6.png"/>
+      </fig>
+      <fig id="fig7">
+        <label>Figure 1</label>
+        <caption>
+          <p>Fig. 1 Flow diagram of the study selection [12]</p>
+        </caption>
+        <graphic xlink:href="figure_7.png"/>
+      </fig>
+      <fig id="fig8">
+        <label>Figure 2</label>
+        <caption>
+          <p>Fig. 2 Representing the percentage of Internet users in different countries. Source: Internet World Stats Report (2021)</p>
+        </caption>
+        <graphic xlink:href="figure_8.png"/>
+      </fig>
+      <fig id="fig9">
+        <label>Figure 3</label>
+        <caption>
+          <p>Fig. 3 Representing the percentage of literacy in different countries. Source: WorldAtlas (2020)</p>
+        </caption>
+        <graphic xlink:href="figure_9.png"/>
+      </fig>
+      <fig id="fig10">
+        <label>Figure 4</label>
+        <caption>
+          <p>Fig. 4 Representing the GDPs of different countries. Source: World Bank Report (2019)</p>
+        </caption>
+        <graphic xlink:href="figure_10.png"/>
+      </fig>
+      <fig id="fig11">
+        <label>Figure 5</label>
+        <caption>
+          <p>Fig. 5 Representing the GDPs per capita of different countries. World Bank Report (2019)</p>
+        </caption>
+        <graphic xlink:href="figure_11.png"/>
+      </fig>
+      <fig id="fig12">
+        <label>Figure 12</label>
+        <caption>
+          <p>Figure 12</p>
+        </caption>
+        <graphic xlink:href="figure_12.png"/>
+      </fig>
+      <fig id="fig13">
+        <label>Figure 13</label>
+        <caption>
+          <p>Figure 13</p>
+        </caption>
+        <graphic xlink:href="figure_13.png"/>
+      </fig>
+      <fig id="fig14">
+        <label>Figure 14</label>
+        <caption>
+          <p>Figure 14</p>
+        </caption>
+        <graphic xlink:href="figure_14.png"/>
+      </fig>
+      <fig id="fig15">
+        <label>Figure 15</label>
+        <caption>
+          <p>Figure 15</p>
+        </caption>
+        <graphic xlink:href="figure_15.png"/>
+      </fig>
+      <fig id="fig16">
+        <label>Figure 16</label>
+        <caption>
+          <p>Figure 16</p>
+        </caption>
+        <graphic xlink:href="figure_16.png"/>
+      </fig>
+      <fig id="fig17">
+        <label>Figure 17</label>
+        <caption>
+          <p>Figure 17</p>
+        </caption>
+        <graphic xlink:href="figure_17.png"/>
+      </fig>
+      <fig id="fig18">
+        <label>Figure 18</label>
+        <caption>
+          <p>Figure 18</p>
+        </caption>
+        <graphic xlink:href="figure_18.png"/>
+      </fig>
+      <fig id="fig19">
+        <label>Figure 19</label>
+        <caption>
+          <p>Figure 19</p>
+        </caption>
+        <graphic xlink:href="figure_19.png"/>
+      </fig>
+      <fig id="fig20">
+        <label>Figure 20</label>
+        <caption>
+          <p>Figure 20</p>
+        </caption>
+        <graphic xlink:href="figure_20.png"/>
+      </fig>
+      <fig id="fig21">
+        <label>Figure 21</label>
+        <caption>
+          <p>Figure 21</p>
+        </caption>
+        <graphic xlink:href="figure_21.png"/>
+      </fig>
+      <fig id="fig22">
+        <label>Figure 22</label>
+        <caption>
+          <p>Figure 22</p>
+        </caption>
+        <graphic xlink:href="figure_22.png"/>
+      </fig>
+      <fig id="fig23">
+        <label>Figure 23</label>
+        <caption>
+          <p>Figure 23</p>
+        </caption>
+        <graphic xlink:href="figure_23.png"/>
+      </fig>
+      <table-wrap id="tbl1">
+        <label>Table 1</label>
+        <caption>
+          <p>Table 1</p>
+        </caption>
+        <table>
+          <tbody>
+            <tr>
+              <td>et al. Systematic Reviews          (2023) 12:195  https://doi.org/10.1186/s13643-023-02359-2</td>
+              <td>Systematic Reviews</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="tbl2">
+        <label>Table 2</label>
+        <caption>
+          <p>Table 2</p>
+        </caption>
+        <table>
+          <tbody>
+            <tr>
+              <td>Fig. 5 Representing the GDPs per capita of different countries. World Bank Report (2019)</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="tbl3">
+        <label>Table 3</label>
+        <caption>
+          <p>Table 3</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th>COVID-19</th>
+              <th>Coronavirus disease 2019</th>
+            </tr>
+          </thead>
+          <tbody/>
+          <tbody>
+            <tr>
+              <td>WHO</td>
+              <td>World Health Organization</td>
+            </tr>
+            <tr>
+              <td>UNICEF</td>
+              <td>U nited Nations International Children’s Emergency Fund</td>
+            </tr>
+            <tr>
+              <td>UNESCO</td>
+              <td>United 	Nations 	Educational, 	Scientific 	and 	Cultural Organization</td>
+            </tr>
+            <tr>
+              <td>GDP</td>
+              <td>Gross domestic product</td>
+            </tr>
+            <tr>
+              <td>PRISMA-ScR</td>
+              <td>Preferred Reporting Items for Systematic Review and MetaAnalyses extension for Scoping Reviews</td>
+            </tr>
+            <tr>
+              <td>SARS-CoV-2</td>
+              <td>Severe acute respiratory syndrome coronavirus 2</td>
+            </tr>
+            <tr>
+              <td>AAMC</td>
+              <td>Association of American Medical Colleges</td>
+            </tr>
+            <tr>
+              <td>DL</td>
+              <td>Distance learning</td>
+            </tr>
+            <tr>
+              <td>TB</td>
+              <td>Technology bases</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="tbl4">
+        <label>Table 4</label>
+        <caption>
+          <p>Table 4</p>
+        </caption>
+        <table>
+          <tbody>
+            <tr>
+              <td>Ready to submit your research ?  Choose BMC and benefit from: fast, convenient online submissionthorough peer review by experienced researchers in your field rapid publication on acceptancesupport for research data, including large and complex data typesgold Open Access which fosters wider collaboration and increased citations maximum visibility for your research: over 100M website views per year  At BMC, research is always in progress.  Learn more biomedcentral.com/submissions</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </floats-group>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="ref1">
+        <mixed-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>clerkship</surname>
+              <given-names>Continuing medical student education during the coronavirus disease 2019 (COVID-19) pandemic: development of a virtual radiation oncology</given-names>
+            </name>
+          </person-group>
+          <article-title>Adv Radiat Oncol</article-title>
+          <year>2020</year>
+          <volume>5</volume>
+          <issue>4</issue>
+          <fpage>732</fpage>
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

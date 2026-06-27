@@ -28,16 +28,36 @@ export default async function SystemSettingsPage() {
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <div>
-              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Crossref Deposit API Key</label>
-              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>PubMed Central (PMC) FTP Host</label>
+              <input type="text" defaultValue="ftp.ncbi.nlm.nih.gov" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
             </div>
             <div>
               <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>SciELO API Token</label>
               <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
             </div>
             <div>
-              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>PubMed Central FTP Host</label>
-              <input type="text" defaultValue="ftp.ncbi.nlm.nih.gov" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Crossref Deposit API Key</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Google Scholar Integration Key</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>DOAJ API Key</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>OpenAIRE Token</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Scopus XML Workflows Key</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Web of Science Publisher Workflows Key</label>
+              <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
             </div>
           </div>
         </div>
@@ -61,6 +81,12 @@ export default async function SystemSettingsPage() {
             <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
               <input type="checkbox" />
               Allow Reviewers to download raw source DOCX
+            </label>
+            <div style={{ borderTop: '1px solid var(--border-color)', margin: '10px 0' }}></div>
+            <h3 style={{ fontSize: '1rem', color: 'var(--brand-blue)', fontWeight: 600 }}>Pipeline Behaviors</h3>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 600 }}>
+              <input type="checkbox" defaultChecked />
+              Convert XML into HTML Version of the Article (For Web Preview)
             </label>
           </div>
         </div>
