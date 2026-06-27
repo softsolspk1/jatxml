@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { generateJATSXML } from "@/lib/xml/jatsGenerator";
-import { generatePMCXML, generateSciELOXML } from "@/lib/xml/specializedGenerators";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
@@ -10,7 +8,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const session = await getServerSession(authOptions);
     
     if (!session || (session.user as any).role === 'REVIEWER') {
-      return NextResponse.json({ error: "Unauthorized. You do not have permission to generate XML." }, { status: 403 });
+      return NextResponse.json({ error: "Unauthorized." }, { status: 403 });
     }
 
     const resolvedParams = await params;
@@ -21,14 +19,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       structuredAuthors, structuredReferences 
     } = await req.json();
 
-    // Strict Backend Validation
-    if (!title || !title.trim()) return NextResponse.json({ error: "Title is required" }, { status: 400 });
-    if (!abstract || !abstract.trim()) return NextResponse.json({ error: "Abstract is required" }, { status: 400 });
-    if (!structuredAuthors || structuredAuthors.length === 0 || !structuredAuthors[0].name.trim()) {
-       return NextResponse.json({ error: "At least one author is required" }, { status: 400 });
-    }
+    // No strict validation for Drafts! Just save whatever we have.
 
-    // 1. Update the Metadata based on the user's manual review edits
     await db.metadata.update({
       where: { articleId: resolvedParams.id },
       data: { 
@@ -39,7 +31,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       }
     });
 
-    // Handle Structured Authors array
     if (structuredAuthors && Array.isArray(structuredAuthors)) {
       await db.author.deleteMany({ where: { articleId: resolvedParams.id } });
       for (const a of structuredAuthors) {
@@ -52,7 +43,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       }
     }
 
-    // Handle Structured References array
     if (structuredReferences && Array.isArray(structuredReferences)) {
       await db.reference.deleteMany({ where: { articleId: resolvedParams.id } });
       for (const r of structuredReferences) {
@@ -73,30 +63,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       }
     });
 
-    // 2. Fetch full article with metadata, authors, references
-    const article = await db.article.findUnique({
-      where: { id: resolvedParams.id },
-      include: { metadata: true, authors: true, references: true, figures: true, tables: true }
-    });
-
-    if (!article || !article.metadata) return NextResponse.json({ error: "Metadata not found" }, { status: 404 });
-
-    // 3. Generate XML Formats
-    const jatsXml = generateJATSXML(article);
-    const pmcXml = generatePMCXML(article);
-    const scieloXml = generateSciELOXML(article);
-
-    // 4. Save Generated XML to DB (assuming we expand schema to save these, or just update status)
-    await db.article.update({
-      where: { id: resolvedParams.id },
-      data: { status: "XML_GENERATED" }
-    });
-
-    // Return the generated XML for the client to preview or download
-    return NextResponse.json({ jats: jatsXml, pmc: pmcXml, scielo: scieloXml });
+    return NextResponse.json({ success: true, message: "Draft saved successfully" });
 
   } catch (error) {
-    console.error("XML Generation error:", error);
+    console.error("Draft Save error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

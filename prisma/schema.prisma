@@ -16,6 +16,7 @@ model User {
   status    String   @default("ACTIVE")
   lastLogin DateTime?
   articles  Article[]
+  historyLogs ArticleHistory[]
   resetTokens ResetToken[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,6 +44,7 @@ model Article {
   figures          Figure[]
   tables           ArticleTable[]
   authors          Author[]
+  history          ArticleHistory[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
@@ -81,6 +83,7 @@ model Reference {
   journal     String?
   year        String?
   doi         String?
+  pmid        String?
   volume      String?
   issue       String?
   pages       String?
@@ -114,4 +117,14 @@ model Author {
   orcid       String?
   isCorresponding Boolean @default(false)
   order       Int @default(0)
+}
+
+model ArticleHistory {
+  id               String   @id @default(cuid())
+  articleId        String
+  article          Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  metadataSnapshot String   // Stored as JSON string
+  createdAt        DateTime @default(now())
 }

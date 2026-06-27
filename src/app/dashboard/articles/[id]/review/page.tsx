@@ -11,7 +11,14 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   
   const article = await db.article.findUnique({
     where: { id: resolvedParams.id },
-    include: { metadata: true, references: true, figures: true, tables: true, authors: true }
+    include: { 
+      metadata: true, 
+      references: true, 
+      figures: true, 
+      tables: true, 
+      authors: { orderBy: { order: 'asc' } },
+      history: { orderBy: { createdAt: 'desc' }, include: { user: true } }
+    }
   });
 
   if (!article || !article.metadata) return notFound();
@@ -29,7 +36,9 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
           <ReviewForm 
             articleId={article.id} 
             initialData={article.metadata} 
-            initialAuthors={article.authors || []} 
+            initialAuthors={article.authors || []}
+            initialReferences={article.references || []}
+            history={article.history || []}
             role={(session?.user as any)?.role || 'REVIEWER'}
           />
         </div>
