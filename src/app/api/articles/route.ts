@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { r2Client } from "@/lib/r2";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { extractMetadataFromDocx } from "@/lib/extractor/docxParser";
+import { extractMetadataWithLLM } from "@/lib/extractor/llmParser";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
@@ -74,7 +75,22 @@ export async function POST(req: NextRequest) {
           let extractedData: any = { title: entry.name, abstract: "", keywords: "", references: [], figures: [], tables: [] };
           try {
             if (docxBuffer.length > 0) {
-              extractedData = await extractMetadataFromDocx(docxBuffer);
+              // Extract tables and figures using cheerio
+              const htmlData = await extractMetadataFromDocx(docxBuffer);
+              extractedData.figures = htmlData.figures;
+              extractedData.tables = htmlData.tables;
+
+              try {
+                // Extract text metadata using Gemini LLM
+                const llmData = await extractMetadataWithLLM(docxBuffer);
+                extractedData = { ...extractedData, ...llmData };
+                // Keep the figures/tables intact
+                extractedData.figures = htmlData.figures;
+                extractedData.tables = htmlData.tables;
+              } catch (llmError) {
+                console.warn("LLM Extraction failed, falling back to basic extraction", llmError);
+                extractedData = { ...extractedData, ...htmlData };
+              }
             }
           } catch (e) {
             console.warn(`Could not extract metadata from ${entry.name}`, e);
@@ -107,9 +123,16 @@ export async function POST(req: NextRequest) {
                 }
               },
               authors: {
-                create: extractedData.structuredAuthors && extractedData.structuredAuthors.length > 0 
-                        ? extractedData.structuredAuthors 
-                        : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
+                create: extractedData.authors && extractedData.authors.length > 0 
+                        ? extractedData.authors.map((a: any) => ({
+                            name: a.name,
+                            affiliation: a.affiliation,
+                            email: a.email,
+                            orcid: a.orcid,
+                            isCorresponding: a.isCorresponding,
+                            order: a.order
+                          }))
+                        : []
               },
               references: { 
                 create: (extractedData.references || []).map((r: any) => ({
@@ -131,7 +154,22 @@ export async function POST(req: NextRequest) {
     } else {
       let extractedData: any = { title: "Draft Title", abstract: "", keywords: "", references: [], figures: [], tables: [] };
       if (buffer.length > 0) {
-        extractedData = await extractMetadataFromDocx(buffer);
+        // Extract tables and figures using cheerio
+        const htmlData = await extractMetadataFromDocx(buffer);
+        extractedData.figures = htmlData.figures;
+        extractedData.tables = htmlData.tables;
+
+        try {
+          // Extract text metadata using Gemini LLM
+          const llmData = await extractMetadataWithLLM(buffer);
+          extractedData = { ...extractedData, ...llmData };
+          // Keep the figures/tables intact
+          extractedData.figures = htmlData.figures;
+          extractedData.tables = htmlData.tables;
+        } catch (llmError) {
+          console.warn("LLM Extraction failed, falling back to basic extraction", llmError);
+          extractedData = { ...extractedData, ...htmlData };
+        }
       }
 
       const article = await db.article.create({
@@ -161,9 +199,16 @@ export async function POST(req: NextRequest) {
                 }
               },
               authors: {
-                create: extractedData.structuredAuthors && extractedData.structuredAuthors.length > 0 
-                        ? extractedData.structuredAuthors 
-                        : (extractedData.authorsRaw ? [{ name: extractedData.authorsRaw, affiliation: extractedData.affiliationsRaw }] : [])
+                create: extractedData.authors && extractedData.authors.length > 0 
+                        ? extractedData.authors.map((a: any) => ({
+                            name: a.name,
+                            affiliation: a.affiliation,
+                            email: a.email,
+                            orcid: a.orcid,
+                            isCorresponding: a.isCorresponding,
+                            order: a.order
+                          }))
+                        : []
               },
               references: { 
                 create: (extractedData.references || []).map((r: any) => ({
