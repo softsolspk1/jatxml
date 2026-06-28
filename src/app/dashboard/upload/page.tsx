@@ -206,7 +206,7 @@ export default function UploadPage() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                          <Loader2 size={20} className="animate-spin" color="var(--brand-blue)" />
                          <span style={{ fontSize: '0.85rem', color: 'var(--brand-blue)', fontWeight: 600 }}>
-                           Extracting metadata with AI... ({Math.floor((Date.now() - (f.startTime || Date.now())) / 1000)}s)
+                           Extracting metadata in process ({Math.floor((Date.now() - (f.startTime || Date.now())) / 1000)}s). It may take longer depend upon size of Article.
                          </span>
                       </div>
                     )}
