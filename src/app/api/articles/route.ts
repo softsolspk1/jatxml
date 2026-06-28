@@ -75,10 +75,9 @@ export async function POST(req: NextRequest) {
           let extractedData: any = { title: entry.name, abstract: "", keywords: "", references: [], figures: [], tables: [] };
           try {
             if (docxBuffer.length > 0) {
-              // Extract tables and figures using cheerio
+              // Extract tables, figures, and raw HTML using cheerio/mammoth
               const htmlData = await extractMetadataFromDocx(docxBuffer);
-              extractedData.figures = htmlData.figures;
-              extractedData.tables = htmlData.tables;
+              extractedData = { ...extractedData, ...htmlData };
 
               try {
                 // Extract text metadata using Gemini LLM
@@ -115,6 +114,7 @@ export async function POST(req: NextRequest) {
                   issue: extractedData.issue,
                   pages: extractedData.pages,
                   doi: extractedData.doi,
+                  publicationDate: extractedData.publicationDate && !isNaN(new Date(extractedData.publicationDate).getTime()) ? new Date(extractedData.publicationDate) : null,
                   fundingInfo: extractedData.fundingInfo,
                   grantNumbers: extractedData.grantNumbers,
                   conflictOfInterest: extractedData.conflictOfInterest,
@@ -155,10 +155,9 @@ export async function POST(req: NextRequest) {
     } else {
       let extractedData: any = { title: "Draft Title", abstract: "", keywords: "", references: [], figures: [], tables: [] };
       if (buffer.length > 0) {
-        // Extract tables and figures using cheerio
+        // Extract tables, figures, and raw HTML using cheerio/mammoth
         const htmlData = await extractMetadataFromDocx(buffer);
-        extractedData.figures = htmlData.figures;
-        extractedData.tables = htmlData.tables;
+        extractedData = { ...extractedData, ...htmlData };
 
         try {
           // Extract text metadata using Gemini LLM
@@ -192,6 +191,7 @@ export async function POST(req: NextRequest) {
                   issue: extractedData.issue,
                   pages: extractedData.pages,
                   doi: extractedData.doi,
+                  publicationDate: extractedData.publicationDate && !isNaN(new Date(extractedData.publicationDate).getTime()) ? new Date(extractedData.publicationDate) : null,
                   fundingInfo: extractedData.fundingInfo,
                   grantNumbers: extractedData.grantNumbers,
                   conflictOfInterest: extractedData.conflictOfInterest,

@@ -1,11 +1,13 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { Download, FileText, Archive, BookOpen, Globe, Send, Info, Key, CheckSquare, Server } from "lucide-react";
+import { Download, FileText, Archive, BookOpen, Globe, Send, Info, Key, CheckSquare, Server, AlertTriangle, XCircle, CheckCircle2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import PipelineVisualizer from "../PipelineVisualizer";
 import SubmitButton from "./SubmitButton";
+import { generateJATSXML } from "@/lib/xml/jatsGenerator";
+import { validateXMLStructure } from "@/lib/xml/validator";
 
 export default async function ExportCenterPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -25,12 +27,21 @@ export default async function ExportCenterPage({ params }: { params: Promise<{ i
 
   const article = await db.article.findUnique({
     where: { id: resolvedParams.id },
-    include: { metadata: true }
+    include: { 
+      metadata: true,
+      authors: true,
+      references: true,
+      figures: true,
+      tables: true
+    }
   });
 
   if (!article) {
     notFound();
   }
+
+  const generatedXml = generateJATSXML(article);
+  const report = validateXMLStructure(generatedXml);
 
   const exportOptions = [
     {
@@ -70,6 +81,53 @@ export default async function ExportCenterPage({ params }: { params: Promise<{ i
   return (
     <div>
       <PipelineVisualizer currentStatus={article.status} />
+
+      {/* Validation Report */}
+      <div className="card" style={{ marginBottom: '30px', borderLeft: '4px solid ' + (report.errors.length > 0 ? '#EF4444' : (report.warnings.length > 0 ? '#F59E0B' : '#10B981')) }}>
+        <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
+          {report.errors.length > 0 ? <XCircle color="#EF4444" size={28} /> : (report.warnings.length > 0 ? <AlertTriangle color="#F59E0B" size={28} /> : <CheckCircle2 color="#10B981" size={28} />)}
+          Automated Validation Report
+        </h2>
+        
+        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+          <div style={{ padding: '10px', backgroundColor: '#F8FAFC', borderRadius: '8px', flex: 1, textAlign: 'center' }}>
+            <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>JATS Compliance</span>
+            <span style={{ fontWeight: 'bold', color: report.compliance.jats ? '#10B981' : '#EF4444' }}>{report.compliance.jats ? 'PASSED' : 'FAILED'}</span>
+          </div>
+          <div style={{ padding: '10px', backgroundColor: '#F8FAFC', borderRadius: '8px', flex: 1, textAlign: 'center' }}>
+            <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>PMC Strict Rules</span>
+            <span style={{ fontWeight: 'bold', color: report.compliance.pmc ? '#10B981' : '#EF4444' }}>{report.compliance.pmc ? 'PASSED' : 'FAILED'}</span>
+          </div>
+          <div style={{ padding: '10px', backgroundColor: '#F8FAFC', borderRadius: '8px', flex: 1, textAlign: 'center' }}>
+            <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>SciELO Strict Rules</span>
+            <span style={{ fontWeight: 'bold', color: report.compliance.scielo ? '#10B981' : '#EF4444' }}>{report.compliance.scielo ? 'PASSED' : 'FAILED'}</span>
+          </div>
+        </div>
+
+        {report.errors.length > 0 && (
+          <div style={{ marginBottom: '15px' }}>
+            <h3 style={{ color: '#EF4444', fontSize: '1.1rem', marginBottom: '10px' }}>Critical Errors ({report.errors.length})</h3>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#B91C1C', backgroundColor: '#FEE2E2', padding: '15px', borderRadius: '8px' }}>
+              {report.errors.map((err, i) => <li key={i} style={{ marginBottom: '5px' }}>{err}</li>)}
+            </ul>
+          </div>
+        )}
+
+        {report.warnings.length > 0 && (
+          <div>
+            <h3 style={{ color: '#D97706', fontSize: '1.1rem', marginBottom: '10px' }}>Warnings ({report.warnings.length})</h3>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#B45309', backgroundColor: '#FEF3C7', padding: '15px', borderRadius: '8px' }}>
+              {report.warnings.map((warn, i) => <li key={i} style={{ marginBottom: '5px' }}>{warn}</li>)}
+            </ul>
+          </div>
+        )}
+        
+        {report.errors.length === 0 && report.warnings.length === 0 && (
+          <p style={{ color: '#047857', backgroundColor: '#D1FAE5', padding: '15px', borderRadius: '8px' }}>
+            Perfect! No errors or warnings found. The generated XML is 100% compliant with JATS, PMC, and SciELO guidelines.
+          </p>
+        )}
+      </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <div>
