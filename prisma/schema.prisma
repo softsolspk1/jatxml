@@ -17,6 +17,7 @@ model User {
   lastLogin DateTime?
   articles  Article[]
   historyLogs ArticleHistory[]
+  systemLogs  SystemLog[]
   resetTokens ResetToken[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -150,4 +151,14 @@ model SystemSettings {
   sourceRetentionDays  Int      @default(30)
   zipRetentionDays     Int      @default(90)
   updatedAt            DateTime @updatedAt
+}
+
+model SystemLog {
+  id        String   @id @default(cuid())
+  action    String
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status    String   @default("SUCCESS") // SUCCESS, FAILED, WARNING
+  details   String?
+  createdAt DateTime @default(now())
 }

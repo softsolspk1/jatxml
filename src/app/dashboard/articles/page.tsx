@@ -4,6 +4,7 @@ import DeleteArticleButton from "./DeleteArticleButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ArticleFilters from "./ArticleFilters";
+import ArticleExportButtons from "./ArticleExportButtons";
 import { Prisma } from "@prisma/client";
 
 export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ q?: string, status?: string, startDate?: string, endDate?: string, journal?: string }> }) {
@@ -58,9 +59,12 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <h1 style={{ fontSize: '2rem', color: 'var(--brand-blue)' }}>Article Tracking</h1>
-        {(role === 'ADMIN' || role === 'EDITORIAL_MANAGER') && (
-           <Link href="/dashboard/upload" className="button">Upload New Article</Link>
-        )}
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <ArticleExportButtons articles={articles} />
+          {(role === 'ADMIN' || role === 'EDITORIAL_MANAGER') && (
+            <Link href="/dashboard/upload" className="button">Upload New Article</Link>
+          )}
+        </div>
       </div>
 
       <ArticleFilters />
