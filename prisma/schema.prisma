@@ -128,3 +128,26 @@ model ArticleHistory {
   metadataSnapshot String   // Stored as JSON string
   createdAt        DateTime @default(now())
 }
+
+model SystemSettings {
+  id                   String   @id @default("global")
+  pmcFtpHost           String?
+  pmcFtpUser           String?
+  pmcFtpPassword       String?
+  scieloApiToken       String?
+  crossrefUsername     String?
+  crossrefPassword     String?
+  doajApiKey           String?
+  googleScholarKey     String?
+  openAireToken        String?
+  scopusKey            String?
+  wosKey               String?
+  oaiEnabled           Boolean  @default(true)
+  require2FA           Boolean  @default(false)
+  logMetadataChanges   Boolean  @default(true)
+  allowReviewerSource  Boolean  @default(false)
+  convertXmlToHtml     Boolean  @default(true)
+  sourceRetentionDays  Int      @default(30)
+  zipRetentionDays     Int      @default(90)
+  updatedAt            DateTime @updatedAt
+}
