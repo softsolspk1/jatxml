@@ -10,7 +10,8 @@ export default function ArticleFilters() {
 
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [status, setStatus] = useState(searchParams.get('status') || '');
-  const [date, setDate] = useState(searchParams.get('date') || '');
+  const [startDate, setStartDate] = useState(searchParams.get('startDate') || '');
+  const [endDate, setEndDate] = useState(searchParams.get('endDate') || '');
   // Using an input for Journal to simulate the filter for now.
   const [journal, setJournal] = useState(searchParams.get('journal') || '');
 
@@ -18,7 +19,8 @@ export default function ArticleFilters() {
     const params = new URLSearchParams();
     if (query) params.set('q', query);
     if (status) params.set('status', status);
-    if (date) params.set('date', date);
+    if (startDate) params.set('startDate', startDate);
+    if (endDate) params.set('endDate', endDate);
     if (journal) params.set('journal', journal);
 
     router.push(`/dashboard/articles?${params.toString()}`);
@@ -61,12 +63,23 @@ export default function ArticleFilters() {
         style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
       />
 
-      <input 
-        type="date" 
-        value={date}
-        onChange={e => setDate(e.target.value)}
-        style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
-      />
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <input 
+          type="date" 
+          value={startDate}
+          onChange={e => setStartDate(e.target.value)}
+          style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
+          title="From Date"
+        />
+        <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>to</span>
+        <input 
+          type="date" 
+          value={endDate}
+          onChange={e => setEndDate(e.target.value)}
+          style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', backgroundColor: 'white' }} 
+          title="Till Date"
+        />
+      </div>
       
       <button onClick={handleApply} className="button button-outline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <Filter size={18} /> Apply Filters

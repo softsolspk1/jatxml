@@ -6,7 +6,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ArticleFilters from "./ArticleFilters";
 import { Prisma } from "@prisma/client";
 
-export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ q?: string, status?: string, date?: string, journal?: string }> }) {
+export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ q?: string, status?: string, startDate?: string, endDate?: string, journal?: string }> }) {
   const session = await getServerSession(authOptions);
   const role = (session?.user as any)?.role;
   const canDelete = role === 'ADMIN' || role === 'EDITORIAL_MANAGER';
@@ -36,16 +36,16 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
     };
   }
 
-  if (params.date) {
-    // Basic date filtering based on YYYY-MM-DD string
-    const startOfDay = new Date(params.date);
-    const endOfDay = new Date(params.date);
-    endOfDay.setDate(endOfDay.getDate() + 1);
-    
-    whereClause.createdAt = {
-      gte: startOfDay,
-      lt: endOfDay
-    };
+  if (params.startDate || params.endDate) {
+    whereClause.createdAt = {};
+    if (params.startDate) {
+      whereClause.createdAt.gte = new Date(params.startDate);
+    }
+    if (params.endDate) {
+      const endOfDay = new Date(params.endDate);
+      endOfDay.setDate(endOfDay.getDate() + 1);
+      whereClause.createdAt.lt = endOfDay;
+    }
   }
 
   const articles = await db.article.findMany({
