@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
 import DeleteArticleButton from "./DeleteArticleButton";
+import ValidationReportTrigger from "./ValidationReportTrigger";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ArticleFilters from "./ArticleFilters";
@@ -110,6 +111,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
                   {(article.status === 'READY_FOR_EXPORT' || article.status === 'SUBMITTED') && role !== 'XML_OPERATOR' ? (
                     <Link href={`/dashboard/articles/${article.id}/export`} style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>Download Center</Link>
                   ) : null}
+                  <ValidationReportTrigger articleId={article.id} />
                   <Link href={`/dashboard/articles/${article.id}/review`} style={{ color: 'var(--brand-green)', fontWeight: 600 }}>Review</Link>
                   {canDelete && <DeleteArticleButton articleId={article.id} />}
                 </td>

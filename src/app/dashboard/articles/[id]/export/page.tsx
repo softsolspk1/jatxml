@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { Download, FileText, Archive, BookOpen, Globe, Send } from "lucide-react";
+import { Download, FileText, Archive, BookOpen, Globe, Send, Info, Key, CheckSquare, Server } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -119,6 +119,66 @@ export default async function ExportCenterPage({ params }: { params: Promise<{ i
           </p>
           
           <SubmitButton articleId={article.id} isAlreadySubmitted={article.status === 'SUBMITTED'} />
+        </div>
+
+      </div>
+
+      {/* Manual Submission Guide */}
+      <div className="card" style={{ marginTop: '40px' }}>
+        <h2 style={{ fontSize: '1.5rem', color: 'var(--brand-blue)', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
+          <Info size={24} /> Export & Submission Guide
+        </h2>
+        
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: 1.6 }}>
+          Scholarly databases generally do not offer public automated API endpoints for direct submission. 
+          To successfully publish this article, please follow these manual submission steps using the downloaded packages above.
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          <div style={{ padding: '20px', backgroundColor: '#F8FAFC', borderRadius: '8px', borderLeft: '4px solid #F59E0B' }}>
+            <h3 style={{ fontSize: '1.2rem', color: '#B45309', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <Key size={20} /> 1. Crossref DOI Registration
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Crossref handles DOI assignments. You must use the <strong>Complete ZIP Package</strong> which contains the <code>crossref.xml</code> file.
+            </p>
+            <ul style={{ color: 'var(--text-secondary)', marginTop: '10px', paddingLeft: '20px', lineHeight: 1.6 }}>
+              <li>Log in to the <a href="https://doi.crossref.org/servlet/deposit" target="_blank" rel="noreferrer" style={{ color: 'var(--brand-blue)' }}>Crossref Web Deposit Portal</a>.</li>
+              <li>Upload the <code>crossref.xml</code> file directly to the portal.</li>
+              <li>Alternatively, if you use OJS (Open Journal Systems), you can use their built-in Crossref plugin.</li>
+            </ul>
+          </div>
+
+          <div style={{ padding: '20px', backgroundColor: '#F8FAFC', borderRadius: '8px', borderLeft: '4px solid #059669' }}>
+            <h3 style={{ fontSize: '1.2rem', color: '#047857', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <Server size={20} /> 2. PubMed Central (PMC) Submission
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              PMC requires strict compliance and receives submissions exclusively through their secure FTP server.
+            </p>
+            <ul style={{ color: 'var(--text-secondary)', marginTop: '10px', paddingLeft: '20px', lineHeight: 1.6 }}>
+              <li>Download the <strong>PMC Submission Package</strong> above.</li>
+              <li>Connect to the NIH FTP server (e.g., <code>ftp-private.ncbi.nlm.nih.gov</code>) using your organization's assigned PMC FTP credentials.</li>
+              <li>Upload the entire ZIP package directly to your designated publisher drop-folder.</li>
+              <li>PMC will automatically process the ZIP and email your organization with the ingestion report.</li>
+            </ul>
+          </div>
+
+          <div style={{ padding: '20px', backgroundColor: '#F8FAFC', borderRadius: '8px', borderLeft: '4px solid #8B5CF6' }}>
+            <h3 style={{ fontSize: '1.2rem', color: '#6D28D9', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <CheckSquare size={20} /> 3. SciELO Submission
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              SciELO relies on the SciELO PC Programs toolkit and national portal coordinators.
+            </p>
+            <ul style={{ color: 'var(--text-secondary)', marginTop: '10px', paddingLeft: '20px', lineHeight: 1.6 }}>
+              <li>Download the <strong>SciELO Submission Package</strong>.</li>
+              <li>Run the package through the local SciELO Markup and Packa tools (if required by your national SciELO coordinator).</li>
+              <li>Upload the final package to your national SciELO FTP or web management portal.</li>
+            </ul>
+          </div>
+
         </div>
 
       </div>
