@@ -1,5 +1,5 @@
 import Client from 'ssh2-sftp-client';
-const archiver = require('archiver');
+import { ZipArchive } from 'archiver';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -22,7 +22,7 @@ export async function uploadToFtp(articleId: string, xmlFiles: { name: string, c
     // 1. Create ZIP Archive
     await new Promise<void>((resolve, reject) => {
       const output = fs.createWriteStream(zipPath);
-      const archive = archiver('zip', { zlib: { level: 9 } });
+      const archive = new ZipArchive({ zlib: { level: 9 } });
 
       output.on('close', () => resolve());
       archive.on('error', (err: any) => reject(err));
