@@ -25,7 +25,10 @@ export default async function DashboardLayout({
 
       {/* Main Content */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <header style={{ backgroundColor: 'white', padding: '20px 40px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'flex-end' }}>
+        <header style={{ backgroundColor: 'white', padding: '20px 40px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ margin: 0, fontSize: '1.2rem', color: 'var(--brand-blue)' }}>Pakistan Journal of Pharmaceutical Sciences</h1>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{ textAlign: 'right' }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Welcome, {session?.user?.name || 'User'}</div>
@@ -40,6 +43,9 @@ export default async function DashboardLayout({
         <main style={{ padding: '40px', flex: 1 }}>
           {children}
         </main>
+        <footer style={{ backgroundColor: 'white', padding: '20px 40px', borderTop: '1px solid var(--border-color)', textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+          © 2026 Softsols Pakistan. All Rights Reserved.
+        </footer>
       </div>
     </div>
   );
