@@ -10,6 +10,7 @@ type UploadFile = {
   status: 'idle' | 'uploading' | 'success' | 'error';
   message?: string;
   articleIds?: string[];
+  startTime?: number;
 };
 
 export default function UploadPage() {
@@ -38,6 +39,15 @@ export default function UploadPage() {
   useEffect(() => {
     fetchHistory();
   }, []);
+
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    let interval: any;
+    if (globalUploading) {
+      interval = setInterval(() => setTick(t => t + 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [globalUploading]);
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -84,7 +94,7 @@ export default function UploadPage() {
   };
 
   const processFile = async (uploadFile: UploadFile) => {
-    setFiles(prev => prev.map(f => f.id === uploadFile.id ? { ...f, status: 'uploading' } : f));
+    setFiles(prev => prev.map(f => f.id === uploadFile.id ? { ...f, status: 'uploading', startTime: Date.now() } : f));
     
     try {
       const formData = new FormData();
@@ -192,7 +202,14 @@ export default function UploadPage() {
                   </div>
                   
                   <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    {f.status === 'uploading' && <Loader2 size={20} className="animate-spin" color="var(--brand-blue)" />}
+                    {f.status === 'uploading' && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                         <Loader2 size={20} className="animate-spin" color="var(--brand-blue)" />
+                         <span style={{ fontSize: '0.85rem', color: 'var(--brand-blue)', fontWeight: 600 }}>
+                           Extracting metadata with AI... ({Math.floor((Date.now() - (f.startTime || Date.now())) / 1000)}s)
+                         </span>
+                      </div>
+                    )}
                     {f.status === 'success' && <CheckCircle size={24} color="var(--brand-green)" />}
                     {f.status === 'error' && <AlertCircle size={24} color="#EF4444" />}
                     
