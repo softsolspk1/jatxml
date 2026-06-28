@@ -25,6 +25,8 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         h1 { color: #0A2540; font-size: 2.5em; border-bottom: 2px solid #2ECC71; padding-bottom: 10px; }
         h2 { color: #0A2540; margin-top: 40px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .abstract { background: #f9f9f9; padding: 20px; border-left: 4px solid #2ECC71; margin-bottom: 30px; }
+        .main-body { margin-top: 30px; }
+        .main-body p { margin-bottom: 15px; }
         .keywords { font-weight: bold; color: #555; }
         .figure { text-align: center; margin: 30px 0; }
         .figure img { max-width: 100%; border: 1px solid #ddd; padding: 5px; }
@@ -49,6 +51,12 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         <h2>Abstract</h2>
         <p>${metadata.abstract}</p>
         ${metadata.keywords ? `<p class="keywords">Keywords: ${metadata.keywords}</p>` : ''}
+    </section>
+    ` : ''}
+
+    ${metadata.bodyHtml ? `
+    <section class="main-body">
+        ${metadata.bodyHtml}
     </section>
     ` : ''}
 

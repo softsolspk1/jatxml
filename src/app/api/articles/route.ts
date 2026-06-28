@@ -119,7 +119,8 @@ export async function POST(req: NextRequest) {
                   grantNumbers: extractedData.grantNumbers,
                   conflictOfInterest: extractedData.conflictOfInterest,
                   ethicalApproval: extractedData.ethicalApproval,
-                  acknowledgements: extractedData.acknowledgements
+                  acknowledgements: extractedData.acknowledgements,
+                  bodyHtml: extractedData.rawHtml
                 }
               },
               authors: {
@@ -195,7 +196,8 @@ export async function POST(req: NextRequest) {
                   grantNumbers: extractedData.grantNumbers,
                   conflictOfInterest: extractedData.conflictOfInterest,
                   ethicalApproval: extractedData.ethicalApproval,
-                  acknowledgements: extractedData.acknowledgements
+                  acknowledgements: extractedData.acknowledgements,
+                  bodyHtml: extractedData.rawHtml
                 }
               },
               authors: {

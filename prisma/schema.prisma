@@ -70,6 +70,7 @@ model Metadata {
   conflictOfInterest String?
   ethicalApproval  String?
   acknowledgements String?
+  bodyHtml         String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

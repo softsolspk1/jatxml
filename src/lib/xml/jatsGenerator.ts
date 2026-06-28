@@ -136,18 +136,55 @@ export function generateJATSXML(article: any) {
   // ============================================================
   const body = root.ele('body');
   
-  if (headings && headings.length > 0) {
+  if (metadata.bodyHtml) {
+    const $ = cheerio.load(metadata.bodyHtml);
+    let currentSec: any = null;
+    let secCounter = 1;
+
+    $('body').children().each((_, el) => {
+      const tag = $(el).prop('tagName')?.toLowerCase();
+      const text = $(el).text().trim();
+      
+      if (!text) return; // Skip empty elements
+      
+      // Stop processing if we hit references or acknowledgements to avoid duplication
+      if (text.toLowerCase() === 'references' || text.toLowerCase() === 'acknowledgements' || text.toLowerCase() === 'acknowledgments') {
+        return false; 
+      }
+
+      if (tag && tag.match(/^h[1-6]$/)) {
+         currentSec = body.ele('sec', { id: `sec${secCounter++}` });
+         currentSec.ele('title').txt(text);
+      } else if (tag === 'p') {
+         if (!currentSec) {
+            currentSec = body.ele('sec', { id: `sec${secCounter++}` });
+            // Only add an Introduction title if we aren't just reading abstract/title stuff
+            if (text.length > 50) currentSec.ele('title').txt('Introduction');
+         }
+         // Filter out standard non-body paragraphs if they leaked
+         if (!text.toLowerCase().startsWith('abstract') && !text.toLowerCase().startsWith('keywords')) {
+            currentSec.ele('p').txt(text);
+         }
+      }
+    });
+    
+    // Fallback if the body section is still empty after parsing
+    if (!currentSec) {
+      const sec = body.ele('sec', { id: 'sec1' });
+      sec.ele('title').txt('Content');
+      sec.ele('p').txt('Parsed content did not yield valid paragraphs.');
+    }
+
+  } else if (headings && headings.length > 0) {
     // Basic flat implementation for nested sections using h1/h2 mapping
     let currentSec: any = null;
     headings.forEach((heading: any, index: number) => {
       if (heading.level === 1 || heading.level === 2) {
         currentSec = body.ele('sec', { id: `sec${index + 1}` });
         currentSec.ele('title').txt(heading.text);
-        currentSec.ele('p').txt(`Content mapped for section: ${heading.text}. Actual text requires deep DOM injection.`);
       } else if (currentSec) {
         const subSec = currentSec.ele('sec', { id: `sec${index + 1}` });
         subSec.ele('title').txt(heading.text);
-        subSec.ele('p').txt(`Subsection content for: ${heading.text}`);
       }
     });
   } else {
