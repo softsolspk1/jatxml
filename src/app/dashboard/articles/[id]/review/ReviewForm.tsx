@@ -126,7 +126,7 @@ export default function ReviewForm({ articleId, initialData, initialAuthors, ini
   };
 
   const handleDownload = () => {
-    window.location.href = `/api/articles/${articleId}/export`;
+    window.location.href = `/dashboard/articles/${articleId}/export`;
   };
 
   const tabStyle = (tabId: string) => ({
@@ -339,7 +339,7 @@ export default function ReviewForm({ articleId, initialData, initialAuthors, ini
 
         {(status === 'success' || isReadOnly) && (
           <button type="button" className="button" style={{ flex: 1, backgroundColor: 'white', color: 'var(--brand-green)', borderColor: 'var(--brand-green)', border: '1px solid' }} onClick={handleDownload}>
-            <CheckCircle size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }}/> Download XML Package
+            <CheckCircle size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }}/> Go to Export & Submission
           </button>
         )}
       </div>
