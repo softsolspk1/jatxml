@@ -45,6 +45,21 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
 <body>
     <header>
         <h1>${metadata.title || 'Untitled Article'}</h1>
+        
+        ${authors && authors.length > 0 ? `
+        <div class="authors" style="margin-top: 15px; font-size: 1.1em; color: #444;">
+            ${authors.map(a => `<span style="margin-right: 15px;"><strong>${a.name}</strong>${a.affiliation ? `<br><small style="color: #666;">${a.affiliation}</small>` : ''}</span>`).join('')}
+        </div>
+        ` : ''}
+        
+        <div class="publication-details" style="margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 5px; font-size: 0.9em;">
+            ${metadata.journalName ? `<strong>Journal:</strong> ${metadata.journalName} &nbsp;|&nbsp; ` : ''}
+            ${metadata.volume ? `<strong>Volume:</strong> ${metadata.volume} &nbsp;|&nbsp; ` : ''}
+            ${metadata.issue ? `<strong>Issue:</strong> ${metadata.issue} &nbsp;|&nbsp; ` : ''}
+            ${metadata.pages ? `<strong>Pages:</strong> ${metadata.pages} &nbsp;|&nbsp; ` : ''}
+            ${metadata.publicationDate ? `<strong>Date:</strong> ${new Date(metadata.publicationDate).toISOString().split('T')[0]} &nbsp;|&nbsp; ` : ''}
+            ${metadata.doi ? `<strong>DOI:</strong> <a href="https://doi.org/${metadata.doi}" target="_blank">${metadata.doi}</a>` : ''}
+        </div>
     </header>
 
     ${metadata.abstract ? `
@@ -63,12 +78,17 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
 
     <section class="figures">
         ${figures.length > 0 ? '<h2>Figures</h2>' : ''}
-        ${figures.map(f => `
+        ${figures.map(f => {
+            if (!f.base64Data) return '';
+            const imgSrc = f.base64Data.startsWith('data:image') 
+              ? f.base64Data 
+              : `data:image/png;base64,${f.base64Data}`;
+            return `
             <div class="figure">
-                <img src="${f.base64Data}" alt="${f.caption}" />
-                <div class="caption"><strong>${f.label}:</strong> ${f.caption}</div>
+                <img src="${imgSrc}" alt="${f.caption || ''}" />
+                <div class="caption"><strong>${f.label || 'Figure'}:</strong> ${f.caption || ''}</div>
             </div>
-        `).join('')}
+        `}).join('')}
     </section>
 
     <section class="tables">

@@ -41,11 +41,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     
     // FORMAT: Raw XML
     if (format === 'xml') {
+      const safeName = (article.originalFileName || 'article').replace(/[^a-zA-Z0-9.\-_]/g, '_');
       return new NextResponse(jatsXml, {
         status: 200,
         headers: {
           'Content-Type': 'application/xml',
-          'Content-Disposition': `attachment; filename="JATS_${article.originalFileName}.xml"`
+          'Content-Disposition': `attachment; filename="JATS_${safeName}.xml"`
         }
       });
     }
@@ -93,9 +94,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     const zipBuffer = await zip.generateAsync({ type: "uint8array" });
-    const filename = format === 'zip' ? `JATS_COMPLETE_${article.originalFileName}.zip` :
-                     format === 'pmc' ? `PMC_${article.originalFileName}.zip` :
-                     `SCIELO_${article.originalFileName}.zip`;
+    const safeNameZip = (article.originalFileName || 'article').replace(/[^a-zA-Z0-9.\-_]/g, '_');
+    const filename = format === 'zip' ? `JATS_COMPLETE_${safeNameZip}.zip` :
+                     format === 'pmc' ? `PMC_${safeNameZip}.zip` :
+                     `SCIELO_${safeNameZip}.zip`;
 
     return new NextResponse(zipBuffer as any, {
       status: 200,
