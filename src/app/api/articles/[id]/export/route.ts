@@ -60,7 +60,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         article.figures.forEach((fig, idx) => {
           if (fig.base64Data) {
             // Strip data:image/... prefix
-            const base64Content = fig.base64Data.replace(/^data:image\/\w+;base64,/, "");
+            const base64Content = fig.base64Data.replace(/^data:image\/[^;]+;base64,/, "");
             imgFolder?.file(`figure_${idx + 1}.png`, base64Content, { base64: true });
           }
         });

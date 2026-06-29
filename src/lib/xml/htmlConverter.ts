@@ -83,6 +83,20 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
             const imgSrc = f.base64Data.startsWith('data:image') 
               ? f.base64Data 
               : `data:image/png;base64,${f.base64Data}`;
+            
+            const isUnsupported = imgSrc.includes('x-wmf') || imgSrc.includes('x-emf');
+            
+            if (isUnsupported) {
+                return `
+                <div class="figure">
+                    <div style="width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; background-color: #f3f4f6; border: 1px dashed #ccc; color: #666; text-align: center; border-radius: 4px;">
+                        <p style="margin: 0; padding: 20px;">🖼️ <strong>Image format is not supported for browser preview.</strong><br/>It will be included in the exported package.</p>
+                    </div>
+                    <div class="caption"><strong>${f.label || 'Figure'}:</strong> ${f.caption || ''}</div>
+                </div>
+                `;
+            }
+
             return `
             <div class="figure">
                 <img src="${imgSrc}" alt="${f.caption || ''}" />
