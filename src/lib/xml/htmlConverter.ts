@@ -1,4 +1,27 @@
 export function convertToHTML(metadata: any, authors: any[] = [], references: any[] = [], figures: any[] = [], tables: any[] = [], supplementaryFiles: any[] = []) {
+  
+  let processedBodyHtml = metadata.bodyHtml || '';
+  let processedAbstract = metadata.abstract || '';
+
+  if (references && references.length > 0) {
+    // Regex for bracketed citations: [1], [1, 2], [1-3]
+    const bracketRegex = /\[([0-9,\s-]+)\]/g;
+    const bracketReplacer = (match: string, p1: string) => {
+      const innerLinked = p1.replace(/\b(\d+)\b/g, '<a href="#ref-$1" style="color: #0056b3; text-decoration: none;">$1</a>');
+      return `[${innerLinked}]`;
+    };
+    
+    // Regex for superscript citations: <sup>1</sup>, <sup>1, 2</sup>
+    const supRegex = /<sup[^>]*>([0-9,\s-]+)<\/sup>/g;
+    const supReplacer = (match: string, p1: string) => {
+      const innerLinked = p1.replace(/\b(\d+)\b/g, '<a href="#ref-$1" style="color: #0056b3; text-decoration: none;">$1</a>');
+      return `<sup>${innerLinked}</sup>`;
+    };
+
+    processedBodyHtml = processedBodyHtml.replace(bracketRegex, bracketReplacer).replace(supRegex, supReplacer);
+    processedAbstract = processedAbstract.replace(bracketRegex, bracketReplacer).replace(supRegex, supReplacer);
+  }
+
   // A clean, stylized HTML representation of the extracted metadata and article contents.
   return `
 <!DOCTYPE html>
@@ -6,19 +29,19 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${metadata.title || 'Research Article'}</title>
+    <title>\${metadata.title || 'Research Article'}</title>
     
     <!-- HighWire Press tags for Google Scholar Indexing -->
-    <meta name="citation_title" content="${metadata.title || 'Untitled Article'}">
-    ${metadata.journalName ? `<meta name="citation_journal_title" content="${metadata.journalName}">` : ''}
-    ${metadata.publicationDate ? `<meta name="citation_publication_date" content="${new Date(metadata.publicationDate).getFullYear()}">` : ''}
-    ${metadata.volume ? `<meta name="citation_volume" content="${metadata.volume}">` : ''}
-    ${metadata.issue ? `<meta name="citation_issue" content="${metadata.issue}">` : ''}
-    ${metadata.doi ? `<meta name="citation_doi" content="${metadata.doi}">` : ''}
-    ${metadata.pages ? `<meta name="citation_firstpage" content="${metadata.pages.split(/[-–]/)[0]?.trim() || ''}">` : ''}
-    ${metadata.abstract ? `<meta name="citation_abstract" content="${metadata.abstract.replace(/"/g, '&quot;')}">` : ''}
-    ${(authors || []).map((author: any) => `<meta name="citation_author" content="${author.name}">
-    ${author.affiliation ? `<meta name="citation_author_institution" content="${author.affiliation}">` : ''}`).join('\n    ')}
+    <meta name="citation_title" content="\${metadata.title || 'Untitled Article'}">
+    \${metadata.journalName ? \`<meta name="citation_journal_title" content="\${metadata.journalName}">\` : ''}
+    \${metadata.publicationDate ? \`<meta name="citation_publication_date" content="\${new Date(metadata.publicationDate).getFullYear()}">\` : ''}
+    \${metadata.volume ? \`<meta name="citation_volume" content="\${metadata.volume}">\` : ''}
+    \${metadata.issue ? \`<meta name="citation_issue" content="\${metadata.issue}">\` : ''}
+    \${metadata.doi ? \`<meta name="citation_doi" content="\${metadata.doi}">\` : ''}
+    \${metadata.pages ? \`<meta name="citation_firstpage" content="\${metadata.pages.split(/[-–]/)[0]?.trim() || ''}">\` : ''}
+    \${metadata.abstract ? \`<meta name="citation_abstract" content="\${metadata.abstract.replace(/"/g, '&quot;')}">\` : ''}
+    \${(authors || []).map((author: any) => \`<meta name="citation_author" content="\${author.name}">
+    \${author.affiliation ? \`<meta name="citation_author_institution" content="\${author.affiliation}">\` : ''}\`).join('\\n    ')}
     
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; color: #333; text-align: justify; }
@@ -36,54 +59,70 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         .table-wrap th, .table-wrap td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .table-wrap th { background-color: #f2f2f2; }
         .caption { font-size: 0.9em; color: #666; margin-top: 10px; font-style: italic; text-align: center; }
-        .reference-list { list-style-type: decimal; padding-left: 20px; text-align: left; }
-        .reference-list li { margin-bottom: 10px; }
+        .reference-list { list-style-type: none; padding-left: 0; text-align: left; }
+        .reference-list li { margin-bottom: 15px; padding-left: 2em; text-indent: -2em; }
+        .reference-list li a { color: #0056b3; text-decoration: none; }
+        .reference-list li a:hover { text-decoration: underline; }
         .supp-list { list-style-type: square; padding-left: 20px; text-align: left; }
         footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8em; text-align: center; color: #777; }
     </style>
 </head>
 <body>
     <header>
-        <h1>${metadata.title || 'Untitled Article'}</h1>
+        <h1>\${metadata.title || 'Untitled Article'}</h1>
         
-        ${authors && authors.length > 0 ? `
+        \${authors && authors.length > 0 ? \`
         <div class="authors" style="margin-top: 15px; font-size: 1.1em; color: #444; display: flex; flex-wrap: wrap; gap: 15px;">
-            ${authors.map(a => `<div style="flex: 1 1 250px;"><strong>${a.name}</strong>${a.affiliation ? `<br><small style="color: #666;">${a.affiliation}</small>` : ''}</div>`).join('')}
+            \${authors.map(a => \`<div style="flex: 1 1 250px;"><strong>\${a.name}</strong>\${a.affiliation ? \`<br><small style="color: #666;">\${a.affiliation}</small>\` : ''}</div>\`).join('')}
         </div>
-        ` : ''}
+        \` : ''}
         
         <div class="publication-details" style="margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 5px; font-size: 0.9em;">
-            ${metadata.journalName ? `<strong>Journal:</strong> ${metadata.journalName} &nbsp;|&nbsp; ` : ''}
-            ${metadata.volume ? `<strong>Volume:</strong> ${metadata.volume} &nbsp;|&nbsp; ` : ''}
-            ${metadata.issue ? `<strong>Issue:</strong> ${metadata.issue} &nbsp;|&nbsp; ` : ''}
-            ${metadata.pages ? `<strong>Pages:</strong> ${metadata.pages} &nbsp;|&nbsp; ` : ''}
-            ${metadata.publicationDate ? `<strong>Date:</strong> ${new Date(metadata.publicationDate).toISOString().split('T')[0]} &nbsp;|&nbsp; ` : ''}
-            ${metadata.doi ? `<strong>DOI:</strong> <a href="https://doi.org/${metadata.doi}" target="_blank">${metadata.doi}</a>` : ''}
+            \${metadata.journalName ? \`<strong>Journal:</strong> \${metadata.journalName} &nbsp;|&nbsp; \` : ''}
+            \${metadata.volume ? \`<strong>Volume:</strong> \${metadata.volume} &nbsp;|&nbsp; \` : ''}
+            \${metadata.issue ? \`<strong>Issue:</strong> \${metadata.issue} &nbsp;|&nbsp; \` : ''}
+            \${metadata.pages ? \`<strong>Pages:</strong> \${metadata.pages} &nbsp;|&nbsp; \` : ''}
+            \${metadata.publicationDate ? \`<strong>Date:</strong> \${new Date(metadata.publicationDate).toISOString().split('T')[0]} &nbsp;|&nbsp; \` : ''}
+            \${metadata.doi ? \`<strong>DOI:</strong> <a href="https://doi.org/\${metadata.doi}" target="_blank">\${metadata.doi}</a>\` : ''}
         </div>
     </header>
 
-    ${metadata.abstract ? `
+    \${processedAbstract ? \`
     <section class="abstract">
         <h2>Abstract</h2>
-        <p>${metadata.abstract}</p>
-        ${metadata.keywords ? `<p class="keywords">Keywords: ${metadata.keywords}</p>` : ''}
+        <p>\${processedAbstract}</p>
+        \${metadata.keywords ? \`<p class="keywords">Keywords: \${metadata.keywords}</p>\` : ''}
     </section>
-    ` : ''}
+    \` : ''}
 
-    ${metadata.bodyHtml ? `
+    \${processedBodyHtml ? \`
     <section class="main-body">
-        ${metadata.bodyHtml}
+        \${processedBodyHtml}
     </section>
-    ` : ''}
+    \` : ''}
+
+    \${references && references.length > 0 ? \`
+    <section class="references" id="references-section">
+        <h2>References</h2>
+        <ul class="reference-list">
+            \${references.map((r, idx) => \`
+                <li id="ref-\${idx + 1}">
+                    \${r.rawText}
+                    \${r.doi ? \`<br><a href="https://doi.org/\${r.doi}" target="_blank">https://doi.org/\${r.doi}</a>\` : ''}
+                </li>
+            \`).join('')}
+        </ul>
+    </section>
+    \` : ''}
 
     <section class="supplementary">
-        ${supplementaryFiles && supplementaryFiles.length > 0 ? '<h2>Supplementary Materials</h2><ul class="supp-list">' : ''}
-        ${supplementaryFiles ? supplementaryFiles.map((s, idx) => `
+        \${supplementaryFiles && supplementaryFiles.length > 0 ? '<h2>Supplementary Materials</h2><ul class="supp-list">' : ''}
+        \${supplementaryFiles ? supplementaryFiles.map((s, idx) => \`
             <li>
-                <strong>Supplementary File ${idx + 1}:</strong> ${s.filename} (${s.type}) - ${(s.size / 1024).toFixed(2)} KB
+                <strong>Supplementary File \${idx + 1}:</strong> \${s.filename} (\${s.type}) - \${(s.size / 1024).toFixed(2)} KB
             </li>
-        `).join('') : ''}
-        ${supplementaryFiles && supplementaryFiles.length > 0 ? '</ul>' : ''}
+        \`).join('') : ''}
+        \${supplementaryFiles && supplementaryFiles.length > 0 ? '</ul>' : ''}
     </section>
 
     <footer>
@@ -128,5 +167,5 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
     </script>
 </body>
 </html>
-  `.trim();
+  \`.trim();
 }

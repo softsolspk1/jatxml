@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Trash2, Plus, CheckCircle, Save, AlertCircle, Clock } from 'lucide-react';
 
 export default function ReviewForm({ articleId, initialData, initialAuthors, initialReferences, history, role }: { articleId: string, initialData: any, initialAuthors?: any[], initialReferences?: any[], history?: any[], role: string }) {
+  const router = useRouter();
   const isReviewer = role === 'REVIEWER';
   const isEditorialManager = role === 'EDITORIAL_MANAGER';
   const isXmlOperator = role === 'XML_OPERATOR';
@@ -126,7 +128,7 @@ export default function ReviewForm({ articleId, initialData, initialAuthors, ini
   };
 
   const handleDownload = () => {
-    window.location.href = `/dashboard/articles/${articleId}/export`;
+    router.push(`/dashboard/articles/${articleId}/export`);
   };
 
   const tabStyle = (tabId: string) => ({
