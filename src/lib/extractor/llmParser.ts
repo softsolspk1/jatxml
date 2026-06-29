@@ -76,6 +76,12 @@ export async function extractMetadataWithLLM(buffer: Buffer) {
     throw new Error("Could not extract any text from the document.");
   }
 
+  // OPTIMIZATION: Truncate massive middle text section since Metadata is at start and References are at the end
+  let optimizedText = rawText;
+  if (rawText.length > 35000) {
+    optimizedText = rawText.substring(0, 15000) + "\n\n...[TEXT TRUNCATED FOR PERFORMANCE]...\n\n" + rawText.substring(rawText.length - 20000);
+  }
+
   const prompt = `
 You are an expert scientific manuscript metadata extractor.
 Analyze the following raw text extracted from a scholarly article (.docx).
@@ -90,7 +96,7 @@ CRITICAL INSTRUCTIONS:
 
 Here is the raw text:
 ====================
-${rawText}
+${optimizedText}
 ====================
   `;
 

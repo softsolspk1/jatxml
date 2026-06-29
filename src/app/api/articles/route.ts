@@ -82,7 +82,13 @@ export async function POST(req: NextRequest) {
               try {
                 // Extract text metadata using Gemini LLM
                 const llmData = await extractMetadataWithLLM(docxBuffer);
-                extractedData = { ...extractedData, ...llmData };
+                // Smart Merge: Only overwrite if LLM returned a valid non-empty value
+                for (const key in llmData) {
+                  if (llmData[key] !== null && llmData[key] !== "" && llmData[key] !== undefined) {
+                    if (Array.isArray(llmData[key]) && llmData[key].length === 0) continue;
+                    extractedData[key] = llmData[key];
+                  }
+                }
                 // Keep the figures/tables intact
                 extractedData.figures = htmlData.figures;
                 extractedData.tables = htmlData.tables;
@@ -162,7 +168,13 @@ export async function POST(req: NextRequest) {
         try {
           // Extract text metadata using Gemini LLM
           const llmData = await extractMetadataWithLLM(buffer);
-          extractedData = { ...extractedData, ...llmData };
+          // Smart Merge: Only overwrite if LLM returned a valid non-empty value
+          for (const key in llmData) {
+            if (llmData[key] !== null && llmData[key] !== "" && llmData[key] !== undefined) {
+              if (Array.isArray(llmData[key]) && llmData[key].length === 0) continue;
+              extractedData[key] = llmData[key];
+            }
+          }
           // Keep the figures/tables intact
           extractedData.figures = htmlData.figures;
           extractedData.tables = htmlData.tables;
