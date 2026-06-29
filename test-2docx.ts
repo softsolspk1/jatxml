@@ -34,7 +34,8 @@ async function processDocx() {
         abstract: data.abstract,
         journalName: "Live Test Journal",
         doi: data.doi || "10.1234/test-2docx",
-        publicationDate: new Date()
+        publicationDate: new Date(),
+        bodyHtml: data.rawHtml
       },
       authors: data.structuredAuthors || [],
       references: data.references || [],

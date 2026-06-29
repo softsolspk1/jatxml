@@ -388,13 +388,60 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     if (dateMatch && !publicationDate) publicationDate = dateMatch[0];
   }
 
+  // 8. Clean up bodyHtml to prevent duplication
+  $('img').remove();
+  $('table').remove();
+
+  let refFound = false;
+  $('body').children().each((_, el) => {
+    const text = $(el).text().trim().toLowerCase();
+    if (text === 'references' || text === 'reference' || text === 'bibliography' || text === 'literature cited' || text === 'acknowledgements' || text === 'acknowledgments') {
+      refFound = true;
+    }
+    if (refFound) {
+      $(el).remove();
+    }
+  });
+
+  let introFound = false;
+  let introIndex = -1;
+  const childrenBody = $('body').children();
+  childrenBody.each((i, el) => {
+    const text = $(el).text().trim().toLowerCase();
+    if (text === 'introduction' || text === 'background' || text === '1 introduction' || text === '1. introduction' || text === 'introduction.') {
+      introFound = true;
+      introIndex = i;
+      return false;
+    }
+  });
+
+  if (introFound && introIndex > 0) {
+    childrenBody.each((i, el) => {
+      if (i < introIndex) $(el).remove();
+    });
+  } else {
+    childrenBody.each((_, el) => {
+       const text = $(el).text().trim();
+       const textLow = text.toLowerCase();
+       if (textLow.startsWith('abstract') || textLow.startsWith('keywords') || textLow.startsWith('summary')) {
+          $(el).remove();
+       } else if (text === title || text === authorsRaw || text === affiliationsRaw) {
+          $(el).remove();
+       } else if (abstract.includes(text) && text.length > 20) {
+          $(el).remove();
+       }
+    });
+  }
+
+  const cleanHtml = $('body').html() || html;
+
   return {
     title,
     runningTitle,
     subtitle,
     abstract: abstract.trim(),
     keywords,
-    rawHtml: html,
+    rawHtml: cleanHtml,
     references: parsedReferences,
     figures,
     tables,
