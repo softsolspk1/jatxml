@@ -21,23 +21,24 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
     ${author.affiliation ? `<meta name="citation_author_institution" content="${author.affiliation}">` : ''}`).join('\n    ')}
     
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; color: #333; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; color: #333; text-align: justify; }
+        h1, h2, h3, h4, h5, h6 { text-align: left; }
         h1 { color: #0A2540; font-size: 2.5em; border-bottom: 2px solid #2ECC71; padding-bottom: 10px; }
         h2 { color: #0A2540; margin-top: 40px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .abstract { background: #f9f9f9; padding: 20px; border-left: 4px solid #2ECC71; margin-bottom: 30px; }
+        .abstract { background: #f9f9f9; padding: 20px; border-left: 4px solid #2ECC71; margin-bottom: 30px; text-align: justify; }
         .main-body { margin-top: 30px; }
-        .main-body p { margin-bottom: 15px; }
-        .keywords { font-weight: bold; color: #555; }
+        .main-body p { margin-bottom: 15px; text-align: justify; }
+        .keywords { font-weight: bold; color: #555; text-align: left; }
         .figure { text-align: center; margin: 30px 0; }
         .figure img { max-width: 100%; border: 1px solid #ddd; padding: 5px; }
-        .table-wrap { margin: 30px 0; overflow-x: auto; }
+        .table-wrap { margin: 30px 0; overflow-x: auto; text-align: left; }
         .table-wrap table { width: 100%; border-collapse: collapse; }
         .table-wrap th, .table-wrap td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         .table-wrap th { background-color: #f2f2f2; }
         .caption { font-size: 0.9em; color: #666; margin-top: 10px; font-style: italic; text-align: center; }
-        .reference-list { list-style-type: decimal; padding-left: 20px; }
+        .reference-list { list-style-type: decimal; padding-left: 20px; text-align: left; }
         .reference-list li { margin-bottom: 10px; }
-        .supp-list { list-style-type: square; padding-left: 20px; }
+        .supp-list { list-style-type: square; padding-left: 20px; text-align: left; }
         footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8em; text-align: center; color: #777; }
     </style>
 </head>
