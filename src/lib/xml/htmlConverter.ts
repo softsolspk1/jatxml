@@ -76,50 +76,14 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
     </section>
     ` : ''}
 
-    <section class="figures">
-        ${figures.length > 0 ? '<h2>Figures</h2>' : ''}
-        ${figures.map(f => {
-            if (!f.base64Data) return '';
-            const imgSrc = f.base64Data.startsWith('data:image') 
-              ? f.base64Data 
-              : `data:image/png;base64,${f.base64Data}`;
-            return `
-            <div class="figure">
-                <img src="${imgSrc}" alt="${f.caption || ''}" />
-                <div class="caption"><strong>${f.label || 'Figure'}:</strong> ${f.caption || ''}</div>
-            </div>
-        `}).join('')}
-    </section>
-
-    <section class="tables">
-        ${tables.length > 0 ? '<h2>Tables</h2>' : ''}
-        ${tables.map(t => `
-            <div class="table-wrap">
-                <div class="caption"><strong>${t.label}:</strong> ${t.caption}</div>
-                ${t.htmlContent}
-            </div>
-        `).join('')}
-    </section>
-
     <section class="supplementary">
-        ${supplementaryFiles.length > 0 ? '<h2>Supplementary Materials</h2><ul class="supp-list">' : ''}
-        ${supplementaryFiles.map((s, idx) => `
+        ${supplementaryFiles && supplementaryFiles.length > 0 ? '<h2>Supplementary Materials</h2><ul class="supp-list">' : ''}
+        ${supplementaryFiles ? supplementaryFiles.map((s, idx) => `
             <li>
                 <strong>Supplementary File ${idx + 1}:</strong> ${s.filename} (${s.type}) - ${(s.size / 1024).toFixed(2)} KB
             </li>
-        `).join('')}
-        ${supplementaryFiles.length > 0 ? '</ul>' : ''}
-    </section>
-
-    <section class="references">
-        ${references.length > 0 ? '<h2>References</h2><ol class="reference-list">' : ''}
-        ${references.map(r => `
-            <li>
-                ${r.rawText}
-                ${r.doi ? `<br/><a href="https://doi.org/${r.doi}" target="_blank">doi:${r.doi}</a>` : ''}
-            </li>
-        `).join('')}
-        ${references.length > 0 ? '</ol>' : ''}
+        `).join('') : ''}
+        ${supplementaryFiles && supplementaryFiles.length > 0 ? '</ul>' : ''}
     </section>
 
     <footer>

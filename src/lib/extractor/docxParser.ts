@@ -425,19 +425,8 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   }
 
   // 8. Clean up bodyHtml to prevent duplication
-  $('img').remove();
-  $('table').remove();
+  // Images, Tables, and References are now kept inline in their original positions.
 
-  let refFound = false;
-  $('body').children().each((_, el) => {
-    const text = $(el).text().trim().toLowerCase();
-    if (text === 'references' || text === 'reference' || text === 'bibliography' || text === 'literature cited' || text === 'acknowledgements' || text === 'acknowledgments') {
-      refFound = true;
-    }
-    if (refFound) {
-      $(el).remove();
-    }
-  });
 
   let introFound = false;
   let introIndex = -1;
@@ -484,6 +473,7 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     authorsRaw,
     affiliationsRaw,
     structuredAuthors,
+    authors: structuredAuthors,
     doi,
     fundingInfo,
     grantNumbers,
