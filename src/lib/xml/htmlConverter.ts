@@ -47,8 +47,8 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         <h1>${metadata.title || 'Untitled Article'}</h1>
         
         ${authors && authors.length > 0 ? `
-        <div class="authors" style="margin-top: 15px; font-size: 1.1em; color: #444;">
-            ${authors.map(a => `<span style="margin-right: 15px;"><strong>${a.name}</strong>${a.affiliation ? `<br><small style="color: #666;">${a.affiliation}</small>` : ''}</span>`).join('')}
+        <div class="authors" style="margin-top: 15px; font-size: 1.1em; color: #444; display: flex; flex-wrap: wrap; gap: 15px;">
+            ${authors.map(a => `<div style="flex: 1 1 250px;"><strong>${a.name}</strong>${a.affiliation ? `<br><small style="color: #666;">${a.affiliation}</small>` : ''}</div>`).join('')}
         </div>
         ` : ''}
         

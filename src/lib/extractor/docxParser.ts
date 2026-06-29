@@ -16,6 +16,14 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
         } catch (e) {
           console.error("Error converting EMF:", e);
         }
+      } else if (contentType === 'image/tiff' || contentType === 'image/x-tiff') {
+        try {
+          const sharp = (await import('sharp')).default;
+          imageBuffer = await sharp(imageBuffer).png().toBuffer();
+          contentType = 'image/png';
+        } catch (e) {
+          console.error("Error converting TIFF to PNG:", e);
+        }
       }
       return {
         src: "data:" + contentType + ";base64," + imageBuffer.toString("base64")

@@ -31,6 +31,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0",
+    "sharp": "^0.35.2",
     "ssh2-sftp-client": "^12.1.1",
     "wmf": "^1.0.2",
     "xmlbuilder2": "^4.0.3"
