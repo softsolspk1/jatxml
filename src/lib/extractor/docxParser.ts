@@ -3,10 +3,38 @@ import * as cheerio from 'cheerio';
 
 export async function extractMetadataFromDocx(buffer: Buffer) {
   // Convert docx to HTML
-  const result = await mammoth.convertToHtml({ buffer });
+  const options = {
+    convertImage: mammoth.images.imgElement(async function(image) {
+      let imageBuffer = await image.read();
+      let contentType = image.contentType;
+      if (contentType === 'image/x-emf' || contentType === 'image/x-wmf') {
+        try {
+          const { convert } = await import('emf-to-png');
+          const pngUint8 = await convert(imageBuffer, { format: 'png' });
+          imageBuffer = Buffer.from(pngUint8);
+          contentType = 'image/png';
+        } catch (e) {
+          console.error("Error converting EMF:", e);
+        }
+      }
+      return {
+        src: "data:" + contentType + ";base64," + imageBuffer.toString("base64")
+      };
+    })
+  };
+  const result = await mammoth.convertToHtml({ buffer }, options);
   const html = result.value;
   
   const $ = cheerio.load(html);
+  
+  // Convert long headings to bold paragraphs (often authors misuse Heading styles for bold paragraphs)
+  $('h1, h2, h3, h4, h5, h6').each((_, el) => {
+    const text = $(el).text().trim();
+    if (text.length > 150) {
+      const $el = $(el);
+      $el.replaceWith(`<p><strong>${$el.html()}</strong></p>`);
+    }
+  });
   
   let title = '';
   let runningTitle = '';

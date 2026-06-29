@@ -19,6 +19,7 @@
     "bcryptjs": "^3.0.3",
     "cheerio": "^1.2.0",
     "docx": "^9.7.1",
+    "emf-to-png": "^0.1.0",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "jszip": "^3.10.1",
@@ -31,6 +32,7 @@
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0",
     "ssh2-sftp-client": "^12.1.1",
+    "wmf": "^1.0.2",
     "xmlbuilder2": "^4.0.3"
   },
   "devDependencies": {
