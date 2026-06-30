@@ -70,8 +70,9 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         .main-body { margin-top: 30px; }
         .main-body p { margin-bottom: 15px; text-align: justify; }
         .keywords { font-weight: bold; color: #555; text-align: left; }
+        img { max-width: 100%; height: auto; display: block; margin: 20px auto; border: 1px solid #eaeaea; padding: 5px; box-sizing: border-box; }
         .figure { text-align: center; margin: 30px 0; }
-        .figure img { max-width: 100%; border: 1px solid #ddd; padding: 5px; }
+        .figure img { margin: 0 auto; border: 1px solid #ddd; }
         .table-wrap { margin: 30px 0; overflow-x: auto; text-align: left; }
         .table-wrap table { width: 100%; border-collapse: collapse; }
         .table-wrap th, .table-wrap td { border: 1px solid #ddd; padding: 8px; text-align: left; }
