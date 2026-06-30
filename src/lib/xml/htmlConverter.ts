@@ -102,7 +102,7 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
                 // If the author has a special mark like # or *, but didn't have one baked into the name string
                 if (a.isCorresponding && !marks.includes('*')) marks += '*';
                 
-                return \`\${cleanName}\${marks ? \`<sup>\${marks}</sup>\` : ''}\`;
+                return `${cleanName}${marks ? `<sup>${marks}</sup>` : ''}`;
             });
             
             let authorsHtml = '';
@@ -116,17 +116,17 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
                 // If it already starts with a number, we wrap it nicely
                 let match = affil.match(/^([1-9]+)(.*)/);
                 if (match) {
-                   return \`<li><sup>\${match[1]}</sup>\${match[2].trim()}</li>\`;
+                   return `<li><sup>${match[1]}</sup>${match[2].trim()}</li>`;
                 }
-                return \`<li><sup>\${idx + 1}</sup>\${affil}</li>\`;
+                return `<li><sup>${idx + 1}</sup>${affil}</li>`;
             }).join('');
             
-            return \`
+            return `
             <div class="author-section">
-                <div class="author-list">\${authorsHtml}</div>
-                \${uniqueAffiliations.length > 0 ? \`<ul class="affiliation-list">\${affiliationsHtml}</ul>\` : ''}
+                <div class="author-list">${authorsHtml}</div>
+                ${uniqueAffiliations.length > 0 ? `<ul class="affiliation-list">${affiliationsHtml}</ul>` : ''}
             </div>
-            \`;
+            `;
         })()}
         
         <div class="publication-details" style="margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 5px; font-size: 0.9em;">
