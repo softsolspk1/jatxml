@@ -54,7 +54,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
   const articles = await db.article.findMany({
     where: whereClause,
     orderBy: { createdAt: 'desc' },
-    include: { metadata: true, authors: true }
+    include: { authors: true }
   });
 
   return (
