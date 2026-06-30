@@ -7,7 +7,24 @@ export default function UserTableClient({ initialUsers }: { initialUsers: any[] 
   const [users, setUsers] = useState(initialUsers);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<any>({});
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const router = useRouter();
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === users.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(users.map(u => u.id));
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter(selectedId => selectedId !== id));
+    } else {
+      setSelectedIds([...selectedIds, id]);
+    }
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
@@ -59,9 +76,23 @@ export default function UserTableClient({ initialUsers }: { initialUsers: any[] 
 
   return (
     <div className="card" style={{ padding: 0, overflowX: 'auto' }}>
+      {selectedIds.length > 0 && (
+        <div style={{ padding: '15px 20px', backgroundColor: 'var(--brand-blue-light)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontWeight: 600, color: 'var(--brand-blue)' }}>{selectedIds.length} users selected</span>
+          {/* Add bulk actions here if needed in the future */}
+        </div>
+      )}
       <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
         <thead style={{ backgroundColor: 'var(--bg-color)', borderBottom: '1px solid var(--border-color)' }}>
           <tr>
+            <th style={{ padding: '15px 20px', width: '50px' }}>
+              <input 
+                type="checkbox" 
+                checked={selectedIds.length === users.length && users.length > 0}
+                onChange={toggleSelectAll}
+                style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+              />
+            </th>
             <th style={{ padding: '15px 20px', fontWeight: 600, color: 'var(--text-secondary)' }}>Name</th>
             <th style={{ padding: '15px 20px', fontWeight: 600, color: 'var(--text-secondary)' }}>Email</th>
             <th style={{ padding: '15px 20px', fontWeight: 600, color: 'var(--text-secondary)' }}>Role</th>
@@ -73,6 +104,14 @@ export default function UserTableClient({ initialUsers }: { initialUsers: any[] 
         <tbody>
           {users.map(user => (
             <tr key={user.id}>
+              <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)' }}>
+                <input 
+                  type="checkbox" 
+                  checked={selectedIds.includes(user.id)}
+                  onChange={() => toggleSelect(user.id)}
+                  style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                />
+              </td>
               <td style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-color)' }}>
                 {editingId === user.id ? 
                   <input value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} style={{ width: '100%', padding: '5px' }} /> 

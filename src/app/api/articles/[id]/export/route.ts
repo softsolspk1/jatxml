@@ -51,6 +51,18 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       });
     }
 
+    // FORMAT: Raw HTML
+    if (format === 'html') {
+      const safeName = (article.originalFileName || 'article').replace(/[^a-zA-Z0-9.\-_]/g, '_');
+      return new NextResponse(htmlContent, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html',
+          'Content-Disposition': `attachment; filename="${safeName}.html"`
+        }
+      });
+    }
+
     const zip = new JSZip();
 
     // Helper to package figures

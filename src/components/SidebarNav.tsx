@@ -10,6 +10,7 @@ export default function SidebarNav({ role }: { role: string }) {
     { href: '/dashboard', label: 'Overview', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
     { href: '/dashboard/upload', label: 'Upload Article', roles: ['ADMIN', 'EDITORIAL_MANAGER'] },
     { href: '/dashboard/articles', label: 'All Articles', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
+    { href: '/dashboard/htmls', label: 'HTMLs', roles: ['ADMIN', 'EDITORIAL_MANAGER', 'XML_OPERATOR', 'REVIEWER'] },
     { href: '/dashboard/users', label: 'Manage Users', roles: ['ADMIN'] },
     { href: '/dashboard/settings', label: 'System Settings', roles: ['ADMIN'] },
     { href: '/dashboard/templates', label: 'XML Templates', roles: ['ADMIN'] },
