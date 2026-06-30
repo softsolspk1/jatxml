@@ -295,7 +295,7 @@ export function generateJATSXML(article: any) {
         if (Array.isArray(ref.authors)) {
           authorsArray = ref.authors;
         } else if (typeof ref.authors === 'string') {
-          authorsArray = ref.authors.split(/,|\band\b/i).map(a => a.trim()).filter(a => a.length > 0);
+          authorsArray = ref.authors.split(/,|\band\b/i).map((a: string) => a.trim()).filter((a: string) => a.length > 0);
         }
 
         if (authorsArray.length > 0) {
