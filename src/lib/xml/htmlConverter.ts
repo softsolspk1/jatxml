@@ -91,63 +91,32 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
 <body>
     <header>
         <h1>${metadata.title || 'Untitled Article'}</h1>
-        
-        ${(function() {
+               ${(function() {
             if (!authors || authors.length === 0) return '';
             
-            let authorsHtml = '';
-            let affiliationsHtml = '';
-            
-            // The DB stores the entire author/affiliation block in the first author's affiliation field.
-            // We use this to extract the clean list, ignoring the messy 'authors' DB records.
-            if (authors[0] && authors[0].affiliation) {
-                // We use the first author's affiliation since all authors have the identical raw block
-                const affiliationStr = authors[0].affiliation;
-                const lines = affiliationStr.split(/\n|(?=\b[1-9]+[a-zA-Z])/).map((l: string) => l.trim()).filter((l: string) => l.length > 0);
-                
-                const realAuthors: string[] = [];
-                const uniqueAffiliations: string[] = [];
-                
-                lines.forEach((line: string) => {
-                    // If it starts with a number followed by letters, it's an affiliation
-                    if (/^[1-9]+/.test(line) && line.length > 10) {
-                        if (!uniqueAffiliations.includes(line)) {
-                            uniqueAffiliations.push(line);
-                        }
-                    } else {
-                        // It's part of the authors block
-                        realAuthors.push(line);
+            const uniqueAffiliations: string[] = [];
+            const authorTags = authors.map((a: any) => {
+                let affilSuperscript = '';
+                if (a.affiliation) {
+                    // Strip leading numbers that might be baked into the affiliation by the LLM
+                    let cleanAffil = a.affiliation.replace(/^[0-9]+/, '').trim();
+                    let affilIndex = uniqueAffiliations.indexOf(cleanAffil);
+                    if (affilIndex === -1) {
+                        uniqueAffiliations.push(cleanAffil);
+                        affilIndex = uniqueAffiliations.length - 1;
                     }
-                });
-
-                const authorsStr = realAuthors.join(' ');
-                const parsedAuthors = authorsStr.split(/,\s*|\s+and\s+/i).map((n: string) => n.trim()).filter((n: string) => n.length > 0);
-                
-                const authorTags = parsedAuthors.map(nameStr => {
-                    let match = nameStr.match(/^(.*?)([\d#*,]+)$/);
-                    if (match) {
-                        return `${match[1].trim()}<sup>${match[2]}</sup>`;
-                    }
-                    return nameStr;
-                });
-
-                if (authorTags.length === 1) {
-                    authorsHtml = authorTags[0];
-                } else if (authorTags.length > 1) {
-                    authorsHtml = authorTags.slice(0, -1).join(', ') + ' and ' + authorTags[authorTags.length - 1];
+                    affilSuperscript = `<sup>${affilIndex + 1}</sup>`;
                 }
+                const corrSuperscript = a.isCorresponding ? '<sup>*</sup>' : '';
+                
+                // Strip trailing numbers/symbols from name if LLM accidentally left them
+                const cleanName = (a.name || '').replace(/[\d#*,]+$/, '').trim();
+                
+                return `${cleanName}${affilSuperscript}${corrSuperscript}`;
+            });
 
-                affiliationsHtml = uniqueAffiliations.map((affil, idx) => {
-                    let match = affil.match(/^([1-9]+)(.*)/);
-                    if (match) {
-                       return `<li><sup>${match[1]}</sup>${match[2].trim()}</li>`;
-                    }
-                    return `<li><sup>${idx + 1}</sup>${affil}</li>`;
-                }).join('');
-            } else {
-                // Fallback if no affiliation block exists
-                authorsHtml = authors.map((a: any) => a.name).join(', ');
-            }
+            const authorsHtml = authorTags.join(', ');
+            const affiliationsHtml = uniqueAffiliations.map((affil, idx) => `<li><sup>${idx + 1}</sup> ${affil}</li>`).join('');
             
             return `
             <div class="author-section">
