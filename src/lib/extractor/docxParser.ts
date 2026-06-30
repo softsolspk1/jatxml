@@ -408,6 +408,10 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     tableCounter++;
   });
 
+  if (!journalName) {
+    journalName = 'PJPS';
+  }
+
   // Scan for Volume, Issue, Pages in early elements
   for (let i = 0; i < earlyElements.length; i++) {
     const text = earlyElements[i];
@@ -419,6 +423,14 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
 
     const pagesMatch = text.match(/(?:pp\.|pages?)\s*(\d+\s*[-–]\s*\d+|\d+)/i);
     if (pagesMatch && !pages) pages = pagesMatch[1];
+
+    // Fallback for format like 30(2): 353-359 or 30(2):353-359
+    const compactMatch = text.match(/\b(\d+)\s*\(\s*(\d+)\s*\)\s*:\s*(\d+\s*[-–]\s*\d+)/);
+    if (compactMatch) {
+      if (!volume) volume = compactMatch[1];
+      if (!issue) issue = compactMatch[2];
+      if (!pages) pages = compactMatch[3];
+    }
 
     const dateMatch = text.match(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December)?\s*(?:20\d{2}|19\d{2})\b/i);
     if (dateMatch && !publicationDate) publicationDate = dateMatch[0];
