@@ -306,7 +306,8 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   $('h1, h2, h3, p, strong, b').each((i, el) => {
     const text = $(el).text().trim().toLowerCase();
     if (text === 'references' || text === 'reference' || text === 'bibliography' || text === 'literature cited') {
-      let current = $(el).parent().is('p') ? $(el).parent().next() : $(el).next();
+      const headerEl = $(el).parent().is('p') ? $(el).parent() : $(el);
+      let current = headerEl.next();
       
       while (current.length > 0) {
         const curText = current.text().toLowerCase();
@@ -331,8 +332,11 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
            });
         }
 
-        current = current.next();
+        const nextEl = current.next();
+        current.remove();
+        current = nextEl;
       }
+      headerEl.remove();
       return false; 
     }
   });

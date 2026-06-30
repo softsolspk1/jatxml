@@ -3,6 +3,10 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
   let processedBodyHtml = metadata.bodyHtml || '';
   let processedAbstract = metadata.abstract || '';
 
+  // Clean legacy baked-in references from bodyHtml for old articles
+  processedBodyHtml = processedBodyHtml.replace(/<p>(?:<strong>|<b>)?\s*(?:References|Literature Cited|Bibliography)\s*(?:<\/strong>|<\/b>)?<\/p>[\s\S]*$/i, '');
+  processedBodyHtml = processedBodyHtml.replace(/<h[1-3]>\s*(?:References|Literature Cited|Bibliography)\s*<\/h[1-3]>[\s\S]*$/i, '');
+
   // Deduplicate references
   let uniqueReferences: any[] = [];
   if (references && references.length > 0) {
