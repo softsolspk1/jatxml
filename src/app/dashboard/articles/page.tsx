@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ArticleFilters from "./ArticleFilters";
 import ArticleExportButtons from "./ArticleExportButtons";
+import ArticlesTableClient from "./ArticlesTableClient";
 import { Prisma } from "@prisma/client";
 
 export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ q?: string, status?: string, startDate?: string, endDate?: string, journal?: string }> }) {
