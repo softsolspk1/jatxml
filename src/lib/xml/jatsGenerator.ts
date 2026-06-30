@@ -290,16 +290,25 @@ export function generateJATSXML(article: any) {
       const citation = refNode.ele('mixed-citation', { 'publication-type': 'journal' });
       
       // Map Authors
-      if (ref.authors && ref.authors.length > 0) {
-        const personGroup = citation.ele('person-group', { 'person-group-type': 'author' });
-        ref.authors.forEach((authorName: string) => {
-          const nameNode = personGroup.ele('name');
-          const parts = authorName.split(' ');
-          const surname = parts.pop() || '';
-          const givenNames = parts.join(' ') || authorName;
-          if (surname) nameNode.ele('surname').txt(surname);
-          if (givenNames) nameNode.ele('given-names').txt(givenNames);
-        });
+      if (ref.authors) {
+        let authorsArray: string[] = [];
+        if (Array.isArray(ref.authors)) {
+          authorsArray = ref.authors;
+        } else if (typeof ref.authors === 'string') {
+          authorsArray = ref.authors.split(/,|\band\b/i).map(a => a.trim()).filter(a => a.length > 0);
+        }
+
+        if (authorsArray.length > 0) {
+          const personGroup = citation.ele('person-group', { 'person-group-type': 'author' });
+          authorsArray.forEach((authorName: string) => {
+            const nameNode = personGroup.ele('name');
+            const parts = authorName.split(' ');
+            const surname = parts.pop() || '';
+            const givenNames = parts.join(' ') || authorName;
+            if (surname) nameNode.ele('surname').txt(surname);
+            if (givenNames) nameNode.ele('given-names').txt(givenNames);
+          });
+        }
       }
 
       if (ref.title) citation.ele('article-title').txt(ref.title);
