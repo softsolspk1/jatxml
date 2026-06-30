@@ -3,7 +3,21 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
   let processedBodyHtml = metadata.bodyHtml || '';
   let processedAbstract = metadata.abstract || '';
 
+  // Deduplicate references
+  let uniqueReferences: any[] = [];
   if (references && references.length > 0) {
+    const seenTexts = new Set<string>();
+    uniqueReferences = references.filter(r => {
+      const textKey = (r.rawText || '').toLowerCase().trim();
+      if (!seenTexts.has(textKey)) {
+        seenTexts.add(textKey);
+        return true;
+      }
+      return false;
+    });
+  }
+
+  if (uniqueReferences.length > 0) {
     // Regex for bracketed citations: [1], [1, 2], [1-3]
     const bracketRegex = /\[([0-9,\s-]+)\]/g;
     const bracketReplacer = (match: string, p1: string) => {
@@ -77,54 +91,64 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         ${(function() {
             if (!authors || authors.length === 0) return '';
             
-            const uniqueAffiliations: string[] = [];
-            const authorStrings: string[] = authors.map((a: any) => {
-                let rawName = a.name ? a.name.trim() : '';
-                // Extract any combination of digits, #, *, comma at the end of the string
-                let match = rawName.match(/^(.*?)([\d#*,]+)$/);
-                let cleanName = rawName;
-                let marks = '';
-                if (match) {
-                    cleanName = match[1].trim();
-                    marks = match[2];
+            let authorsHtml = '';
+            let affiliationsHtml = '';
+            
+            // The DB stores the entire author/affiliation block in the first author's affiliation field.
+            // We use this to extract the clean list, ignoring the messy 'authors' DB records.
+            if (authors[0] && authors[0].affiliation) {
+                // We use the first author's affiliation since all authors have the identical raw block
+                const affiliationStr = authors[0].affiliation;
+                const lines = affiliationStr.split(/\n|(?=\b[1-9]+[a-zA-Z])/).map((l: string) => l.trim()).filter((l: string) => l.length > 0);
+                
+                const realAuthors: string[] = [];
+                const uniqueAffiliations: string[] = [];
+                
+                lines.forEach((line: string) => {
+                    // If it starts with a number followed by letters, it's an affiliation
+                    if (/^[1-9]+/.test(line) && line.length > 10) {
+                        if (!uniqueAffiliations.includes(line)) {
+                            uniqueAffiliations.push(line);
+                        }
+                    } else {
+                        // It's part of the authors block
+                        realAuthors.push(line);
+                    }
+                });
+
+                const authorsStr = realAuthors.join(' ');
+                const parsedAuthors = authorsStr.split(/,\s*|\s+and\s+/i).map((n: string) => n.trim()).filter((n: string) => n.length > 0);
+                
+                const authorTags = parsedAuthors.map(nameStr => {
+                    let match = nameStr.match(/^(.*?)([\d#*,]+)$/);
+                    if (match) {
+                        return `${match[1].trim()}<sup>${match[2]}</sup>`;
+                    }
+                    return nameStr;
+                });
+
+                if (authorTags.length === 1) {
+                    authorsHtml = authorTags[0];
+                } else if (authorTags.length > 1) {
+                    authorsHtml = authorTags.slice(0, -1).join(', ') + ' and ' + authorTags[authorTags.length - 1];
                 }
 
-                if (a.affiliation) {
-                    // Try splitting the giant affiliation string by newlines or numbers followed by a letter
-                    let splitAffils = a.affiliation.split(/\n|(?=\b[1-9]+[a-zA-Z])/).map((s: string) => s.trim()).filter((s: string) => s.length > 0);
-                    splitAffils.forEach((affil: string) => {
-                        if (!uniqueAffiliations.includes(affil)) {
-                            uniqueAffiliations.push(affil);
-                        }
-                    });
-                }
-                
-                // If the author has a special mark like # or *, but didn't have one baked into the name string
-                if (a.isCorresponding && !marks.includes('*')) marks += '*';
-                
-                return `${cleanName}${marks ? `<sup>${marks}</sup>` : ''}`;
-            });
-            
-            let authorsHtml = '';
-            if (authorStrings.length === 1) {
-                authorsHtml = authorStrings[0];
-            } else if (authorStrings.length > 1) {
-                authorsHtml = authorStrings.slice(0, -1).join(', ') + ' and ' + authorStrings[authorStrings.length - 1];
+                affiliationsHtml = uniqueAffiliations.map((affil, idx) => {
+                    let match = affil.match(/^([1-9]+)(.*)/);
+                    if (match) {
+                       return `<li><sup>${match[1]}</sup>${match[2].trim()}</li>`;
+                    }
+                    return `<li><sup>${idx + 1}</sup>${affil}</li>`;
+                }).join('');
+            } else {
+                // Fallback if no affiliation block exists
+                authorsHtml = authors.map((a: any) => a.name).join(', ');
             }
-            
-            const affiliationsHtml = uniqueAffiliations.map((affil, idx) => {
-                // If it already starts with a number, we wrap it nicely
-                let match = affil.match(/^([1-9]+)(.*)/);
-                if (match) {
-                   return `<li><sup>${match[1]}</sup>${match[2].trim()}</li>`;
-                }
-                return `<li><sup>${idx + 1}</sup>${affil}</li>`;
-            }).join('');
             
             return `
             <div class="author-section">
                 <div class="author-list">${authorsHtml}</div>
-                ${uniqueAffiliations.length > 0 ? `<ul class="affiliation-list">${affiliationsHtml}</ul>` : ''}
+                ${affiliationsHtml ? `<ul class="affiliation-list">${affiliationsHtml}</ul>` : ''}
             </div>
             `;
         })()}
@@ -153,11 +177,11 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
     </section>
     ` : ''}
 
-    ${references && references.length > 0 ? `
+    ${uniqueReferences.length > 0 ? `
     <section class="references" id="references-section">
         <h2>References</h2>
         <ul class="reference-list">
-            ${references.map((r, idx) => `
+            ${uniqueReferences.map((r, idx) => `
                 <li id="ref-${idx + 1}">
                     ${r.rawText}
                     ${r.doi ? `<br><a href="https://doi.org/${r.doi}" target="_blank">https://doi.org/${r.doi}</a>` : ''}
