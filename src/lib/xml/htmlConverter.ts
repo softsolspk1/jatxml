@@ -41,7 +41,7 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
     ${metadata.pages ? `<meta name="citation_firstpage" content="${metadata.pages.split(/[-–]/)[0]?.trim() || ''}">` : ''}
     ${metadata.abstract ? `<meta name="citation_abstract" content="${metadata.abstract.replace(/"/g, '&quot;')}">` : ''}
     ${(authors || []).map((author: any) => `<meta name="citation_author" content="${author.name}">
-    ${author.affiliation ? `<meta name="citation_author_institution" content="${author.affiliation}">` : ''}`).join('\\n    ')}
+    ${author.affiliation ? `<meta name="citation_author_institution" content="${author.affiliation}">` : ''}`).join('\n    ')}
     
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; color: #333; text-align: justify; }
@@ -65,17 +65,69 @@ export function convertToHTML(metadata: any, authors: any[] = [], references: an
         .reference-list li a:hover { text-decoration: underline; }
         .supp-list { list-style-type: square; padding-left: 20px; text-align: left; }
         footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8em; text-align: center; color: #777; }
+        .author-list { font-size: 1.2em; font-weight: bold; color: #000; margin-top: 20px; }
+        .affiliation-list { font-size: 0.9em; color: #444; margin-top: 10px; list-style: none; padding-left: 0; }
+        .affiliation-list li { margin-bottom: 5px; }
     </style>
 </head>
 <body>
     <header>
         <h1>${metadata.title || 'Untitled Article'}</h1>
         
-        ${authors && authors.length > 0 ? `
-        <div class="authors" style="margin-top: 15px; font-size: 1.1em; color: #444; display: flex; flex-wrap: wrap; gap: 15px;">
-            ${authors.map(a => `<div style="flex: 1 1 250px;"><strong>${a.name}</strong>${a.affiliation ? `<br><small style="color: #666;">${a.affiliation}</small>` : ''}</div>`).join('')}
-        </div>
-        ` : ''}
+        ${(function() {
+            if (!authors || authors.length === 0) return '';
+            
+            const uniqueAffiliations: string[] = [];
+            const authorStrings: string[] = authors.map((a: any) => {
+                let rawName = a.name ? a.name.trim() : '';
+                // Extract any combination of digits, #, *, comma at the end of the string
+                let match = rawName.match(/^(.*?)([\d#*,]+)$/);
+                let cleanName = rawName;
+                let marks = '';
+                if (match) {
+                    cleanName = match[1].trim();
+                    marks = match[2];
+                }
+
+                if (a.affiliation) {
+                    // Try splitting the giant affiliation string by newlines or numbers followed by a letter
+                    let splitAffils = a.affiliation.split(/\n|(?=\b[1-9]+[a-zA-Z])/).map((s: string) => s.trim()).filter((s: string) => s.length > 0);
+                    splitAffils.forEach((affil: string) => {
+                        if (!uniqueAffiliations.includes(affil)) {
+                            uniqueAffiliations.push(affil);
+                        }
+                    });
+                }
+                
+                // If the author has a special mark like # or *, but didn't have one baked into the name string
+                if (a.isCorresponding && !marks.includes('*')) marks += '*';
+                
+                return \`\${cleanName}\${marks ? \`<sup>\${marks}</sup>\` : ''}\`;
+            });
+            
+            let authorsHtml = '';
+            if (authorStrings.length === 1) {
+                authorsHtml = authorStrings[0];
+            } else if (authorStrings.length > 1) {
+                authorsHtml = authorStrings.slice(0, -1).join(', ') + ' and ' + authorStrings[authorStrings.length - 1];
+            }
+            
+            const affiliationsHtml = uniqueAffiliations.map((affil, idx) => {
+                // If it already starts with a number, we wrap it nicely
+                let match = affil.match(/^([1-9]+)(.*)/);
+                if (match) {
+                   return \`<li><sup>\${match[1]}</sup>\${match[2].trim()}</li>\`;
+                }
+                return \`<li><sup>\${idx + 1}</sup>\${affil}</li>\`;
+            }).join('');
+            
+            return \`
+            <div class="author-section">
+                <div class="author-list">\${authorsHtml}</div>
+                \${uniqueAffiliations.length > 0 ? \`<ul class="affiliation-list">\${affiliationsHtml}</ul>\` : ''}
+            </div>
+            \`;
+        })()}
         
         <div class="publication-details" style="margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 5px; font-size: 0.9em;">
             ${metadata.journalName ? `<strong>Journal:</strong> ${metadata.journalName} &nbsp;|&nbsp; ` : ''}
