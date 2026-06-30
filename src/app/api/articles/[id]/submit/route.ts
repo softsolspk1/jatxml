@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { uploadToFtp } from '@/lib/ftpClient';
-import { generateCrossrefXML, generateDOAJXML, generatePMCXML, generateScopusXML, generateWebOfScienceXML } from '@/lib/xml/specializedGenerators';
+import { generateCrossrefXML, generateDOAJXML, generatePMCXML, generateScopusXML, generateWebOfScienceXML, generatePorticoXML } from '@/lib/xml/specializedGenerators';
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -93,10 +93,34 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
             { name: `${article.id}_WoS.xml`, content: wosXml }
           ];
 
-          await uploadToFtp(article.id, xmlFiles);
+          await uploadToFtp(article.id, xmlFiles, {
+            host: settings.pmcFtpHost,
+            user: settings.pmcFtpUser,
+            password: settings.pmcFtpPassword
+          });
           submissionLogs.push('FTP (PMC/Scopus/WoS): Success');
        } catch (e: any) {
           submissionLogs.push(`FTP (PMC/Scopus/WoS): Error - ${e.message}`);
+       }
+    }
+
+    // 4. Portico FTP Submission
+    if (settings.porticoFtpHost && settings.porticoFtpUser && settings.porticoFtpPassword) {
+       try {
+          const porticoXml = generatePorticoXML(article as any);
+          
+          const xmlFiles = [
+            { name: `${article.id}_Portico.xml`, content: porticoXml }
+          ];
+
+          await uploadToFtp(article.id, xmlFiles, {
+            host: settings.porticoFtpHost,
+            user: settings.porticoFtpUser,
+            password: settings.porticoFtpPassword
+          });
+          submissionLogs.push('FTP (Portico): Success');
+       } catch (e: any) {
+          submissionLogs.push(`FTP (Portico): Error - ${e.message}`);
        }
     }
 

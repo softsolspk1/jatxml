@@ -34,3 +34,8 @@ export function generateWebOfScienceXML(article: any) {
   const xml = generateJATSXML(article);
   return xml.replace('dtd-version="1.3"', 'dtd-version="1.3" specific-use="wos"');
 }
+
+export function generatePorticoXML(article: any) {
+  const xml = generateJATSXML(article);
+  return xml.replace('dtd-version="1.3"', 'dtd-version="1.3" specific-use="portico"');
+}

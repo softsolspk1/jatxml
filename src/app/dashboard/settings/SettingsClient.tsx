@@ -70,6 +70,18 @@ export default function SettingsClient() {
             <input type="password" value={settings.pmcFtpPassword || ''} onChange={e => handleChange('pmcFtpPassword', e.target.value)} placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
           </div>
           <div>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>PORTICO FTP Host</label>
+            <input type="text" value={settings.porticoFtpHost || ''} onChange={e => handleChange('porticoFtpHost', e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>PORTICO FTP User</label>
+            <input type="text" value={settings.porticoFtpUser || ''} onChange={e => handleChange('porticoFtpUser', e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>PORTICO FTP Password</label>
+            <input type="password" value={settings.porticoFtpPassword || ''} onChange={e => handleChange('porticoFtpPassword', e.target.value)} placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+          </div>
+          <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>SciELO API Token</label>
             <input type="password" value={settings.scieloApiToken || ''} onChange={e => handleChange('scieloApiToken', e.target.value)} placeholder="••••••••••••••••" style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
           </div>
@@ -149,11 +161,11 @@ export default function SettingsClient() {
         <div style={{ display: 'flex', gap: '20px' }}>
           <div style={{ flex: 1 }}>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Source DOCX Retention (Days)</label>
-            <input type="number" value={settings.sourceRetentionDays} onChange={e => handleChange('sourceRetentionDays', parseInt(e.target.value))} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            <input type="number" value={settings.sourceRetentionDays} onChange={e => handleChange('sourceRetentionDays', parseInt(e.target.value) || 0)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
           </div>
           <div style={{ flex: 1 }}>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: '5px' }}>Generated ZIP Retention (Days)</label>
-            <input type="number" value={settings.zipRetentionDays} onChange={e => handleChange('zipRetentionDays', parseInt(e.target.value))} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
+            <input type="number" value={settings.zipRetentionDays} onChange={e => handleChange('zipRetentionDays', parseInt(e.target.value) || 0)} style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid var(--border-color)' }} />
           </div>
         </div>
       </div>

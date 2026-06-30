@@ -136,6 +136,9 @@ model SystemSettings {
   pmcFtpHost           String?
   pmcFtpUser           String?
   pmcFtpPassword       String?
+  porticoFtpHost       String?
+  porticoFtpUser       String?
+  porticoFtpPassword   String?
   scieloApiToken       String?
   crossrefUsername     String?
   crossrefPassword     String?

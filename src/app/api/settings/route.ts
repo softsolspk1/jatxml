@@ -25,6 +25,12 @@ export async function PUT(req: Request) {
 
   try {
     const data = await req.json();
+    
+    // Remove fields that shouldn't be updated manually
+    delete data.id;
+    delete data.createdAt;
+    delete data.updatedAt;
+
     const updated = await db.systemSettings.upsert({
       where: { id: "global" },
       update: data,

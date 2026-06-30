@@ -8,11 +8,11 @@ import { db } from './db';
 /**
  * Packages XML and images into a zip and uploads via SFTP to NLM/Elsevier
  */
-export async function uploadToFtp(articleId: string, xmlFiles: { name: string, content: string }[]) {
-  const settings = await db.systemSettings.findUnique({ where: { id: "global" } });
-  if (!settings?.pmcFtpHost || !settings?.pmcFtpUser || !settings?.pmcFtpPassword) {
-    throw new Error('FTP Credentials not configured in System Settings.');
-  }
+export async function uploadToFtp(
+  articleId: string, 
+  xmlFiles: { name: string, content: string }[],
+  credentials: { host: string, user: string, password: string }
+) {
 
   const sftp = new Client();
   const tmpDir = os.tmpdir();
@@ -39,10 +39,10 @@ export async function uploadToFtp(articleId: string, xmlFiles: { name: string, c
 
     // 2. Upload via SFTP
     await sftp.connect({
-      host: settings.pmcFtpHost,
+      host: credentials.host,
       port: 22,
-      username: settings.pmcFtpUser,
-      password: settings.pmcFtpPassword
+      username: credentials.user,
+      password: credentials.password
     });
 
     const remotePath = `/incoming/article_${articleId}.zip`; // Standard NLM incoming path
