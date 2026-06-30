@@ -8,14 +8,8 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
       let imageBuffer = await image.read();
       let contentType = image.contentType;
       if (contentType === 'image/x-emf' || contentType === 'image/x-wmf') {
-        try {
-          const { convert } = await import('emf-to-png');
-          const pngUint8 = await convert(imageBuffer, { format: 'png' });
-          imageBuffer = Buffer.from(pngUint8);
-          contentType = 'image/png';
-        } catch (e) {
-          console.error("Error converting EMF:", e);
-        }
+        // We skip server-side emf-to-png because node-canvas on Windows often returns blank images.
+        // The original EMF base64 string is passed to the frontend where wmf.js renders it via Canvas.
       } else if (contentType === 'image/tiff' || contentType === 'image/x-tiff') {
         try {
           const sharp = (await import('sharp')).default;
@@ -354,9 +348,18 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
       let nextP = $(el).next('p');
       if (!nextP.length) nextP = $(el).parent().next('p');
       
+      let prevP = $(el).prev('p');
+      if (!prevP.length) prevP = $(el).parent().prev('p');
+
       const textNext = nextP.text().trim();
+      const textPrev = prevP.text().trim();
+
       if (textNext.toLowerCase().startsWith('fig') || textNext.toLowerCase().startsWith('image')) {
         caption = textNext;
+        nextP.remove(); // Remove to prevent it floating around as body text
+      } else if (textPrev.toLowerCase().startsWith('fig') || textPrev.toLowerCase().startsWith('image')) {
+        caption = textPrev;
+        prevP.remove();
       } else {
         caption = `Figure ${figCounter}`;
       }
@@ -376,10 +379,18 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     let caption = '';
     let prevP = $(el).prev('p');
     if (!prevP.length) prevP = $(el).parent().prev('p');
+    let nextP = $(el).next('p');
+    if (!nextP.length) nextP = $(el).parent().next('p');
     
     const textPrev = prevP.text().trim();
+    const textNext = nextP.text().trim();
+
     if (textPrev.toLowerCase().startsWith('table')) {
       caption = textPrev;
+      prevP.remove();
+    } else if (textNext.toLowerCase().startsWith('table')) {
+      caption = textNext;
+      nextP.remove();
     } else {
       caption = `Table ${tableCounter}`;
     }
@@ -443,6 +454,18 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
   // 8. Clean up bodyHtml to prevent duplication
   // Images, Tables, and References are now kept inline in their original positions.
 
+  // Remove chart junk (standalone numbers, R-squared, linear equations, common chart axis labels)
+  $('p').each((i, el) => {
+    const text = $(el).text().trim();
+    if (
+      /^[-+]?\d+(?:\.\d+)?(?:E[-+]?\d+)?$/i.test(text) ||
+      /^y\s*=\s*[-+]?\d+(?:\.\d+)?x\s*[+-]\s*\d+(?:\.\d+)?$/i.test(text) ||
+      /^R²\s*=\s*\d+(?:\.\d+)?$/i.test(text) ||
+      /^(?:Peak Area|Concentration(?:\s*\(.*?\))?|Absorbance|Time(?:\s*\(.*?\))?|Intensity|Frequency|Retention Time(?:\s*\(.*?\))?)$/i.test(text)
+    ) {
+      $(el).remove();
+    }
+  });
 
   let introFound = false;
   let introIndex = -1;
