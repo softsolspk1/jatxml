@@ -1,7 +1,25 @@
 import mammoth from 'mammoth';
 import * as cheerio from 'cheerio';
+import AdmZip from 'adm-zip';
 
 export async function extractMetadataFromDocx(buffer: Buffer) {
+  // Extract text from headers and footers using adm-zip
+  let headerFooterText = '';
+  try {
+    const zip = new AdmZip(buffer);
+    const zipEntries = zip.getEntries();
+    zipEntries.forEach(entry => {
+      const name = entry.entryName.toLowerCase();
+      if (name.startsWith('word/header') || name.startsWith('word/footer')) {
+        const xml = entry.getData().toString('utf8');
+        const text = xml.replace(/<[^>]+>/g, ' ');
+        headerFooterText += ' ' + text;
+      }
+    });
+  } catch (e) {
+    console.error("Failed to extract headers/footers", e);
+  }
+
   // Convert docx to HTML
   const options = {
     convertImage: mammoth.images.imgElement(async function(image) {
@@ -60,6 +78,11 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
     const text = $(el).text().trim();
     if (text.length > 3) earlyElements.push(text);
   });
+  
+  // Add header/footer text as the very first element to be scanned for metadata
+  if (headerFooterText.trim()) {
+    earlyElements.unshift(headerFooterText.trim());
+  }
 
   // 1. Journal Extraction (Scan all early elements)
   let journalName = '';
@@ -191,14 +214,29 @@ export async function extractMetadataFromDocx(buffer: Buffer) {
 
   // 3. Document Scanning (DOI, Funding, Ethics, Grants, Volume)
   let doi = '';
-  const doiMatch = html.match(/(?:doi\.org\/|doi:?\s*)(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i);
-  if (doiMatch) doi = doiMatch[1];
-
   let volume = '';
   let issue = '';
   let pages = '';
   let publicationDate = '';
-
+  
+  const fullTextForDoi = html + ' ' + headerFooterText;
+  const doiMatch = fullTextForDoi.match(/(?:doi\.org\/|doi:?\s*)(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i);
+  if (doiMatch) {
+    doi = doiMatch[1];
+    
+    // If DOI follows PJPS format: 10.36721/PJPS.2026.39.8.222.1
+    // We can extract Journal, Year, Volume, Issue
+    const parts = doi.split('/');
+    if (parts.length > 1) {
+      const subParts = parts[1].split('.');
+      if (subParts.length >= 4 && subParts[0].toUpperCase() === 'PJPS') {
+        if (!journalName || journalName.length < 5) journalName = 'Pakistan Journal of Pharmaceutical Sciences';
+        if (!publicationDate) publicationDate = subParts[1];
+        if (!volume) volume = subParts[2];
+        if (!issue) issue = subParts[3];
+      }
+    }
+  }
 
   let fundingInfo = '';
   let grantNumbers = '';
