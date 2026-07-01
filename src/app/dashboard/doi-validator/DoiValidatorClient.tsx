@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Upload, CheckCircle, XCircle } from 'lucide-react';
+import { Upload, CheckCircle, XCircle, Download } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 export default function DoiValidatorClient() {
   const [inputText, setInputText] = useState('');
@@ -63,6 +65,49 @@ export default function DoiValidatorClient() {
     }
   };
 
+  const exportToExcel = () => {
+    if (results.length === 0) return;
+    const header = ['DOI', 'Status', 'Title'];
+    const rows = results.map(r => [
+      r.doi,
+      r.active ? 'Active' : 'Not Active',
+      `"${(r.title || '').replace(/"/g, '""')}"`
+    ]);
+    const csvContent = [header.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'doi_validation_results.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportToPDF = () => {
+    if (results.length === 0) return;
+    const doc = new jsPDF();
+    
+    doc.text('DOI Validation Results', 14, 15);
+    
+    const tableColumn = ['DOI', 'Status', 'Title'];
+    const tableRows = results.map(r => [
+      r.doi,
+      r.active ? 'Active' : 'Not Active',
+      r.title || '-'
+    ]);
+    
+    (doc as any).autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+      styles: { fontSize: 10, cellPadding: 3 },
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 }
+    });
+    
+    doc.save('doi_validation_results.pdf');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -110,7 +155,17 @@ export default function DoiValidatorClient() {
 
       {results.length > 0 && (
         <div className="card" style={{ overflowX: 'auto' }}>
-          <h2 style={{ fontSize: '1.2rem', marginBottom: '15px', color: 'var(--brand-blue)' }}>Results</h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+            <h2 style={{ fontSize: '1.2rem', color: 'var(--brand-blue)', margin: 0 }}>Results</h2>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={exportToExcel} className="button" style={{ backgroundColor: '#217346', padding: '8px 12px', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <Download size={16} /> Export to Excel
+              </button>
+              <button onClick={exportToPDF} className="button" style={{ backgroundColor: '#E3242B', padding: '8px 12px', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <Download size={16} /> Export to PDF
+              </button>
+            </div>
+          </div>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--border-color)' }}>

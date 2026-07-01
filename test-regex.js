@@ -1,0 +1,2 @@
+const text = "1Department of Orthopedic Surgery, Anqing First People's Hospital Affiliated to Anhui Medical University, Anqing, Anhui, 246000, China 2Department of Orthopedics II, Huanggang Central Hospital, Huanggang, Hubei, 438000, China 3Department of Orthopedics and Traumatology I, Yichang Hospital of Traditional Chinese Medicine, China Three Gorges University, Yichang, Hubei, 443001, China";
+console.log(text.split(/(?=\b[1-9]+[a-zA-Z])/));
