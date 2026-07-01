@@ -29,41 +29,59 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     const authors = article.authors || [];
 
     let ris = `TY  - JOUR\r\n`;
-    if (m.title) ris += `TI  - ${m.title}\r\n`;
+    ris += `TI  - ${m.title || ''}\r\n`;
     
-    authors.forEach(author => {
-      ris += `AU  - ${author.name}\r\n`;
-    });
+    if (authors.length > 0) {
+      authors.forEach(author => {
+        ris += `AU  - ${author.name}\r\n`;
+      });
+    } else {
+      ris += `AU  - \r\n`;
+    }
 
     const journalName = m.journalName || 'Pakistan Journal of Pharmaceutical Sciences';
     ris += `JO  - ${journalName}\r\n`;
     
-    if (m.volume) ris += `VL  - ${m.volume}\r\n`;
-    if (m.issue) ris += `IS  - ${m.issue}\r\n`;
+    ris += `VL  - ${m.volume || ''}\r\n`;
+    ris += `IS  - ${m.issue || ''}\r\n`;
     
+    let sp = '';
+    let ep = '';
     if (m.pages) {
       const parts = m.pages.split('-');
-      if (parts[0]) ris += `SP  - ${parts[0].trim()}\r\n`;
-      if (parts[1]) ris += `EP  - ${parts[1].trim()}\r\n`;
+      sp = parts[0] ? parts[0].trim() : '';
+      ep = parts[1] ? parts[1].trim() : '';
     }
+    ris += `SP  - ${sp}\r\n`;
+    ris += `EP  - ${ep}\r\n`;
 
+    let year = '';
+    let dateStr = '';
     if (m.publicationDate) {
       const d = new Date(m.publicationDate);
-      ris += `PY  - ${d.getFullYear()}\r\n`;
+      year = d.getFullYear().toString();
       const month = String(d.getMonth() + 1).padStart(2, '0');
-      ris += `DA  - ${d.getFullYear()}/${month}\r\n`;
+      dateStr = `${year}/${month}`;
     }
+    ris += `PY  - ${year}\r\n`;
+    ris += `DA  - ${dateStr}\r\n`;
 
     if (m.keywords) {
       const kws = m.keywords.split(',').map(k => k.trim()).filter(k => k);
-      kws.forEach(k => {
-        ris += `KW  - ${k}\r\n`;
-      });
+      if (kws.length > 0) {
+        kws.forEach(k => {
+          ris += `KW  - ${k}\r\n`;
+        });
+      } else {
+        ris += `KW  - \r\n`;
+      }
+    } else {
+      ris += `KW  - \r\n`;
     }
 
-    if (m.doi) ris += `DO  - ${m.doi}\r\n`;
+    ris += `DO  - ${m.doi || ''}\r\n`;
     
-    if (m.abstract) ris += `AB  - ${m.abstract}\r\n`;
+    ris += `AB  - ${m.abstract || ''}\r\n`;
     
     ris += `ER  -\r\n`;
 
