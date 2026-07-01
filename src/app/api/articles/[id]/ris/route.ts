@@ -3,6 +3,8 @@ import { db } from '@/lib/db';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
 
@@ -41,6 +43,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     const journalName = m.journalName || 'Pakistan Journal of Pharmaceutical Sciences';
     ris += `JO  - ${journalName}\r\n`;
+    ris += `JF  - ${journalName}\r\n`;
+    ris += `T2  - ${journalName}\r\n`;
     
     ris += `VL  - ${m.volume || ''}\r\n`;
     ris += `IS  - ${m.issue || ''}\r\n`;
@@ -64,6 +68,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       dateStr = `${year}/${month}`;
     }
     ris += `PY  - ${year}\r\n`;
+    ris += `Y1  - ${year}\r\n`;
     ris += `DA  - ${dateStr}\r\n`;
 
     if (m.keywords) {
@@ -80,6 +85,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     }
 
     ris += `DO  - ${m.doi || ''}\r\n`;
+    if (m.doi) {
+      ris += `UR  - https://doi.org/${m.doi}\r\n`;
+    }
     
     ris += `AB  - ${m.abstract || ''}\r\n`;
     
