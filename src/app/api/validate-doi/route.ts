@@ -18,24 +18,48 @@ export async function POST(req: Request) {
     }
 
     const results = [];
-
-    // Process sequentially to avoid aggressive rate limiting from Crossref
-    for (const doi of dois) {
-      const cleanDoi = doi.trim();
-      if (!cleanDoi) continue;
-
-      try {
-        const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(cleanDoi)}`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          const title = data.message?.title?.[0] || 'Unknown Title';
-          results.push({ doi: cleanDoi, active: true, title });
-        } else {
-          results.push({ doi: cleanDoi, active: false, title: null });
-        }
-      } catch (err) {
-        results.push({ doi: cleanDoi, active: false, title: null });
+    const cleanDois = dois.map(doi => doi.trim()).filter(Boolean);
+    
+    // Process in chunks to avoid timeout and excessive rate limiting
+    const chunkSize = 5;
+    for (let i = 0; i < cleanDois.length; i += chunkSize) {
+      const chunk = cleanDois.slice(i, i + chunkSize);
+      
+      const chunkResults = await Promise.all(
+        chunk.map(async (cleanDoi) => {
+          try {
+            // Using polite pool by providing mailto
+            const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(cleanDoi)}`, {
+              headers: {
+                'User-Agent': 'JatXML/1.0 (mailto:support@jatxml.com)'
+              }
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+              const title = data.message?.title?.[0] || 'Unknown Title';
+              return { doi: cleanDoi, active: true, title };
+            } else if (response.status === 404) {
+              // Try doi.org resolution for DOIs not in Crossref (e.g. DataCite)
+              const doiRes = await fetch(`https://doi.org/api/handles/${encodeURIComponent(cleanDoi)}`);
+              if (doiRes.ok) {
+                return { doi: cleanDoi, active: true, title: 'Unknown Title (Not in Crossref)' };
+              }
+              return { doi: cleanDoi, active: false, title: null };
+            } else {
+              return { doi: cleanDoi, active: false, title: null };
+            }
+          } catch (err) {
+            return { doi: cleanDoi, active: false, title: null };
+          }
+        })
+      );
+      
+      results.push(...chunkResults);
+      
+      // Small delay between chunks to respect rate limits further
+      if (i + chunkSize < cleanDois.length) {
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
     }
 
