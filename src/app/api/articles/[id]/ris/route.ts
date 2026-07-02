@@ -52,12 +52,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     let sp = '';
     let ep = '';
     if (m.pages) {
-      const parts = m.pages.split('-');
+      const parts = m.pages.split(/[-–—]/);
       sp = parts[0] ? parts[0].trim() : '';
       ep = parts[1] ? parts[1].trim() : '';
     }
-    ris += `SP  - ${sp}\r\n`;
-    ris += `EP  - ${ep}\r\n`;
+    if (sp) ris += `SP  - ${sp}\r\n`;
+    if (ep) ris += `EP  - ${ep}\r\n`;
 
     let year = '';
     let dateStr = '';
